@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 void main() {
   runApp(const PortfolioApp());
@@ -572,7 +573,7 @@ class TopNav extends StatelessWidget {
               GestureDetector(
                 onTap: onHero,
                 child: Text(
-                  'AC.',
+                  'SS.',
                   style: GoogleFonts.spaceGrotesk(
                     color: AppTokens.accent,
                     fontWeight: FontWeight.w700,
@@ -843,7 +844,7 @@ class _HeroImageState extends State<_HeroImage>
         end: 1.0,
       ).animate(CurvedAnimation(parent: _ac, curve: Curves.easeOutCubic)),
       child: Container(
-        constraints: const BoxConstraints(maxWidth: 400, maxHeight: 400),
+        constraints: const BoxConstraints(maxWidth: 280, maxHeight: 280),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppTokens.r24),
           border: Border.all(color: AppTokens.border, width: 2),
@@ -857,7 +858,7 @@ class _HeroImageState extends State<_HeroImage>
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(AppTokens.r24),
-          child: Image.network(
+          child: Image.asset(
             widget.ctrl.imageUrl,
             fit: BoxFit.cover,
             errorBuilder: (ctx, err, stack) => Container(
@@ -890,21 +891,31 @@ class _HeroTextContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Badge
-        _AvailableBadge(),
-        const SizedBox(height: AppTokens.s32),
-
-        // Name
+        // Name with animated gradient
         Obx(
-          () => Text(
-            ctrl.name.value,
-            style: GoogleFonts.spaceGrotesk(
-              color: AppTokens.textPrimary,
-              fontSize: isMobile ? 48 : 64,
-              fontWeight: FontWeight.w800,
-              height: 1.1,
-              letterSpacing: -1.5,
-            ),
+          () => AnimatedTextKit(
+            repeatForever: true,
+            animatedTexts: [
+              ColorizeAnimatedText(
+                ctrl.name.value,
+                textStyle: GoogleFonts.spaceGrotesk(
+                  fontSize: isMobile ? 48 : 64,
+                  fontWeight: FontWeight.w800,
+                  height: 1.1,
+                  letterSpacing: -1.5,
+                ),
+                colors: [
+                  AppTokens.accent,
+                  AppTokens.accentBlue,
+                  AppTokens.accentPurple,
+                  AppTokens.accentPink,
+                ],
+                speed: const Duration(milliseconds: 400),
+              ),
+            ],
+            isRepeatingAnimation: true,
+            pause: const Duration(milliseconds: 1200),
+            displayFullTextOnTap: true,
           ),
         ),
         const SizedBox(height: AppTokens.s16),
@@ -934,18 +945,28 @@ class _HeroTextContent extends StatelessWidget {
         ),
         const SizedBox(height: AppTokens.s32),
 
-        // Intro/Bio
+        // Intro/Bio with typing animation
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 600),
           child: Obx(
-            () => Text(
-              ctrl.intro.value,
-              style: GoogleFonts.inter(
-                color: AppTokens.textSecondary,
-                fontSize: isMobile ? 16 : 18,
-                height: 1.8,
-                fontWeight: FontWeight.w400,
-              ),
+            () => AnimatedTextKit(
+              isRepeatingAnimation: false,
+              animatedTexts: [
+                TypewriterAnimatedText(
+                  ctrl.intro.value,
+                  textStyle: GoogleFonts.inter(
+                    color: AppTokens.textSecondary,
+                    fontSize: isMobile ? 16 : 18,
+                    height: 1.8,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  speed: const Duration(milliseconds: 38),
+                  cursor: '|',
+                ),
+              ],
+              totalRepeatCount: 1,
+              displayFullTextOnTap: true,
+              pause: const Duration(milliseconds: 800),
             ),
           ),
         ),
@@ -961,70 +982,6 @@ class _HeroTextContent extends StatelessWidget {
           ],
         ),
       ],
-    );
-  }
-}
-
-// Animated "available" pill badge
-class _AvailableBadge extends StatefulWidget {
-  @override
-  State<_AvailableBadge> createState() => _AvailableBadgeState();
-}
-
-class _AvailableBadgeState extends State<_AvailableBadge>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _ac;
-
-  @override
-  void initState() {
-    super.initState();
-    _ac = AnimationController(vsync: this, duration: const Duration(seconds: 2))
-      ..repeat(reverse: true);
-  }
-
-  @override
-  void dispose() {
-    _ac.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _ac,
-      builder: (_, __) => Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppTokens.s12,
-          vertical: AppTokens.s8,
-        ),
-        decoration: BoxDecoration(
-          color: AppTokens.accentDim,
-          borderRadius: BorderRadius.circular(AppTokens.r999),
-          border: Border.all(color: AppTokens.accent.withOpacity(0.3)),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 8,
-              height: 8,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppTokens.accent.withOpacity(0.5 + 0.5 * _ac.value),
-              ),
-            ),
-            const SizedBox(width: AppTokens.s8),
-            Text(
-              'Available for work',
-              style: GoogleFonts.inter(
-                color: AppTokens.accent,
-                fontSize: 13,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
@@ -1691,11 +1648,11 @@ class ProjectsSection extends StatelessWidget {
               // Responsive column count
               int cols;
               if (constraints.maxWidth < 600) {
-                cols = 1; // Mobile
+                cols = 1;
               } else if (constraints.maxWidth < 1000) {
-                cols = 2; // Tablet
+                cols = 2;
               } else {
-                cols = 3; // Desktop
+                cols = 3;
               }
 
               final items = ctrl.projects;
