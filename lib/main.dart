@@ -172,9 +172,9 @@ class PortfolioController extends GetxController {
     {'name': 'Notion', 'icon': Icons.note, 'color': AppTokens.accentPurple},
   ];
   // ── Personal info ──────────────────────────────────────────
-  final name = 'Alex Chen'.obs;
+  final name = 'Shahria Sayad'.obs;
   final title = 'Flutter Developer'.obs;
-  final imageUrl = 'https://via.placeholder.com/200'; // Add your image URL
+  final imageUrl = 'assets/images/profile.jpg'; // Local asset image
   final intro =
       'I craft fast, beautiful cross-platform apps\nthat feel native everywhere.'
           .obs;
@@ -2296,7 +2296,7 @@ class _SectionLabel extends StatelessWidget {
             borderRadius: BorderRadius.circular(2),
           ),
         ),
-        const SizedBox(width: AppTokens.s8),
+        // const SizedBox(width: AppTokens.s8),
         Text(
           label.toUpperCase(),
           style: GoogleFonts.inter(
