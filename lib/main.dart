@@ -133,11 +133,13 @@ class SkillModel {
   final String name;
   final double proficiency; // 0.0 to 1.0
   final String category; // 'Frontend', 'Backend', 'Tools', etc.
+  final IconData? icon;
 
   const SkillModel({
     required this.name,
     required this.proficiency,
     required this.category,
+    this.icon,
   });
 }
 
@@ -146,6 +148,29 @@ class SkillModel {
 // Replace fields with your own data; UI updates automatically.
 // ────────────────────────────────────────────────────────────
 class PortfolioController extends GetxController {
+  // ── Tools ───────────────────────────────────────────────
+  final tools = [
+    {'name': 'VS Code', 'icon': Icons.code, 'color': AppTokens.accentBlue},
+    {
+      'name': 'Android Studio',
+      'icon': Icons.android,
+      'color': AppTokens.accent,
+    },
+    {
+      'name': 'Xcode',
+      'icon': Icons.laptop_mac,
+      'color': AppTokens.accentPurple,
+    },
+    {'name': 'GitHub', 'icon': Icons.cloud, 'color': AppTokens.accent},
+    {'name': 'Figma', 'icon': Icons.brush, 'color': AppTokens.accentPink},
+    {
+      'name': 'Slack',
+      'icon': Icons.chat_bubble_outline,
+      'color': AppTokens.accentBlue,
+    },
+    {'name': 'Postman', 'icon': Icons.send, 'color': AppTokens.accentOrange},
+    {'name': 'Notion', 'icon': Icons.note, 'color': AppTokens.accentPurple},
+  ];
   // ── Personal info ──────────────────────────────────────────
   final name = 'Alex Chen'.obs;
   final title = 'Flutter Developer'.obs;
@@ -169,23 +194,69 @@ writing about Dart internals, or hiking somewhere without cell service.
   // ── Skills ─────────────────────────────────────────────────
   final skills = <SkillModel>[
     // Frontend
-    SkillModel(name: 'Flutter', proficiency: 0.95, category: 'Frontend'),
-    SkillModel(name: 'Dart', proficiency: 0.93, category: 'Frontend'),
-    SkillModel(name: 'UI/UX Design', proficiency: 0.88, category: 'Frontend'),
+    SkillModel(
+      name: 'Flutter',
+      proficiency: 0.95,
+      category: 'Frontend',
+      icon: Icons.flutter_dash,
+    ),
+    SkillModel(
+      name: 'Dart',
+      proficiency: 0.93,
+      category: 'Frontend',
+      icon: Icons.code,
+    ),
+    SkillModel(
+      name: 'UI/UX Design',
+      proficiency: 0.88,
+      category: 'Frontend',
+      icon: Icons.design_services,
+    ),
     // State Management
-    SkillModel(name: 'GetX', proficiency: 0.92, category: 'State Management'),
+    SkillModel(
+      name: 'GetX',
+      proficiency: 0.92,
+      category: 'State Management',
+      icon: Icons.settings,
+    ),
     SkillModel(
       name: 'Riverpod',
       proficiency: 0.85,
       category: 'State Management',
+      icon: Icons.settings_input_component,
     ),
     // Backend & API
-    SkillModel(name: 'Firebase', proficiency: 0.90, category: 'Backend'),
-    SkillModel(name: 'REST & GraphQL', proficiency: 0.87, category: 'Backend'),
+    SkillModel(
+      name: 'Firebase',
+      proficiency: 0.90,
+      category: 'Backend',
+      icon: Icons.cloud,
+    ),
+    SkillModel(
+      name: 'REST & GraphQL',
+      proficiency: 0.87,
+      category: 'Backend',
+      icon: Icons.api,
+    ),
     // DevOps & Tools
-    SkillModel(name: 'CI/CD', proficiency: 0.82, category: 'DevOps'),
-    SkillModel(name: 'Git', proficiency: 0.94, category: 'DevOps'),
-    SkillModel(name: 'Figma', proficiency: 0.80, category: 'Design'),
+    SkillModel(
+      name: 'CI/CD',
+      proficiency: 0.82,
+      category: 'DevOps',
+      icon: Icons.build,
+    ),
+    SkillModel(
+      name: 'Git',
+      proficiency: 0.94,
+      category: 'DevOps',
+      icon: Icons.merge_type,
+    ),
+    SkillModel(
+      name: 'Figma',
+      proficiency: 0.80,
+      category: 'Design',
+      icon: Icons.brush,
+    ),
   ];
 
   // ── Projects ───────────────────────────────────────────────
@@ -397,6 +468,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 AboutSection(key: _aboutKey),
                 _divider(),
                 SkillsSection(key: _skillsKey),
+                _divider(),
+                const ToolsSection(),
                 _divider(),
                 ProjectsSection(key: _projectsKey),
                 _divider(),
@@ -1137,25 +1210,273 @@ class SkillsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final ctrl = Get.find<PortfolioController>();
 
+    // Group skills by category
+    final Map<String, List<SkillModel>> grouped = {};
+    for (final skill in ctrl.skills) {
+      grouped.putIfAbsent(skill.category, () => []).add(skill);
+    }
+
     return SectionWrapper(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _SectionLabel(label: 'Skills'),
+          const SizedBox(height: AppTokens.s16),
+          Text(
+            'A snapshot of my technical strengths',
+            style: GoogleFonts.inter(
+              color: AppTokens.textMuted,
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
           const SizedBox(height: AppTokens.s48),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: ctrl.skills
-                .map(
+          ...grouped.entries.map(
+            (entry) => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: AppTokens.s16),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppTokens.s12,
+                      vertical: AppTokens.s4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppTokens.surfaceAlt,
+                      borderRadius: BorderRadius.circular(AppTokens.r8),
+                    ),
+                    child: Text(
+                      entry.key,
+                      style: GoogleFonts.inter(
+                        color: AppTokens.accent,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                  ),
+                ),
+                ...entry.value.map(
                   (skill) => Padding(
                     padding: const EdgeInsets.only(bottom: AppTokens.s24),
-                    child: _SkillBar(skill: skill),
+                    child: _SkillCard(skill: skill),
                   ),
-                )
-                .toList(),
+                ),
+                const SizedBox(height: AppTokens.s32),
+              ],
+            ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// ────────────────────────────────────────────────────────────
+// TOOLS SECTION
+// ────────────────────────────────────────────────────────────
+class ToolsSection extends StatelessWidget {
+  const ToolsSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final ctrl = Get.find<PortfolioController>();
+    final isWide = MediaQuery.of(context).size.width > 700;
+    return SectionWrapper(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _SectionLabel(label: 'Tools'),
+          const SizedBox(height: AppTokens.s48),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final cols = isWide ? 4 : 2;
+              final items = ctrl.tools;
+              final rows = (items.length / cols).ceil();
+              return Column(
+                children: List.generate(rows, (r) {
+                  return Row(
+                    children: List.generate(cols, (c) {
+                      final idx = r * cols + c;
+                      if (idx >= items.length)
+                        return Expanded(child: Container());
+                      final tool = items[idx];
+                      return Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            right: c < cols - 1 ? AppTokens.s16 : 0,
+                            bottom: AppTokens.s24,
+                          ),
+                          child: _ToolCard(
+                            name: tool['name'] as String,
+                            icon: tool['icon'] as IconData,
+                            color: tool['color'] as Color,
+                          ),
+                        ),
+                      );
+                    }),
+                  );
+                }),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ToolCard extends StatefulWidget {
+  final String name;
+  final IconData icon;
+  final Color color;
+  const _ToolCard({
+    required this.name,
+    required this.icon,
+    required this.color,
+  });
+
+  @override
+  State<_ToolCard> createState() => _ToolCardState();
+}
+
+class _ToolCardState extends State<_ToolCard> {
+  bool _hovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 180),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppTokens.s24,
+          vertical: AppTokens.s32,
+        ),
+        decoration: BoxDecoration(
+          color: _hovered ? widget.color.withOpacity(0.08) : AppTokens.surface,
+          borderRadius: BorderRadius.circular(AppTokens.r16),
+          border: Border.all(
+            color: _hovered ? widget.color.withOpacity(0.4) : AppTokens.border,
+            width: 2,
+          ),
+          boxShadow: _hovered
+              ? [
+                  BoxShadow(
+                    color: widget.color.withOpacity(0.13),
+                    blurRadius: 24,
+                    spreadRadius: 0,
+                  ),
+                ]
+              : [],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: widget.color.withOpacity(0.18),
+                borderRadius: BorderRadius.circular(AppTokens.r999),
+              ),
+              child: Icon(widget.icon, color: widget.color, size: 28),
+            ),
+            const SizedBox(height: AppTokens.s16),
+            Text(
+              widget.name,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.inter(
+                color: AppTokens.textPrimary,
+                fontWeight: FontWeight.w600,
+                fontSize: 15,
+                letterSpacing: 0.2,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Card for each skill with icon, bar, and animation
+class _SkillCard extends StatefulWidget {
+  final SkillModel skill;
+  const _SkillCard({required this.skill});
+
+  @override
+  State<_SkillCard> createState() => _SkillCardState();
+}
+
+class _SkillCardState extends State<_SkillCard>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _ac;
+  late Animation<double> _fadeAnim;
+
+  @override
+  void initState() {
+    super.initState();
+    _ac = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 700),
+    );
+    _fadeAnim = CurvedAnimation(parent: _ac, curve: Curves.easeOutCubic);
+    _ac.forward();
+  }
+
+  @override
+  void dispose() {
+    _ac.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeTransition(
+      opacity: _fadeAnim,
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppTokens.surface,
+          borderRadius: BorderRadius.circular(AppTokens.r16),
+          border: Border.all(color: AppTokens.border.withOpacity(0.5)),
+          boxShadow: [
+            BoxShadow(
+              color: AppTokens.accent.withOpacity(0.06),
+              blurRadius: 16,
+              spreadRadius: 0,
+            ),
+          ],
+        ),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppTokens.s24,
+          vertical: AppTokens.s16,
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: 36,
+              height: 36,
+              decoration: BoxDecoration(
+                color: AppTokens.surfaceAlt,
+                borderRadius: BorderRadius.circular(AppTokens.r999),
+                border: Border.all(color: AppTokens.border.withOpacity(0.4)),
+              ),
+              child: Icon(
+                widget.skill.icon ?? Icons.star,
+                color: AppTokens.accent,
+                size: 22,
+              ),
+            ),
+            const SizedBox(width: AppTokens.s24),
+            Expanded(child: _SkillBar(skill: widget.skill)),
+          ],
+        ),
       ),
     );
   }
@@ -1244,25 +1565,25 @@ class _SkillBarState extends State<_SkillBar>
               widget.skill.name,
               style: GoogleFonts.inter(
                 color: AppTokens.textPrimary,
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
               ),
             ),
             Text(
               '${(widget.skill.proficiency * 100).toStringAsFixed(0)}%',
               style: GoogleFonts.inter(
                 color: barColor,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
+                fontSize: 13,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ],
         ),
-        const SizedBox(height: AppTokens.s8),
+        const SizedBox(height: AppTokens.s12),
         ClipRRect(
           borderRadius: BorderRadius.circular(AppTokens.r999),
           child: Container(
-            height: 6,
+            height: 14,
             color: AppTokens.border,
             child: AnimatedBuilder(
               animation: _widthAnim,
@@ -1274,12 +1595,19 @@ class _SkillBarState extends State<_SkillBar>
                   widthFactor: _widthAnim.value,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: barColor,
+                      gradient: LinearGradient(
+                        colors: [
+                          barColor.withOpacity(0.85),
+                          barColor.withOpacity(0.55),
+                        ],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ),
                       borderRadius: BorderRadius.circular(AppTokens.r999),
                       boxShadow: [
                         BoxShadow(
-                          color: barColor.withOpacity(0.4),
-                          blurRadius: 12,
+                          color: barColor.withOpacity(0.25),
+                          blurRadius: 16,
                           spreadRadius: 0,
                         ),
                       ],
