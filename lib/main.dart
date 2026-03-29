@@ -16,6 +16,7 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const PortfolioApp());
@@ -192,7 +193,7 @@ writing about Dart internals, or hiking somewhere without cell service.
 '''
           .obs;
 
-  final email = 'alex@example.com'.obs;
+  final email = 'shahriasayad9@gmail.com'.obs;
 
   // ── Skills ─────────────────────────────────────────────────
   final skills = <SkillModel>[
@@ -354,16 +355,20 @@ writing about Dart internals, or hiking somewhere without cell service.
 
   // ── Social Links ───────────────────────────────────────────
   final socials = <SocialLink>[
-    SocialLink(label: 'GitHub', url: 'https://github.com/', icon: Icons.code),
+    SocialLink(
+      label: 'GitHub',
+      url: 'https://github.com/shahriasayad',
+      icon: Icons.code,
+    ),
     SocialLink(
       label: 'LinkedIn',
-      url: 'https://linkedin.com/',
+      url: 'https://www.linkedin.com/in/shahria-sayad-9236a1308/',
       icon: Icons.link,
     ),
     SocialLink(
-      label: 'Twitter',
-      url: 'https://twitter.com/',
-      icon: Icons.alternate_email,
+      label: 'Email',
+      url: 'mailto:shahriasayad9@gmail.com',
+      icon: Icons.email,
     ),
   ];
 
@@ -2145,27 +2150,8 @@ class ContactSection extends StatelessWidget {
           ),
           const SizedBox(height: AppTokens.s32),
 
-          // Email link
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.mail_outline,
-                color: AppTokens.textSecondary,
-                size: 18,
-              ),
-              const SizedBox(width: AppTokens.s8),
-              Obx(
-                () => Text(
-                  ctrl.email.value,
-                  style: GoogleFonts.inter(
-                    color: AppTokens.textSecondary,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ],
-          ),
+          // Email link (clickable)
+          _EmailButton(email: ctrl.email.value),
           const SizedBox(height: AppTokens.s32),
 
           // Social links
@@ -2182,6 +2168,58 @@ class ContactSection extends StatelessWidget {
   }
 }
 
+class _EmailButton extends StatefulWidget {
+  final String email;
+  const _EmailButton({required this.email});
+
+  @override
+  State<_EmailButton> createState() => _EmailButtonState();
+}
+
+class _EmailButtonState extends State<_EmailButton> {
+  bool _hovered = false;
+
+  Future<void> _launchEmail() async {
+    final Uri emailUri = Uri(scheme: 'mailto', path: widget.email);
+    if (!await launchUrl(emailUri)) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Could not launch email client')));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      child: GestureDetector(
+        onTap: _launchEmail,
+        child: AnimatedDefaultTextStyle(
+          duration: const Duration(milliseconds: 150),
+          style: GoogleFonts.inter(
+            color: _hovered ? AppTokens.accent : AppTokens.textSecondary,
+            fontSize: 16,
+            fontWeight: _hovered ? FontWeight.w600 : FontWeight.w400,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.mail_outline,
+                color: _hovered ? AppTokens.accent : AppTokens.textSecondary,
+                size: 18,
+              ),
+              const SizedBox(width: AppTokens.s8),
+              Text(widget.email),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _SocialButton extends StatefulWidget {
   final SocialLink social;
   const _SocialButton({required this.social});
@@ -2193,44 +2231,56 @@ class _SocialButton extends StatefulWidget {
 class _SocialButtonState extends State<_SocialButton> {
   bool _hovered = false;
 
+  Future<void> _launchUrl() async {
+    final Uri url = Uri.parse(widget.social.url);
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not launch ${widget.social.url}')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
       onEnter: (_) => setState(() => _hovered = true),
       onExit: (_) => setState(() => _hovered = false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 150),
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppTokens.s16,
-          vertical: AppTokens.s12,
-        ),
-        decoration: BoxDecoration(
-          color: _hovered ? AppTokens.surface : Colors.transparent,
-          borderRadius: BorderRadius.circular(AppTokens.r12),
-          border: Border.all(
-            color: _hovered ? AppTokens.border : AppTokens.border,
+      child: GestureDetector(
+        onTap: _launchUrl,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 150),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppTokens.s16,
+            vertical: AppTokens.s12,
           ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              widget.social.icon,
-              color: _hovered ? AppTokens.accent : AppTokens.textSecondary,
-              size: 16,
+          decoration: BoxDecoration(
+            color: _hovered ? AppTokens.surface : Colors.transparent,
+            borderRadius: BorderRadius.circular(AppTokens.r12),
+            border: Border.all(
+              color: _hovered ? AppTokens.border : AppTokens.border,
             ),
-            const SizedBox(width: AppTokens.s8),
-            Text(
-              widget.social.label,
-              style: GoogleFonts.inter(
-                color: _hovered
-                    ? AppTokens.textPrimary
-                    : AppTokens.textSecondary,
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                widget.social.icon,
+                color: _hovered ? AppTokens.accent : AppTokens.textSecondary,
+                size: 16,
               ),
-            ),
-          ],
+              const SizedBox(width: AppTokens.s8),
+              Text(
+                widget.social.label,
+                style: GoogleFonts.inter(
+                  color: _hovered
+                      ? AppTokens.textPrimary
+                      : AppTokens.textSecondary,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
