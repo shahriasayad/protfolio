@@ -103,6 +103,20 @@ class ExperienceModel {
   });
 }
 
+class AchievementModel {
+  final String title;
+  final String organization;
+  final String organizationUrl;
+  final String description;
+
+  const AchievementModel({
+    required this.title,
+    required this.organization,
+    required this.organizationUrl,
+    required this.description,
+  });
+}
+
 class EducationModel {
   final String degree;
   final String school;
@@ -325,6 +339,24 @@ writing about Dart internals, or hiking somewhere without cell service.
     ),
   ];
 
+  // ── Achievements ──────────────────────────────────────────────
+  final achievements = <AchievementModel>[
+    AchievementModel(
+      title: 'Industrial Attachment',
+      organization: 'BdCalling Academy',
+      organizationUrl: 'https://bdcalling.com/partnership/bdcalling-academy',
+      description:
+          'Completed a 3-month industrial training in Flutter Development. Worked on real-life projects and gained hands-on experience with live app development.',
+    ),
+    AchievementModel(
+      title: 'Programming Contest',
+      organization: 'Brahmanbaria Polytechnic Institute',
+      organizationUrl: 'https://brahmanbaria.polytech.gov.bd/',
+      description:
+          'Achieved 8th place among 34 participants in a coding competition using Python programming language.',
+    ),
+  ];
+
   // ── Education ──────────────────────────────────────────────
   final education = <EducationModel>[
     EducationModel(
@@ -425,6 +457,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
   final _projectsKey = GlobalKey();
   final _educationKey = GlobalKey();
   final _experienceKey = GlobalKey();
+  final _achievementsKey = GlobalKey();
   final _contactKey = GlobalKey();
 
   void _scrollTo(GlobalKey key) {
@@ -484,6 +517,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 EducationSection(key: _educationKey),
                 _divider(),
                 ExperienceSection(key: _experienceKey),
+                _divider(),
+                const AchievementsSection(),
                 _divider(),
                 ContactSection(key: _contactKey),
                 const SizedBox(height: AppTokens.s64),
@@ -2112,6 +2147,142 @@ class _TimelineItemState extends State<_TimelineItem> {
           ),
         ),
       ],
+    );
+  }
+}
+
+// ────────────────────────────────────────────────────────────
+// ACHIEVEMENTS SECTION
+// ────────────────────────────────────────────────────────────
+class AchievementsSection extends StatelessWidget {
+  const AchievementsSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final ctrl = Get.find<PortfolioController>();
+
+    return SectionWrapper(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _SectionLabel(label: 'Achievements & Experience'),
+          const SizedBox(height: AppTokens.s48),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ...ctrl.achievements.asMap().entries.map(
+                (e) => _AchievementCard(
+                  item: e.value,
+                  isLast: e.key == ctrl.achievements.length - 1,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AchievementCard extends StatefulWidget {
+  final AchievementModel item;
+  final bool isLast;
+  const _AchievementCard({required this.item, required this.isLast});
+
+  @override
+  State<_AchievementCard> createState() => _AchievementCardState();
+}
+
+class _AchievementCardState extends State<_AchievementCard> {
+  bool _hovered = false;
+
+  Future<void> _launchUrl() async {
+    final Uri url = Uri.parse(widget.item.organizationUrl);
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Could not launch URL')));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        margin: EdgeInsets.only(bottom: widget.isLast ? 0 : AppTokens.s24),
+        padding: const EdgeInsets.all(AppTokens.s24),
+        decoration: BoxDecoration(
+          color: _hovered ? AppTokens.surfaceAlt : AppTokens.surface,
+          borderRadius: BorderRadius.circular(AppTokens.r12),
+          border: Border.all(
+            color: _hovered
+                ? AppTokens.accent.withOpacity(0.4)
+                : AppTokens.border,
+          ),
+          boxShadow: _hovered
+              ? [
+                  BoxShadow(
+                    color: AppTokens.accent.withOpacity(0.1),
+                    blurRadius: 24,
+                    spreadRadius: 0,
+                  ),
+                ]
+              : [],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Title
+            Text(
+              widget.item.title,
+              style: GoogleFonts.spaceGrotesk(
+                color: AppTokens.textPrimary,
+                fontWeight: FontWeight.w600,
+                fontSize: 18,
+              ),
+            ),
+            const SizedBox(height: AppTokens.s12),
+
+            // Organization (clickable)
+            GestureDetector(
+              onTap: _launchUrl,
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: AnimatedDefaultTextStyle(
+                  duration: const Duration(milliseconds: 150),
+                  style: GoogleFonts.inter(
+                    color: _hovered
+                        ? AppTokens.accent
+                        : AppTokens.textSecondary,
+                    fontSize: 15,
+                    fontWeight: _hovered ? FontWeight.w600 : FontWeight.w500,
+                    decoration: _hovered
+                        ? TextDecoration.underline
+                        : TextDecoration.none,
+                  ),
+                  child: Text(widget.item.organization),
+                ),
+              ),
+            ),
+            const SizedBox(height: AppTokens.s16),
+
+            // Description
+            Text(
+              widget.item.description,
+              style: GoogleFonts.inter(
+                color: AppTokens.textSecondary,
+                fontSize: 14,
+                height: 1.6,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
