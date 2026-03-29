@@ -16,7 +16,6 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() {
   runApp(const PortfolioApp());
@@ -152,34 +151,26 @@ class SkillModel {
 class PortfolioController extends GetxController {
   // ── Tools ───────────────────────────────────────────────
   final tools = [
-    {
-      'name': 'VS Code',
-      'icon': FontAwesomeIcons.code,
-      'color': Color(0xFF007ACC),
-    },
+    {'name': 'VS Code', 'icon': 'icons/vscode.png', 'color': Color(0xFF007ACC)},
     {
       'name': 'Android Studio',
-      'icon': FontAwesomeIcons.android,
+      'icon': 'icons/androidstudio.png',
       'color': Color(0xFF3DDC84),
     },
     {
       'name': 'IntelliJ IDEA',
-      'icon': FontAwesomeIcons.laptop,
-      'color': Color(0xFF000000),
+      'icon': 'icons/intellijidea.png',
+      'color': Color(0xFFEE5A52),
     },
-    {
-      'name': 'GitHub',
-      'icon': FontAwesomeIcons.github,
-      'color': Color(0xFFFFFFFF),
-    },
+    {'name': 'GitHub', 'icon': 'icons/github.png', 'color': Color(0xFFFFFFFF)},
     {
       'name': 'Postman',
-      'icon': FontAwesomeIcons.fire,
+      'icon': 'icons/postman.png',
       'color': Color(0xFFFF6C37),
     },
     {
       'name': 'Swagger',
-      'icon': FontAwesomeIcons.swatchbook,
+      'icon': 'icons/swagger.png',
       'color': Color(0xFF85EA2D),
     },
   ];
@@ -1273,7 +1264,7 @@ class ToolsSection extends StatelessWidget {
                           ),
                           child: _ToolCard(
                             name: tool['name'] as String,
-                            icon: tool['icon'] as IconData,
+                            icon: tool['icon'] as String,
                             color: tool['color'] as Color,
                           ),
                         ),
@@ -1292,7 +1283,7 @@ class ToolsSection extends StatelessWidget {
 
 class _ToolCard extends StatefulWidget {
   final String name;
-  final IconData icon;
+  final String icon;
   final Color color;
   const _ToolCard({
     required this.name,
@@ -1346,7 +1337,10 @@ class _ToolCardState extends State<_ToolCard> {
                 color: widget.color.withOpacity(0.18),
                 borderRadius: BorderRadius.circular(AppTokens.r999),
               ),
-              child: Icon(widget.icon, color: widget.color, size: 28),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset(widget.icon, fit: BoxFit.contain),
+              ),
             ),
             const SizedBox(height: AppTokens.s16),
             Text(
