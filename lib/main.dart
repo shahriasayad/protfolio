@@ -16,6 +16,7 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() {
   runApp(const PortfolioApp());
@@ -151,26 +152,36 @@ class SkillModel {
 class PortfolioController extends GetxController {
   // ── Tools ───────────────────────────────────────────────
   final tools = [
-    {'name': 'VS Code', 'icon': Icons.code, 'color': AppTokens.accentBlue},
+    {
+      'name': 'VS Code',
+      'icon': FontAwesomeIcons.code,
+      'color': Color(0xFF007ACC),
+    },
     {
       'name': 'Android Studio',
-      'icon': Icons.android,
-      'color': AppTokens.accent,
+      'icon': FontAwesomeIcons.android,
+      'color': Color(0xFF3DDC84),
     },
     {
-      'name': 'Xcode',
-      'icon': Icons.laptop_mac,
-      'color': AppTokens.accentPurple,
+      'name': 'IntelliJ IDEA',
+      'icon': FontAwesomeIcons.laptop,
+      'color': Color(0xFF000000),
     },
-    {'name': 'GitHub', 'icon': Icons.cloud, 'color': AppTokens.accent},
-    {'name': 'Figma', 'icon': Icons.brush, 'color': AppTokens.accentPink},
     {
-      'name': 'Slack',
-      'icon': Icons.chat_bubble_outline,
-      'color': AppTokens.accentBlue,
+      'name': 'GitHub',
+      'icon': FontAwesomeIcons.github,
+      'color': Color(0xFFFFFFFF),
     },
-    {'name': 'Postman', 'icon': Icons.send, 'color': AppTokens.accentOrange},
-    {'name': 'Notion', 'icon': Icons.note, 'color': AppTokens.accentPurple},
+    {
+      'name': 'Postman',
+      'icon': FontAwesomeIcons.fire,
+      'color': Color(0xFFFF6C37),
+    },
+    {
+      'name': 'Swagger',
+      'icon': FontAwesomeIcons.swatchbook,
+      'color': Color(0xFF85EA2D),
+    },
   ];
   // ── Personal info ──────────────────────────────────────────
   final name = 'Shahria Sayad'.obs;
