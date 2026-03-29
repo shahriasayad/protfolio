@@ -197,66 +197,60 @@ writing about Dart internals, or hiking somewhere without cell service.
     // Frontend
     SkillModel(
       name: 'Flutter',
-      proficiency: 0.95,
+      proficiency: 0.92,
       category: 'Frontend',
       icon: Icons.flutter_dash,
     ),
     SkillModel(
       name: 'Dart',
-      proficiency: 0.93,
+      proficiency: 0.90,
       category: 'Frontend',
       icon: Icons.code,
     ),
     SkillModel(
-      name: 'UI/UX Design',
-      proficiency: 0.88,
+      name: 'Python',
+      proficiency: 0.50,
       category: 'Frontend',
-      icon: Icons.design_services,
+      icon: Icons.terminal,
     ),
     // State Management
     SkillModel(
       name: 'GetX',
-      proficiency: 0.92,
+      proficiency: 0.95,
       category: 'State Management',
       icon: Icons.settings,
     ),
-    SkillModel(
-      name: 'Riverpod',
-      proficiency: 0.85,
-      category: 'State Management',
-      icon: Icons.settings_input_component,
-    ),
-    // Backend & API
+    // Backend & Data
     SkillModel(
       name: 'Firebase',
-      proficiency: 0.90,
+      proficiency: 0.80,
       category: 'Backend',
       icon: Icons.cloud,
     ),
     SkillModel(
-      name: 'REST & GraphQL',
-      proficiency: 0.87,
+      name: 'REST API',
+      proficiency: 0.85,
       category: 'Backend',
       icon: Icons.api,
     ),
+    SkillModel(
+      name: 'Hive',
+      proficiency: 0.80,
+      category: 'Backend',
+      icon: Icons.storage,
+    ),
+    SkillModel(
+      name: 'Shared Preference',
+      proficiency: 0.88,
+      category: 'Backend',
+      icon: Icons.save,
+    ),
     // DevOps & Tools
     SkillModel(
-      name: 'CI/CD',
-      proficiency: 0.82,
-      category: 'DevOps',
-      icon: Icons.build,
-    ),
-    SkillModel(
       name: 'Git',
-      proficiency: 0.94,
+      proficiency: 0.95,
       category: 'DevOps',
       icon: Icons.merge_type,
-    ),
-    SkillModel(
-      name: 'Figma',
-      proficiency: 0.80,
-      category: 'Design',
-      icon: Icons.brush,
     ),
   ];
 
