@@ -327,22 +327,28 @@ writing about Dart internals, or hiking somewhere without cell service.
   // ── Education ──────────────────────────────────────────────
   final education = <EducationModel>[
     EducationModel(
-      degree: 'Bachelor of Science',
-      school: 'University of Technology',
-      period: '2015 – 2019',
-      field: 'Computer Science',
+      degree: 'Bachelor of Science (BSc)',
+      school: 'Uttara University (UU)',
+      period: 'Expected Graduation: 2028',
+      field: 'Computer Science and Engineering',
       description:
-          'Focused on mobile development and software architecture. '
-          'Graduated with distinction. Thesis: Cross-platform architecture patterns.',
+          'Currently pursuing a Bachelor\'s degree in CSE with focus on software development and emerging technologies.',
     ),
     EducationModel(
-      degree: 'Advanced Diploma',
-      school: 'Tech Academy',
-      period: '2014 – 2015',
-      field: 'Mobile Development',
+      degree: 'Diploma in Engineering',
+      school: 'Brahmanbaria Polytechnic Institute (BBPI)',
+      period: '2021 – 2024',
+      field: 'Computer Science and Engineering',
       description:
-          'Intensive bootcamp covering React Native and early Flutter. '
-          'Built 5 production apps during the program.',
+          'Completed diploma studies in CSE with hands-on experience in web and application development.',
+    ),
+    EducationModel(
+      degree: 'Secondary School Certificate (SSC)',
+      school: 'Barura High School and College (BHSC)',
+      period: '2016 – 2020',
+      field: 'Science',
+      description:
+          'Completed secondary education with strong focus on science and mathematics.',
     ),
   ];
 
