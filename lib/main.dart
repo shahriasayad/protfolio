@@ -17,6 +17,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:palette_generator/palette_generator.dart';
 
 void main() {
   runApp(const PortfolioApp());
@@ -67,6 +68,49 @@ class AppTokens {
   // Max content width - better for web
   static const maxWidth = 1200.0;
   static const maxWidthNarrow = 900.0;
+}
+
+// ────────────────────────────────────────────────────────────
+// COLOR EXTRACTION UTILITY — extract dominant color from icon images
+// ────────────────────────────────────────────────────────────
+class IconColorExtractor {
+  static final Map<String, Color> _colorCache = {};
+
+  static Future<Color> extractDominantColor(String iconPath) async {
+    // Return cached color if available
+    if (_colorCache.containsKey(iconPath)) {
+      return _colorCache[iconPath]!;
+    }
+
+    try {
+      final imageProvider = AssetImage(iconPath);
+      final paletteGenerator = await PaletteGenerator.fromImageProvider(
+        imageProvider,
+        size: const Size(256, 256),
+      );
+
+      // Get the dominant color, fallback to a vibrant color, then to app accent
+      final dominantColor =
+          paletteGenerator.dominantColor?.color ??
+          paletteGenerator.vibrantColor?.color ??
+          AppTokens.accent;
+
+      _colorCache[iconPath] = dominantColor;
+      return dominantColor;
+    } catch (e) {
+      // Fallback to accent color if extraction fails
+      _colorCache[iconPath] = AppTokens.accent;
+      return AppTokens.accent;
+    }
+  }
+
+  static Color? getCachedColor(String iconPath) {
+    return _colorCache[iconPath];
+  }
+
+  static void clearCache() {
+    _colorCache.clear();
+  }
 }
 
 // ────────────────────────────────────────────────────────────
@@ -150,13 +194,25 @@ class SkillModel {
   final double proficiency; // 0.0 to 1.0
   final String category; // 'Frontend', 'Backend', 'Tools', etc.
   final IconData? icon;
+  final String?
+  iconPath; // Path to icon image asset (e.g., 'assets/icons/flutter.png')
+  Color? _cachedColor; // Cached dominant color from icon
 
-  const SkillModel({
+  SkillModel({
     required this.name,
     required this.proficiency,
     required this.category,
     this.icon,
+    this.iconPath,
   });
+
+  // Getter for cached color
+  Color? get cachedColor => _cachedColor;
+
+  // Set cached color
+  void setCachedColor(Color color) {
+    _cachedColor = color;
+  }
 }
 
 // ────────────────────────────────────────────────────────────
@@ -217,18 +273,21 @@ writing about Dart internals, or hiking somewhere without cell service.
       proficiency: 0.92,
       category: 'Frontend',
       icon: Icons.flutter_dash,
+      iconPath: 'assets/icons/flutter.png',
     ),
     SkillModel(
       name: 'Dart',
       proficiency: 0.90,
       category: 'Frontend',
       icon: Icons.code,
+      iconPath: 'assets/icons/dart.png',
     ),
     SkillModel(
       name: 'Python',
       proficiency: 0.50,
       category: 'Frontend',
       icon: Icons.terminal,
+      iconPath: 'assets/icons/python.png',
     ),
     // State Management
     SkillModel(
@@ -236,6 +295,7 @@ writing about Dart internals, or hiking somewhere without cell service.
       proficiency: 0.95,
       category: 'State Management',
       icon: Icons.settings,
+      iconPath: 'assets/icons/getx.png',
     ),
     // Backend & Data
     SkillModel(
@@ -243,24 +303,28 @@ writing about Dart internals, or hiking somewhere without cell service.
       proficiency: 0.80,
       category: 'Backend',
       icon: Icons.cloud,
+      iconPath: 'assets/icons/firebase.png',
     ),
     SkillModel(
       name: 'REST API',
       proficiency: 0.85,
       category: 'Backend',
       icon: Icons.api,
+      iconPath: 'assets/icons/swagger.png',
     ),
     SkillModel(
       name: 'Hive',
       proficiency: 0.80,
       category: 'Backend',
       icon: Icons.storage,
+      iconPath: 'assets/icons/hive.png',
     ),
     SkillModel(
       name: 'Shared Preference',
       proficiency: 0.88,
       category: 'Backend',
       icon: Icons.save,
+      iconPath: 'assets/icons/sharedpreferences.png',
     ),
     // DevOps & Tools
     SkillModel(
@@ -268,6 +332,7 @@ writing about Dart internals, or hiking somewhere without cell service.
       proficiency: 0.95,
       category: 'DevOps',
       icon: Icons.merge_type,
+      iconPath: 'assets/icons/git.png',
     ),
   ];
 
@@ -1429,6 +1494,23 @@ class _SkillCardState extends State<_SkillCard>
     );
     _fadeAnim = CurvedAnimation(parent: _ac, curve: Curves.easeOutCubic);
     _ac.forward();
+
+    // Extract color from icon image if iconPath is provided
+    if (widget.skill.iconPath != null) {
+      _extractIconColor();
+    }
+  }
+
+  Future<void> _extractIconColor() async {
+    if (widget.skill.iconPath != null) {
+      final color = await IconColorExtractor.extractDominantColor(
+        widget.skill.iconPath!,
+      );
+      if (mounted) {
+        widget.skill.setCachedColor(color);
+        setState(() {});
+      }
+    }
   }
 
   @override
@@ -1462,18 +1544,26 @@ class _SkillCardState extends State<_SkillCard>
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              width: 36,
-              height: 36,
+              width: 42,
+              height: 42,
               decoration: BoxDecoration(
                 color: AppTokens.surfaceAlt,
-                borderRadius: BorderRadius.circular(AppTokens.r999),
+                borderRadius: BorderRadius.circular(AppTokens.r8),
                 border: Border.all(color: AppTokens.border.withOpacity(0.4)),
               ),
-              child: Icon(
-                widget.skill.icon ?? Icons.star,
-                color: AppTokens.accent,
-                size: 22,
-              ),
+              child: widget.skill.iconPath != null
+                  ? Padding(
+                      padding: const EdgeInsets.all(6),
+                      child: Image.asset(
+                        widget.skill.iconPath!,
+                        fit: BoxFit.contain,
+                      ),
+                    )
+                  : Icon(
+                      widget.skill.icon ?? Icons.star,
+                      color: AppTokens.accent,
+                      size: 22,
+                    ),
             ),
             const SizedBox(width: AppTokens.s24),
             Expanded(child: _SkillBar(skill: widget.skill)),
@@ -1536,6 +1626,12 @@ class _SkillBarState extends State<_SkillBar>
   }
 
   Color _getCategoryColor(String category) {
+    // First, check if we have a cached color from the icon
+    if (widget.skill.cachedColor != null) {
+      return widget.skill.cachedColor!;
+    }
+
+    // Fall back to category-based colors
     switch (category) {
       case 'Frontend':
         return AppTokens.accentBlue;
