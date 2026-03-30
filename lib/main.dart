@@ -1225,7 +1225,7 @@ class SkillsSection extends StatelessWidget {
           Text(
             'A snapshot of my technical strengths',
             style: GoogleFonts.inter(
-              color: AppTokens.textMuted,
+              color: AppTokens.textSecondary,
               fontSize: 16,
               fontWeight: FontWeight.w400,
             ),
@@ -2483,7 +2483,7 @@ class _SectionLabel extends StatelessWidget {
         Text(
           label.toUpperCase(),
           style: GoogleFonts.inter(
-            color: AppTokens.textMuted,
+            color: AppTokens.textPrimary,
             fontSize: 12,
             fontWeight: FontWeight.w600,
             letterSpacing: 2,
