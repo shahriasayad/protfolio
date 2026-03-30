@@ -250,7 +250,8 @@ class PortfolioController extends GetxController {
   // ── Personal info ──────────────────────────────────────────
   final name = 'Shahria Sayad'.obs;
   final title = 'Flutter Developer'.obs;
-  final imageUrl = 'assets/images/profile.jpg'; // Local asset image
+  final imageUrl = 'assets/images/profile2.jpg';
+
   final intro =
       'I craft fast, beautiful cross-platform apps\nthat feel native everywhere.'
           .obs;
