@@ -11,6 +11,8 @@
 //   3. flutter run
 // ============================================================
 
+// ignore_for_file: use_build_context_synchronously, curly_braces_in_flow_control_structures
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
@@ -315,14 +317,14 @@ writing about Dart internals, or hiking somewhere without cell service.
     SkillModel(
       name: 'Hive',
       proficiency: 0.80,
-      category: 'Backend',
+      category: 'Local Storage',
       icon: Icons.storage,
       iconPath: 'assets/icons/hive.png',
     ),
     SkillModel(
       name: 'Shared Preference',
       proficiency: 0.88,
-      category: 'Backend',
+      category: 'Local Storage',
       icon: Icons.save,
       iconPath: 'assets/icons/sharedpreferences.png',
     ),
@@ -522,7 +524,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
   final _projectsKey = GlobalKey();
   final _educationKey = GlobalKey();
   final _experienceKey = GlobalKey();
-  final _achievementsKey = GlobalKey();
   final _contactKey = GlobalKey();
 
   void _scrollTo(GlobalKey key) {
@@ -564,7 +565,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
             controller: _scrollController,
             child: Column(
               children: [
-                const SizedBox(height: AppTokens.s96), // nav clearance
+                const SizedBox(height: AppTokens.s64), // nav clearance
                 HeroSection(
                   key: _heroKey,
                   onHire: () => _scrollTo(_contactKey),
@@ -664,7 +665,7 @@ class TopNav extends StatelessWidget {
   Widget build(BuildContext context) {
     final isWide = MediaQuery.of(context).size.width > 640;
     return Container(
-      color: AppTokens.bg.withOpacity(0.85),
+      color: AppTokens.bg.withValues(alpha: 0.85),
       child: ClipRect(
         child: Container(
           decoration: BoxDecoration(
@@ -814,7 +815,7 @@ class SectionWrapper extends StatelessWidget {
               padding ??
               const EdgeInsets.symmetric(
                 horizontal: AppTokens.s24,
-                vertical: AppTokens.s96,
+                vertical: AppTokens.s48,
               ),
           child: child,
         ),
@@ -957,7 +958,7 @@ class _HeroImageState extends State<_HeroImage>
           border: Border.all(color: AppTokens.border, width: 2),
           boxShadow: [
             BoxShadow(
-              color: AppTokens.accent.withOpacity(0.2),
+              color: AppTokens.accent.withValues(alpha: 0.2),
               blurRadius: 40,
               spreadRadius: 0,
             ),
@@ -974,7 +975,7 @@ class _HeroImageState extends State<_HeroImage>
                 child: Icon(
                   Icons.person_outline,
                   size: 80,
-                  color: AppTokens.accent.withOpacity(0.3),
+                  color: AppTokens.accent.withValues(alpha: 0.3),
                 ),
               ),
             ),
@@ -1035,9 +1036,11 @@ class _HeroTextContent extends StatelessWidget {
               vertical: AppTokens.s8,
             ),
             decoration: BoxDecoration(
-              color: AppTokens.accent.withOpacity(0.15),
+              color: AppTokens.accent.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(AppTokens.r12),
-              border: Border.all(color: AppTokens.accent.withOpacity(0.3)),
+              border: Border.all(
+                color: AppTokens.accent.withValues(alpha: 0.3),
+              ),
             ),
             child: Text(
               ctrl.title.value,
@@ -1121,7 +1124,7 @@ class _PrimaryButtonState extends State<_PrimaryButton> {
           ),
           decoration: BoxDecoration(
             color: _hovered
-                ? AppTokens.accent.withOpacity(0.9)
+                ? AppTokens.accent.withValues(alpha: 0.9)
                 : AppTokens.accent,
             borderRadius: BorderRadius.circular(AppTokens.r12),
           ),
@@ -1215,8 +1218,8 @@ class _SecondaryButtonState extends State<_SecondaryButton> {
             borderRadius: BorderRadius.circular(AppTokens.r12),
             border: Border.all(
               color: _hovered
-                  ? AppTokens.accent.withOpacity(0.5)
-                  : AppTokens.border.withOpacity(0.5),
+                  ? AppTokens.accent.withValues(alpha: 0.5)
+                  : AppTokens.border.withValues(alpha: 0.5),
               width: 2,
             ),
           ),
@@ -1421,16 +1424,20 @@ class _ToolCardState extends State<_ToolCard> {
           vertical: AppTokens.s32,
         ),
         decoration: BoxDecoration(
-          color: _hovered ? widget.color.withOpacity(0.08) : AppTokens.surface,
+          color: _hovered
+              ? widget.color.withValues(alpha: 0.08)
+              : AppTokens.surface,
           borderRadius: BorderRadius.circular(AppTokens.r16),
           border: Border.all(
-            color: _hovered ? widget.color.withOpacity(0.4) : AppTokens.border,
+            color: _hovered
+                ? widget.color.withValues(alpha: 0.4)
+                : AppTokens.border,
             width: 2,
           ),
           boxShadow: _hovered
               ? [
                   BoxShadow(
-                    color: widget.color.withOpacity(0.13),
+                    color: widget.color.withValues(alpha: 0.13),
                     blurRadius: 24,
                     spreadRadius: 0,
                   ),
@@ -1445,7 +1452,7 @@ class _ToolCardState extends State<_ToolCard> {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: widget.color.withOpacity(0.18),
+                color: widget.color.withValues(alpha: 0.18),
                 borderRadius: BorderRadius.circular(AppTokens.r999),
               ),
               child: Padding(
@@ -1527,10 +1534,10 @@ class _SkillCardState extends State<_SkillCard>
         decoration: BoxDecoration(
           color: AppTokens.surface,
           borderRadius: BorderRadius.circular(AppTokens.r16),
-          border: Border.all(color: AppTokens.border.withOpacity(0.5)),
+          border: Border.all(color: AppTokens.border.withValues(alpha: 0.5)),
           boxShadow: [
             BoxShadow(
-              color: AppTokens.accent.withOpacity(0.06),
+              color: AppTokens.accent.withValues(alpha: 0.06),
               blurRadius: 16,
               spreadRadius: 0,
             ),
@@ -1549,7 +1556,9 @@ class _SkillCardState extends State<_SkillCard>
               decoration: BoxDecoration(
                 color: AppTokens.surfaceAlt,
                 borderRadius: BorderRadius.circular(AppTokens.r8),
-                border: Border.all(color: AppTokens.border.withOpacity(0.4)),
+                border: Border.all(
+                  color: AppTokens.border.withValues(alpha: 0.4),
+                ),
               ),
               child: widget.skill.iconPath != null
                   ? Padding(
@@ -1639,6 +1648,8 @@ class _SkillBarState extends State<_SkillBar>
         return AppTokens.accent;
       case 'Backend':
         return AppTokens.accentPurple;
+      case 'Local Storage':
+        return AppTokens.accentPink;
       case 'DevOps':
         return AppTokens.accentOrange;
       case 'Design':
@@ -1681,38 +1692,91 @@ class _SkillBarState extends State<_SkillBar>
         ClipRRect(
           borderRadius: BorderRadius.circular(AppTokens.r999),
           child: Container(
-            height: 14,
-            color: AppTokens.border,
+            height: 10,
+            decoration: BoxDecoration(
+              color: AppTokens.border.withValues(alpha: 0.3),
+              borderRadius: BorderRadius.circular(AppTokens.r999),
+              border: Border.all(
+                color: AppTokens.border.withValues(alpha: 0.2),
+                width: 0.5,
+              ),
+            ),
             child: AnimatedBuilder(
               animation: _widthAnim,
-              builder: (context, _) => Container(
-                width: double.infinity,
-                height: double.infinity,
-                alignment: Alignment.centerLeft,
-                child: FractionallySizedBox(
-                  widthFactor: _widthAnim.value,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          barColor.withOpacity(0.85),
-                          barColor.withOpacity(0.55),
-                        ],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                      ),
-                      borderRadius: BorderRadius.circular(AppTokens.r999),
-                      boxShadow: [
-                        BoxShadow(
-                          color: barColor.withOpacity(0.25),
-                          blurRadius: 16,
-                          spreadRadius: 0,
+              builder: (context, _) {
+                return Stack(
+                  children: [
+                    // Background gradient overlay
+                    Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            AppTokens.border.withValues(alpha: 0.05),
+                            AppTokens.border.withValues(alpha: 0.0),
+                          ],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
                         ),
-                      ],
+                        borderRadius: BorderRadius.circular(AppTokens.r999),
+                      ),
                     ),
-                  ),
-                ),
-              ),
+                    // Progress fill
+                    FractionallySizedBox(
+                      widthFactor: _widthAnim.value,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              barColor.withValues(alpha: 0.9),
+                              barColor.withValues(alpha: 0.6),
+                            ],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            stops: const [0.0, 1.0],
+                          ),
+                          borderRadius: BorderRadius.circular(AppTokens.r999),
+                          boxShadow: [
+                            BoxShadow(
+                              color: barColor.withValues(alpha: 0.4),
+                              blurRadius: 12,
+                              spreadRadius: 0,
+                              offset: const Offset(0, 2),
+                            ),
+                            BoxShadow(
+                              color: barColor.withValues(alpha: 0.2),
+                              blurRadius: 24,
+                              spreadRadius: 2,
+                              offset: const Offset(0, 0),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // Shine effect
+                    if (_widthAnim.value > 0)
+                      FractionallySizedBox(
+                        widthFactor: _widthAnim.value,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.white.withValues(alpha: 0.0),
+                                Colors.white.withValues(alpha: 0.15),
+                                Colors.white.withValues(alpha: 0.0),
+                              ],
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                              stops: const [0.0, 0.5, 1.0],
+                            ),
+                            borderRadius: BorderRadius.circular(AppTokens.r999),
+                          ),
+                        ),
+                      ),
+                  ],
+                );
+              },
             ),
           ),
         ),
@@ -1748,7 +1812,7 @@ class _SkillChipState extends State<_SkillChip> {
           borderRadius: BorderRadius.circular(AppTokens.r8),
           border: Border.all(
             color: _hovered
-                ? AppTokens.accent.withOpacity(0.4)
+                ? AppTokens.accent.withValues(alpha: 0.4)
                 : AppTokens.border,
           ),
         ),
@@ -1856,13 +1920,13 @@ class _ProjectCardState extends State<_ProjectCard> {
           borderRadius: BorderRadius.circular(AppTokens.r16),
           border: Border.all(
             color: _hovered
-                ? AppTokens.accent.withOpacity(0.25)
+                ? AppTokens.accent.withValues(alpha: 0.25)
                 : AppTokens.border,
           ),
           boxShadow: _hovered
               ? [
                   BoxShadow(
-                    color: AppTokens.accent.withOpacity(0.05),
+                    color: AppTokens.accent.withValues(alpha: 0.05),
                     blurRadius: 40,
                     spreadRadius: 0,
                   ),
@@ -2011,12 +2075,14 @@ class _EducationCardState extends State<_EducationCard> {
           color: _hovered ? AppTokens.surfaceAlt : AppTokens.surface,
           borderRadius: BorderRadius.circular(AppTokens.r12),
           border: Border.all(
-            color: _hovered ? accentColor.withOpacity(0.4) : AppTokens.border,
+            color: _hovered
+                ? accentColor.withValues(alpha: 0.4)
+                : AppTokens.border,
           ),
           boxShadow: _hovered
               ? [
                   BoxShadow(
-                    color: accentColor.withOpacity(0.1),
+                    color: accentColor.withValues(alpha: 0.1),
                     blurRadius: 24,
                     spreadRadius: 0,
                   ),
@@ -2031,7 +2097,7 @@ class _EducationCardState extends State<_EducationCard> {
                 Container(
                   padding: const EdgeInsets.all(AppTokens.s8),
                   decoration: BoxDecoration(
-                    color: accentColor.withOpacity(0.15),
+                    color: accentColor.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(AppTokens.r8),
                   ),
                   child: Icon(
@@ -2317,13 +2383,13 @@ class _AchievementCardState extends State<_AchievementCard> {
           borderRadius: BorderRadius.circular(AppTokens.r12),
           border: Border.all(
             color: _hovered
-                ? AppTokens.accent.withOpacity(0.4)
+                ? AppTokens.accent.withValues(alpha: 0.4)
                 : AppTokens.border,
           ),
           boxShadow: _hovered
               ? [
                   BoxShadow(
-                    color: AppTokens.accent.withOpacity(0.1),
+                    color: AppTokens.accent.withValues(alpha: 0.1),
                     blurRadius: 24,
                     spreadRadius: 0,
                   ),
