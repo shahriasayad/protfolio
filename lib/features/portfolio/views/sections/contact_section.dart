@@ -7,6 +7,7 @@ import '../widgets/common/section_wrapper.dart';
 import '../widgets/common/section_label.dart';
 import '../widgets/buttons/email_button.dart';
 import '../widgets/buttons/social_button.dart';
+import '../widgets/forms/contact_form.dart';
 
 /// Contact section - call to action and social links
 class ContactSection extends StatelessWidget {
@@ -49,6 +50,13 @@ class ContactSection extends StatelessWidget {
             spacing: AppTokens.s12,
             runSpacing: AppTokens.s12,
             children: ctrl.socials.map((s) => SocialButton(social: s)).toList(),
+          ),
+          const SizedBox(height: AppTokens.s48),
+
+          // Contact form
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 600),
+            child: const ContactForm(),
           ),
         ],
       ),
