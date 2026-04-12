@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// AppTokens - Single source of truth for every color,
-/// spacing, and radius value used across the entire app.
 class AppTokens {
   // Colors - Modern gradient palette
   static const bg = Color(0xFF05080F); // deep navy-black

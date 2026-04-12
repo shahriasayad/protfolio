@@ -36,7 +36,7 @@ class SkillsSection extends StatelessWidget {
               fontWeight: FontWeight.w400,
             ),
           ),
-          const SizedBox(height: AppTokens.s48),
+          const SizedBox(height: AppTokens.s16),
           ...grouped.entries.map(
             (entry) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -74,7 +74,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
             controller: _scrollController,
             child: Column(
               children: [
-                const SizedBox(height: AppTokens.s64), // nav clearance
+                const SizedBox(height: AppTokens.s32), // nav clearance
                 HeroSection(
                   key: _heroKey,
                   onHire: () => _scrollTo(_contactKey),
@@ -83,20 +83,20 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 _divider(),
                 AboutSection(key: _aboutKey),
                 _divider(),
+                ExperienceSection(key: _experienceKey),
+                _divider(),
+                ProjectsSection(key: _projectsKey),
+                _divider(),
                 SkillsSection(key: _skillsKey),
                 _divider(),
                 const ToolsSection(),
                 _divider(),
-                ProjectsSection(key: _projectsKey),
+                const AchievementsSection(),
                 _divider(),
                 EducationSection(key: _educationKey),
                 _divider(),
-                ExperienceSection(key: _experienceKey),
-                _divider(),
-                const AchievementsSection(),
-                _divider(),
                 ContactSection(key: _contactKey),
-                const SizedBox(height: AppTokens.s64),
+                const SizedBox(height: AppTokens.s32),
                 _footer(),
               ],
             ),
@@ -131,7 +131,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
   }
 
   Widget _divider() => Padding(
-    padding: const EdgeInsets.symmetric(horizontal: AppTokens.s24),
+    padding: const EdgeInsets.symmetric(
+      horizontal: AppTokens.s24,
+      vertical: AppTokens.s4,
+    ),
     child: Container(height: 1, color: AppTokens.border),
   );
 

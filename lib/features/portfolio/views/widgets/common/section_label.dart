@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
 
-/// Subtle uppercase section label with accent underline
 class SectionLabel extends StatelessWidget {
   final String label;
   const SectionLabel({super.key, required this.label});

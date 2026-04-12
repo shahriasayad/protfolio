@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
 import 'package:my_portfolio/features/portfolio/models/project_model.dart';
 
-
 /// Project card - displays project info
 class ProjectCard extends StatefulWidget {
   final ProjectModel project;
