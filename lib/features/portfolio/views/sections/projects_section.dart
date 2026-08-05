@@ -47,8 +47,9 @@ class ProjectsSection extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: List.generate(cols, (c) {
                         final idx = r * cols + c;
-                        if (idx >= items.length)
+                        if (idx >= items.length) {
                           return Expanded(child: Container());
+                        }
                         return Expanded(
                           child: Padding(
                             padding: EdgeInsets.only(

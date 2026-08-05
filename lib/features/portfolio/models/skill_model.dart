@@ -5,8 +5,7 @@ class SkillModel {
   final double proficiency; // 0.0 to 1.0
   final String category; // 'Frontend', 'Backend', 'Tools', etc.
   final IconData? icon;
-  final String?
-  iconPath; // Path to icon image asset (e.g., 'assets/icons/flutter.png')
+  final String? iconPath; // Path to icon image asset.
   Color? _cachedColor; // Cached dominant color from icon
 
   SkillModel({

@@ -7,7 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 /// Social button - clickable social link
 class SocialButton extends StatefulWidget {
   final SocialLink social;
-  const SocialButton({required this.social});
+  const SocialButton({super.key, required this.social});
 
   @override
   State<SocialButton> createState() => _SocialButtonState();
@@ -17,9 +17,10 @@ class _SocialButtonState extends State<SocialButton> {
   bool _hovered = false;
 
   Future<void> _launchUrl() async {
+    final messenger = ScaffoldMessenger.of(context);
     final Uri url = Uri.parse(widget.social.url);
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-      ScaffoldMessenger.of(context).showSnackBar(
+      messenger.showSnackBar(
         SnackBar(content: Text('Could not launch ${widget.social.url}')),
       );
     }

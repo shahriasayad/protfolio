@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
 import '../../viewmodels/portfolio_controller.dart';
@@ -15,112 +14,66 @@ import '../sections/contact_section.dart';
 import '../widgets/nav/top_nav.dart';
 
 /// Portfolio page - main screen with all sections
-class PortfolioPage extends StatefulWidget {
+class PortfolioPage extends StatelessWidget {
   const PortfolioPage({super.key});
 
   @override
-  State<PortfolioPage> createState() => _PortfolioPageState();
-}
-
-class _PortfolioPageState extends State<PortfolioPage> {
-  final _scrollController = ScrollController();
-  final _ctrl = Get.find<PortfolioController>();
-
-  // Section keys for scroll-to navigation
-  final _heroKey = GlobalKey();
-  final _aboutKey = GlobalKey();
-  final _skillsKey = GlobalKey();
-  final _projectsKey = GlobalKey();
-  final _educationKey = GlobalKey();
-  final _experienceKey = GlobalKey();
-  final _contactKey = GlobalKey();
-
-  void _scrollTo(GlobalKey key) {
-    final ctx = key.currentContext;
-    if (ctx == null) return;
-    Scrollable.ensureVisible(
-      ctx,
-      duration: const Duration(milliseconds: 700),
-      curve: Curves.easeInOutCubic,
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController.addListener(() {
-      // Hide/show nav on scroll direction
-      _ctrl.isNavVisible.value =
-          _scrollController.position.userScrollDirection ==
-              ScrollDirection.forward ||
-          _scrollController.offset < 80;
-    });
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final ctrl = Get.find<PortfolioController>();
+
     return Scaffold(
       backgroundColor: AppTokens.bg,
       body: Stack(
         children: [
-          // ── Scrollable content ──────────────────────────────
           SingleChildScrollView(
-            controller: _scrollController,
+            controller: ctrl.scrollController,
             child: Column(
               children: [
-                const SizedBox(height: AppTokens.s32), // nav clearance
-                HeroSection(
-                  key: _heroKey,
-                  onHire: () => _scrollTo(_contactKey),
-                  onProjects: () => _scrollTo(_projectsKey),
-                ),
-                _divider(),
-                AboutSection(key: _aboutKey),
-                _divider(),
-                ExperienceSection(key: _experienceKey),
-                _divider(),
-                ProjectsSection(key: _projectsKey),
-                _divider(),
-                SkillsSection(key: _skillsKey),
-                _divider(),
-                const ToolsSection(),
-                _divider(),
-                const AchievementsSection(),
-                _divider(),
-                EducationSection(key: _educationKey),
-                _divider(),
-                ContactSection(key: _contactKey),
                 const SizedBox(height: AppTokens.s32),
-                _footer(),
+                HeroSection(
+                  key: ctrl.heroKey,
+                  onHire: () => ctrl.scrollToSection(ctrl.contactKey),
+                  onProjects: () => ctrl.scrollToSection(ctrl.projectsKey),
+                ),
+                const _Divider(),
+                AboutSection(key: ctrl.aboutKey),
+                const _Divider(),
+                ExperienceSection(key: ctrl.experienceKey),
+                const _Divider(),
+                ProjectsSection(key: ctrl.projectsKey),
+                const _Divider(),
+                SkillsSection(key: ctrl.skillsKey),
+                const _Divider(),
+                const ToolsSection(),
+                const _Divider(),
+                const AchievementsSection(),
+                const _Divider(),
+                EducationSection(key: ctrl.educationKey),
+                const _Divider(),
+                ContactSection(key: ctrl.contactKey),
+                const SizedBox(height: AppTokens.s32),
+                const _Footer(),
               ],
             ),
           ),
-
-          // ── Floating nav ────────────────────────────────────
           Obx(
             () => AnimatedSlide(
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut,
-              offset: _ctrl.isNavVisible.value
+              offset: ctrl.isNavVisible.value
                   ? Offset.zero
                   : const Offset(0, -1),
               child: AnimatedOpacity(
                 duration: const Duration(milliseconds: 300),
-                opacity: _ctrl.isNavVisible.value ? 1 : 0,
+                opacity: ctrl.isNavVisible.value ? 1 : 0,
                 child: TopNav(
-                  onHero: () => _scrollTo(_heroKey),
-                  onAbout: () => _scrollTo(_aboutKey),
-                  onSkills: () => _scrollTo(_skillsKey),
-                  onProjects: () => _scrollTo(_projectsKey),
-                  onEducation: () => _scrollTo(_educationKey),
-                  onExperience: () => _scrollTo(_experienceKey),
-                  onContact: () => _scrollTo(_contactKey),
+                  onHero: () => ctrl.scrollToSection(ctrl.heroKey),
+                  onAbout: () => ctrl.scrollToSection(ctrl.aboutKey),
+                  onSkills: () => ctrl.scrollToSection(ctrl.skillsKey),
+                  onProjects: () => ctrl.scrollToSection(ctrl.projectsKey),
+                  onEducation: () => ctrl.scrollToSection(ctrl.educationKey),
+                  onExperience: () => ctrl.scrollToSection(ctrl.experienceKey),
+                  onContact: () => ctrl.scrollToSection(ctrl.contactKey),
                 ),
               ),
             ),
@@ -129,23 +82,35 @@ class _PortfolioPageState extends State<PortfolioPage> {
       ),
     );
   }
+}
 
-  Widget _divider() => Padding(
-    padding: const EdgeInsets.symmetric(
-      horizontal: AppTokens.s24,
-      vertical: AppTokens.s4,
-    ),
-    child: Container(height: 1, color: AppTokens.border),
-  );
+class _Divider extends StatelessWidget {
+  const _Divider();
 
-  Widget _footer() => Center(
-    child: Text(
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: AppTokens.s24,
+        vertical: AppTokens.s4,
+      ),
+      child: Divider(height: 1, color: AppTokens.border),
+    );
+  }
+}
+
+class _Footer extends StatelessWidget {
+  const _Footer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
       'Built with Flutter & ♥',
-      style: TextStyle(
+      style: const TextStyle(
         color: AppTokens.textMuted,
         fontSize: 13,
         letterSpacing: 0.5,
       ),
-    ),
-  );
+    );
+  }
 }

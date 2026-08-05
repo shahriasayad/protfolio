@@ -7,7 +7,7 @@ class ToolCard extends StatefulWidget {
   final String name;
   final String icon;
   final Color color;
-  const ToolCard({required this.name, required this.icon, required this.color});
+  const ToolCard({super.key, required this.name, required this.icon, required this.color});
 
   @override
   State<ToolCard> createState() => _ToolCardState();

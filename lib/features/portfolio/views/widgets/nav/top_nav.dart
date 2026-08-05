@@ -102,7 +102,7 @@ class TopNav extends StatelessWidget {
 class NavItem extends StatefulWidget {
   final String label;
   final VoidCallback onTap;
-  const NavItem(this.label, this.onTap);
+  const NavItem(this.label, this.onTap, {super.key});
 
   @override
   State<NavItem> createState() => _NavItemState();
@@ -143,7 +143,7 @@ class MobileNavItem extends StatelessWidget {
   final String label;
   final VoidCallback onTap;
   final BuildContext parentCtx;
-  const MobileNavItem(this.label, this.onTap, this.parentCtx);
+  const MobileNavItem(this.label, this.onTap, this.parentCtx, {super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -31,8 +31,9 @@ class ToolsSection extends StatelessWidget {
                   return Row(
                     children: List.generate(cols, (c) {
                       final idx = r * cols + c;
-                      if (idx >= items.length)
+                      if (idx >= items.length) {
                         return Expanded(child: Container());
+                      }
                       final tool = items[idx];
                       return Expanded(
                         child: Padding(

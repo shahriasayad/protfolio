@@ -6,7 +6,7 @@ import 'package:my_portfolio/features/portfolio/models/project_model.dart';
 /// Project card - displays project info
 class ProjectCard extends StatefulWidget {
   final ProjectModel project;
-  const ProjectCard({required this.project});
+  const ProjectCard({super.key, required this.project});
 
   @override
   State<ProjectCard> createState() => _ProjectCardState();

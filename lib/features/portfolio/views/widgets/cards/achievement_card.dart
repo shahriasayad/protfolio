@@ -8,7 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 class AchievementCard extends StatefulWidget {
   final AchievementModel item;
   final bool isLast;
-  const AchievementCard({required this.item, required this.isLast});
+  const AchievementCard({super.key, required this.item, required this.isLast});
 
   @override
   State<AchievementCard> createState() => _AchievementCardState();
@@ -18,11 +18,12 @@ class _AchievementCardState extends State<AchievementCard> {
   bool _hovered = false;
 
   Future<void> _launchUrl() async {
+    final messenger = ScaffoldMessenger.of(context);
     final Uri url = Uri.parse(widget.item.organizationUrl);
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Could not launch URL')));
+      messenger.showSnackBar(
+        const SnackBar(content: Text('Could not launch URL')),
+      );
     }
   }
 

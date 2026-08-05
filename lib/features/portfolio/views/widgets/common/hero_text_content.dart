@@ -13,7 +13,7 @@ class HeroTextContent extends StatelessWidget {
   final VoidCallback onHire;
   final VoidCallback onProjects;
 
-  const HeroTextContent({
+  const HeroTextContent({super.key, 
     required this.ctrl,
     required this.onHire,
     required this.onProjects,

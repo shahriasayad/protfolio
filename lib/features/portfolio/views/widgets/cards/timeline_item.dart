@@ -8,7 +8,7 @@ import 'package:my_portfolio/features/portfolio/models/experience_model.dart';
 class TimelineItem extends StatefulWidget {
   final ExperienceModel item;
   final bool isLast;
-  const TimelineItem({required this.item, required this.isLast});
+  const TimelineItem({super.key, required this.item, required this.isLast});
 
   @override
   State<TimelineItem> createState() => _TimelineItemState();

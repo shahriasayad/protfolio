@@ -1,16 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import '../models/project_model.dart';
 import '../models/experience_model.dart';
 import '../models/achievement_model.dart';
 import '../models/education_model.dart';
 import '../models/skill_model.dart';
 import '../models/social_link_model.dart';
+import '../../../core/utils/icon_color_extractor.dart';
 
 /// PortfolioController - ViewModel managing all portfolio data and state
 class PortfolioController extends GetxController {
+  final scrollController = ScrollController();
+
+  final heroKey = GlobalKey();
+  final aboutKey = GlobalKey();
+  final skillsKey = GlobalKey();
+  final projectsKey = GlobalKey();
+  final educationKey = GlobalKey();
+  final experienceKey = GlobalKey();
+  final contactKey = GlobalKey();
+
+  final contactFormKey = GlobalKey<FormState>();
+  final contactEmailController = TextEditingController();
+  final contactMessageController = TextEditingController();
+
+  final isNavVisible = true.obs;
+  final isContactSubmitting = false.obs;
+  final skillPaletteReady = false.obs;
+
   // ── Tools ───────────────────────────────────────────────
-  final tools = [
+  final tools = <Map<String, Object>>[
     {'name': 'VS Code', 'icon': 'icons/vscode.png', 'color': Color(0xFF007ACC)},
     {
       'name': 'Android Studio',
@@ -260,7 +281,102 @@ writing about Dart internals, or hiking somewhere without cell service.
     ),
   ];
 
-  // ── Reactive state ─────────────────────────────────────────
-  final activeSection = 0.obs; // tracks nav highlight
-  final isNavVisible = true.obs;
+  @override
+  void onInit() {
+    super.onInit();
+    scrollController.addListener(_handleScroll);
+    loadSkillColors();
+  }
+
+  void _handleScroll() {
+    isNavVisible.value =
+        scrollController.position.userScrollDirection ==
+            ScrollDirection.forward ||
+        scrollController.offset < 80;
+  }
+
+  void scrollToSection(GlobalKey key) {
+    final context = key.currentContext;
+    if (context == null) {
+      return;
+    }
+
+    Scrollable.ensureVisible(
+      context,
+      duration: const Duration(milliseconds: 700),
+      curve: Curves.easeInOutCubic,
+    );
+  }
+
+  Future<void> loadSkillColors() async {
+    for (final skill in skills) {
+      final iconPath = skill.iconPath;
+      if (iconPath == null) {
+        continue;
+      }
+
+      final color = await IconColorExtractor.extractDominantColor(iconPath);
+      skill.setCachedColor(color);
+    }
+
+    skillPaletteReady.value = true;
+  }
+
+  Future<void> submitContactForm() async {
+    if (!(contactFormKey.currentState?.validate() ?? false)) {
+      return;
+    }
+
+    isContactSubmitting.value = true;
+
+    try {
+      final response = await http
+          .post(
+            Uri.parse('https://formsubmit.co/ajax/${email.value}'),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: {
+              'email': contactEmailController.text,
+              'message': contactMessageController.text,
+              '_captcha': 'false',
+            },
+          )
+          .timeout(
+            const Duration(seconds: 10),
+            onTimeout: () => throw Exception('Request timeout'),
+          );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        contactEmailController.clear();
+        contactMessageController.clear();
+        Get.snackbar(
+          'Success',
+          'Message sent successfully!',
+          backgroundColor: Colors.green.withValues(alpha: 0.7),
+          colorText: Colors.white,
+          duration: const Duration(seconds: 3),
+        );
+      } else {
+        throw Exception('Failed: ${response.statusCode}');
+      }
+    } catch (_) {
+      Get.snackbar(
+        'Error',
+        'Failed to send message. Please try again.',
+        backgroundColor: Colors.red.withValues(alpha: 0.7),
+        colorText: Colors.white,
+        duration: const Duration(seconds: 3),
+      );
+    } finally {
+      isContactSubmitting.value = false;
+    }
+  }
+
+  @override
+  void onClose() {
+    scrollController.removeListener(_handleScroll);
+    scrollController.dispose();
+    contactEmailController.dispose();
+    contactMessageController.dispose();
+    super.onClose();
+  }
 }

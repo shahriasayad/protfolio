@@ -15,10 +15,10 @@ class PortfolioApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Register controller globally
-    Get.put(PortfolioController());
-
     return GetMaterialApp(
+      initialBinding: BindingsBuilder(() {
+        Get.put(PortfolioController(), permanent: true);
+      }),
       title: 'Portfolio',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(

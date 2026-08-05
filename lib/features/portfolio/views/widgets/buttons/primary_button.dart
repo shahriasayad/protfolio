@@ -6,7 +6,7 @@ import 'package:my_portfolio/core/constants/app_tokens.dart';
 class PrimaryButton extends StatefulWidget {
   final String label;
   final VoidCallback onTap;
-  const PrimaryButton({required this.label, required this.onTap});
+  const PrimaryButton({super.key, required this.label, required this.onTap});
 
   @override
   State<PrimaryButton> createState() => _PrimaryButtonState();

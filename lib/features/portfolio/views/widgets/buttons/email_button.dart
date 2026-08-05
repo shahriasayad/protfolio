@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 /// Email button - clickable email link
 class EmailButton extends StatefulWidget {
   final String email;
-  const EmailButton({required this.email});
+  const EmailButton({super.key, required this.email});
 
   @override
   State<EmailButton> createState() => _EmailButtonState();
@@ -16,11 +16,12 @@ class _EmailButtonState extends State<EmailButton> {
   bool _hovered = false;
 
   Future<void> _launchEmail() async {
+    final messenger = ScaffoldMessenger.of(context);
     final Uri emailUri = Uri(scheme: 'mailto', path: widget.email);
     if (!await launchUrl(emailUri)) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Could not launch email client')));
+      messenger.showSnackBar(
+        const SnackBar(content: Text('Could not launch email client')),
+      );
     }
   }
 

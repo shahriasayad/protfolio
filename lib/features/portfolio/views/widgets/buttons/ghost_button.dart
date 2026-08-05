@@ -6,7 +6,7 @@ import 'package:my_portfolio/core/constants/app_tokens.dart';
 class GhostButton extends StatefulWidget {
   final String label;
   final VoidCallback onTap;
-  const GhostButton({required this.label, required this.onTap});
+  const GhostButton({super.key, required this.label, required this.onTap});
 
   @override
   State<GhostButton> createState() => _GhostButtonState();

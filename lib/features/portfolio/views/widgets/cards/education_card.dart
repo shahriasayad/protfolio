@@ -7,7 +7,7 @@ import 'package:my_portfolio/features/portfolio/models/education_model.dart';
 class EducationCard extends StatefulWidget {
   final EducationModel item;
   final bool isLast;
-  const EducationCard({required this.item, required this.isLast});
+  const EducationCard({super.key, required this.item, required this.isLast});
 
   @override
   State<EducationCard> createState() => _EducationCardState();
