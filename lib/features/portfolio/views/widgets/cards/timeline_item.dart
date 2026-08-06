@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
+import 'package:my_portfolio/core/utils/app_screen_util.dart';
 import 'package:my_portfolio/features/portfolio/models/experience_model.dart';
-
 
 /// Timeline item - displays experience in a timeline
 class TimelineItem extends StatefulWidget {
@@ -23,93 +23,118 @@ class _TimelineItemState extends State<TimelineItem> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Timeline column
         SizedBox(
-          width: 32,
+          width: 34,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(height: 6),
+              SizedBox(height: AppTokens.s8.h),
               Container(
-                width: 10,
-                height: 10,
+                width: 12,
+                height: 12,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: _hovered ? AppTokens.accent : AppTokens.border,
+                  color: _hovered ? AppTokens.accent : AppTokens.surfaceGlass,
                   border: Border.all(
-                    color: _hovered ? AppTokens.accent : AppTokens.textMuted,
+                    color: _hovered ? AppTokens.accent : AppTokens.borderStrong,
                     width: 2,
                   ),
+                  boxShadow: _hovered
+                      ? [
+                          BoxShadow(
+                            color: AppTokens.accent.withValues(alpha: 0.35),
+                            blurRadius: 16,
+                            spreadRadius: 2,
+                          ),
+                        ]
+                      : [],
                 ),
               ),
               if (!widget.isLast)
                 SizedBox(
                   width: 1,
-                  height: AppTokens.s32,
+                  height: AppTokens.s36.h,
                   child: Container(
-                    margin: const EdgeInsets.symmetric(vertical: 4),
-                    color: AppTokens.border,
+                    margin: EdgeInsets.symmetric(vertical: AppTokens.s4.h),
+                    color: AppTokens.borderStrong.withValues(alpha: 0.75),
                   ),
                 )
               else
-                const SizedBox(height: AppTokens.s32),
+                SizedBox(height: AppTokens.s32.h),
             ],
           ),
         ),
-        const SizedBox(width: AppTokens.s16),
+        SizedBox(width: AppTokens.s16.w),
 
-        // Content
         Expanded(
           child: MouseRegion(
             onEnter: (_) => setState(() => _hovered = true),
             onExit: (_) => setState(() => _hovered = false),
             child: Padding(
               padding: EdgeInsets.only(
-                bottom: widget.isLast ? 0 : AppTokens.s32,
+                bottom: widget.isLast ? 0 : AppTokens.s28.h,
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        e.role,
-                        style: GoogleFonts.spaceGrotesk(
-                          color: AppTokens.textPrimary,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
+              child: Container(
+                padding: EdgeInsets.all(AppTokens.s20.w),
+                decoration: BoxDecoration(
+                  color: _hovered
+                      ? AppTokens.surfaceAlt.withValues(alpha: 0.68)
+                      : AppTokens.surfaceGlass,
+                  borderRadius: BorderRadius.circular(AppTokens.r20.r),
+                  border: Border.all(
+                    color: _hovered
+                        ? AppTokens.accent.withValues(alpha: 0.22)
+                        : AppTokens.borderStrong.withValues(alpha: 0.42),
+                  ),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            e.role,
+                            style: GoogleFonts.spaceGrotesk(
+                              color: AppTokens.textPrimary,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 17.sp,
+                            ),
+                          ),
                         ),
-                      ),
-                      const Spacer(),
-                      Text(
-                        e.period,
-                        style: GoogleFonts.inter(
-                          color: AppTokens.textMuted,
-                          fontSize: 13,
+                        const SizedBox(width: AppTokens.s12),
+                        Text(
+                          e.period,
+                          style: GoogleFonts.inter(
+                            color: AppTokens.textMuted,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
+                      ],
+                    ),
+                    SizedBox(height: AppTokens.s6.h),
+                    Text(
+                      e.company,
+                      style: GoogleFonts.inter(
+                        color: AppTokens.accent,
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 0.2,
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: AppTokens.s4),
-                  Text(
-                    e.company,
-                    style: GoogleFonts.inter(
-                      color: AppTokens.accent,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
                     ),
-                  ),
-                  const SizedBox(height: AppTokens.s8),
-                  Text(
-                    e.description,
-                    style: GoogleFonts.inter(
-                      color: AppTokens.textSecondary,
-                      fontSize: 14,
-                      height: 1.6,
+                    SizedBox(height: AppTokens.s8.h),
+                    Text(
+                      e.description,
+                      style: GoogleFonts.inter(
+                        color: AppTokens.textSecondary,
+                        fontSize: 14.sp,
+                        height: 1.7,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

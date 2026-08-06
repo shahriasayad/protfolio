@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
+import 'package:my_portfolio/core/utils/app_screen_util.dart';
 
 /// Ghost button with transparent background
 class GhostButton extends StatefulWidget {
@@ -24,13 +25,13 @@ class _GhostButtonState extends State<GhostButton> {
         onTap: widget.onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 150),
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppTokens.s24,
-            vertical: AppTokens.s16,
+          padding: EdgeInsets.symmetric(
+            horizontal: AppTokens.s24.w,
+            vertical: AppTokens.s16.h,
           ),
           decoration: BoxDecoration(
             color: _hovered ? AppTokens.surface : Colors.transparent,
-            borderRadius: BorderRadius.circular(AppTokens.r12),
+            borderRadius: BorderRadius.circular(AppTokens.r12.r),
             border: Border.all(color: AppTokens.border),
           ),
           child: Text(
@@ -38,7 +39,7 @@ class _GhostButtonState extends State<GhostButton> {
             style: GoogleFonts.inter(
               color: AppTokens.textPrimary,
               fontWeight: FontWeight.w500,
-              fontSize: 15,
+              fontSize: 15.sp,
             ),
           ),
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
+import 'package:my_portfolio/core/utils/app_screen_util.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Email button - clickable email link
@@ -36,7 +37,7 @@ class _EmailButtonState extends State<EmailButton> {
           duration: const Duration(milliseconds: 150),
           style: GoogleFonts.inter(
             color: _hovered ? AppTokens.accent : AppTokens.textSecondary,
-            fontSize: 16,
+            fontSize: 16.sp,
             fontWeight: _hovered ? FontWeight.w600 : FontWeight.w400,
           ),
           child: Row(
@@ -47,7 +48,7 @@ class _EmailButtonState extends State<EmailButton> {
                 color: _hovered ? AppTokens.accent : AppTokens.textSecondary,
                 size: 18,
               ),
-              const SizedBox(width: AppTokens.s8),
+              SizedBox(width: AppTokens.s8.w),
               Text(widget.email),
             ],
           ),

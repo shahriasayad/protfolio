@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
+import 'package:my_portfolio/core/utils/app_screen_util.dart';
 
 /// Secondary button with border
 class SecondaryButton extends StatefulWidget {
@@ -24,13 +25,13 @@ class _SecondaryButtonState extends State<SecondaryButton> {
         onTap: widget.onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppTokens.s32,
-            vertical: AppTokens.s16,
+          padding: EdgeInsets.symmetric(
+            horizontal: AppTokens.s32.w,
+            vertical: AppTokens.s16.h,
           ),
           decoration: BoxDecoration(
             color: _hovered ? AppTokens.surfaceAlt : AppTokens.surface,
-            borderRadius: BorderRadius.circular(AppTokens.r12),
+            borderRadius: BorderRadius.circular(AppTokens.r12.r),
             border: Border.all(
               color: _hovered
                   ? AppTokens.accent.withValues(alpha: 0.5)
@@ -43,7 +44,7 @@ class _SecondaryButtonState extends State<SecondaryButton> {
             style: GoogleFonts.inter(
               color: _hovered ? AppTokens.accent : AppTokens.textPrimary,
               fontWeight: FontWeight.w700,
-              fontSize: 16,
+              fontSize: 16.sp,
               letterSpacing: 0.3,
             ),
           ),

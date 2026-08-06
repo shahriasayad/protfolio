@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../../core/constants/app_tokens.dart';
+import 'package:my_portfolio/core/utils/app_screen_util.dart';
 import '../../../viewmodels/portfolio_controller.dart';
 
 class ContactForm extends StatelessWidget {
@@ -26,25 +27,25 @@ class ContactForm extends StatelessWidget {
                 color: AppTokens.textMuted.withValues(alpha: 0.5),
               ),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(AppTokens.r12.r),
                 borderSide: BorderSide(color: AppTokens.border),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(AppTokens.r12.r),
                 borderSide: BorderSide(color: AppTokens.border),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(AppTokens.r12.r),
                 borderSide: BorderSide(color: AppTokens.accent, width: 2),
               ),
               filled: true,
               fillColor: AppTokens.bg,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 12,
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: AppTokens.s16.w,
+                vertical: AppTokens.s12.h,
               ),
             ),
-            style: TextStyle(color: AppTokens.textPrimary),
+            style: TextStyle(color: AppTokens.textPrimary, fontSize: 14.sp),
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Email is required';
@@ -68,25 +69,25 @@ class ContactForm extends StatelessWidget {
                 color: AppTokens.textMuted.withValues(alpha: 0.5),
               ),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(AppTokens.r12.r),
                 borderSide: BorderSide(color: AppTokens.border),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(AppTokens.r12.r),
                 borderSide: BorderSide(color: AppTokens.border),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(AppTokens.r12.r),
                 borderSide: BorderSide(color: AppTokens.accent, width: 2),
               ),
               filled: true,
               fillColor: AppTokens.bg,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 12,
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: AppTokens.s16.w,
+                vertical: AppTokens.s12.h,
               ),
             ),
-            style: TextStyle(color: AppTokens.textPrimary),
+            style: TextStyle(color: AppTokens.textPrimary, fontSize: 14.sp),
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Message is required';
@@ -112,13 +113,13 @@ class ContactForm extends StatelessWidget {
                   ),
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(AppTokens.r12.r),
                   ),
                 ),
                 child: ctrl.isContactSubmitting.value
                     ? SizedBox(
-                        height: 20,
-                        width: 20,
+                        height: 20.h,
+                        width: 20.w,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
                           valueColor: AlwaysStoppedAnimation<Color>(
@@ -130,7 +131,7 @@ class ContactForm extends StatelessWidget {
                         'Send Message',
                         style: GoogleFonts.spaceGrotesk(
                           color: AppTokens.bg,
-                          fontSize: 14,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
                           letterSpacing: 0.5,
                         ),

@@ -3,9 +3,10 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_portfolio/features/portfolio/viewmodels/portfolio_controller.dart';
 import '../../../../core/constants/app_tokens.dart';
+import '../../../../core/utils/app_screen_util.dart';
 import '../../models/skill_model.dart';
 import '../widgets/common/section_wrapper.dart';
-import '../widgets/common/section_label.dart';
+import '../widgets/common/portfolio_section_header.dart';
 import '../widgets/cards/skill_card.dart';
 
 /// Skills section - technical skills grouped by category
@@ -17,6 +18,7 @@ class SkillsSection extends StatelessWidget {
     final ctrl = Get.find<PortfolioController>();
 
     return SectionWrapper(
+      tone: SectionTone.tinted,
       child: Obx(() {
         final _ = ctrl.skillPaletteReady.value;
         final Map<String, List<SkillModel>> grouped =
@@ -29,50 +31,80 @@ class SkillsSection extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SectionLabel(label: 'Skills'),
-            const SizedBox(height: AppTokens.s16),
-            Text(
-              'A snapshot of my technical strengths',
-              style: GoogleFonts.inter(
-                color: AppTokens.textSecondary,
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-              ),
+            const PortfolioSectionHeader(
+              sectionIndex: '04',
+              title: 'Technical Skills',
+              subtitle: 'A focused stack rather than a long checklist.',
+              description:
+                  'The stack below is organized around what I actually use to ship polished Flutter products and the systems that support them.',
             ),
             const SizedBox(height: AppTokens.s16),
+            Wrap(
+              spacing: AppTokens.s8.w,
+              runSpacing: AppTokens.s8.h,
+              children: grouped.entries
+                  .map(
+                    (entry) => Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: AppTokens.s12.w,
+                        vertical: AppTokens.s6.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppTokens.surfaceGlass,
+                        borderRadius: BorderRadius.circular(AppTokens.r999.r),
+                        border: Border.all(
+                          color: AppTokens.borderStrong.withValues(alpha: 0.55),
+                        ),
+                      ),
+                      child: Text(
+                        '${entry.key} • ${entry.value.length}',
+                        style: GoogleFonts.inter(
+                          color: AppTokens.textPrimary,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList(),
+            ),
+            SizedBox(height: AppTokens.s24.h),
             ...grouped.entries.map(
               (entry) => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(bottom: AppTokens.s16),
+                    padding: EdgeInsets.only(bottom: AppTokens.s16.h),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppTokens.s12,
-                        vertical: AppTokens.s4,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: AppTokens.s12.w,
+                        vertical: AppTokens.s4.h,
                       ),
                       decoration: BoxDecoration(
-                        color: AppTokens.surfaceAlt,
-                        borderRadius: BorderRadius.circular(AppTokens.r8),
+                        color: AppTokens.surfaceGlass,
+                        borderRadius: BorderRadius.circular(AppTokens.r999.r),
+                        border: Border.all(
+                          color: AppTokens.borderStrong.withValues(alpha: 0.55),
+                        ),
                       ),
                       child: Text(
                         entry.key,
                         style: GoogleFonts.inter(
                           color: AppTokens.accent,
                           fontWeight: FontWeight.w600,
-                          fontSize: 13,
-                          letterSpacing: 1,
+                          fontSize: 12.sp,
+                          letterSpacing: 1.4,
                         ),
                       ),
                     ),
                   ),
                   ...entry.value.map(
                     (skill) => Padding(
-                      padding: const EdgeInsets.only(bottom: AppTokens.s24),
+                      padding: EdgeInsets.only(bottom: AppTokens.s24.h),
                       child: SkillCard(skill: skill),
                     ),
                   ),
-                  const SizedBox(height: AppTokens.s32),
+                  SizedBox(height: AppTokens.s32.h),
                 ],
               ),
             ),

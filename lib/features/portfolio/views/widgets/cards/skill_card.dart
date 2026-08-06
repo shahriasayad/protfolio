@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
+import 'package:my_portfolio/core/utils/app_screen_util.dart';
 import 'package:my_portfolio/features/portfolio/models/skill_model.dart';
 import '../skill/skill_bar.dart';
 
@@ -12,37 +13,46 @@ class SkillCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppTokens.surface,
-        borderRadius: BorderRadius.circular(AppTokens.r16),
-        border: Border.all(color: AppTokens.border.withValues(alpha: 0.5)),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            AppTokens.surfaceAlt.withValues(alpha: 0.95),
+            AppTokens.surfaceSoft.withValues(alpha: 0.92),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(AppTokens.r20.r),
+        border: Border.all(
+          color: AppTokens.borderStrong.withValues(alpha: 0.55),
+        ),
         boxShadow: [
           BoxShadow(
-            color: AppTokens.accent.withValues(alpha: 0.06),
-            blurRadius: 16,
+            color: AppTokens.accent.withValues(alpha: 0.05),
+            blurRadius: 20,
             spreadRadius: 0,
           ),
         ],
       ),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppTokens.s24,
-        vertical: AppTokens.s16,
+      padding: EdgeInsets.symmetric(
+        horizontal: AppTokens.s20.w,
+        vertical: AppTokens.s16.h,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: 42,
-            height: 42,
+            width: 48,
+            height: 48,
             decoration: BoxDecoration(
-              color: AppTokens.surfaceAlt,
-              borderRadius: BorderRadius.circular(AppTokens.r8),
+              color: AppTokens.surfaceGlass,
+              borderRadius: BorderRadius.circular(AppTokens.r12.r),
               border: Border.all(
-                color: AppTokens.border.withValues(alpha: 0.4),
+                color: AppTokens.borderStrong.withValues(alpha: 0.45),
               ),
             ),
             child: skill.iconPath != null
                 ? Padding(
-                    padding: const EdgeInsets.all(6),
+                    padding: const EdgeInsets.all(7),
                     child: Image.asset(skill.iconPath!, fit: BoxFit.contain),
                   )
                 : Icon(
@@ -51,7 +61,7 @@ class SkillCard extends StatelessWidget {
                     size: 22,
                   ),
           ),
-          const SizedBox(width: AppTokens.s24),
+          SizedBox(width: AppTokens.s20.w),
           Expanded(child: SkillBar(skill: skill)),
         ],
       ),

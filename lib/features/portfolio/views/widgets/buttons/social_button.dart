@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
+import 'package:my_portfolio/core/utils/app_screen_util.dart';
 import 'package:my_portfolio/features/portfolio/models/social_link_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -35,13 +36,13 @@ class _SocialButtonState extends State<SocialButton> {
         onTap: _launchUrl,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 150),
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppTokens.s16,
-            vertical: AppTokens.s12,
+          padding: EdgeInsets.symmetric(
+            horizontal: AppTokens.s16.w,
+            vertical: AppTokens.s12.h,
           ),
           decoration: BoxDecoration(
             color: _hovered ? AppTokens.surface : Colors.transparent,
-            borderRadius: BorderRadius.circular(AppTokens.r12),
+            borderRadius: BorderRadius.circular(AppTokens.r12.r),
             border: Border.all(
               color: _hovered ? AppTokens.border : AppTokens.border,
             ),
@@ -54,14 +55,14 @@ class _SocialButtonState extends State<SocialButton> {
                 color: _hovered ? AppTokens.accent : AppTokens.textSecondary,
                 size: 16,
               ),
-              const SizedBox(width: AppTokens.s8),
+              SizedBox(width: AppTokens.s8.w),
               Text(
                 widget.social.label,
                 style: GoogleFonts.inter(
                   color: _hovered
                       ? AppTokens.textPrimary
                       : AppTokens.textSecondary,
-                  fontSize: 14,
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.w500,
                 ),
               ),

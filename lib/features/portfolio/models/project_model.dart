@@ -4,6 +4,7 @@ class ProjectModel {
   final List<String> tech;
   final String link;
   final String emoji;
+  final String impact;
 
   const ProjectModel({
     required this.title,
@@ -11,5 +12,6 @@ class ProjectModel {
     required this.tech,
     required this.link,
     required this.emoji,
+    required this.impact,
   });
 }

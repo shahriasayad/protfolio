@@ -7,6 +7,7 @@ import 'package:my_portfolio/core/utils/app_screen_util.dart';
 import '../../../viewmodels/portfolio_controller.dart';
 import '../buttons/primary_button.dart';
 import '../buttons/secondary_button.dart';
+import 'portfolio_stat_card.dart';
 
 /// Hero text content - Name, title, intro, and CTAs
 class HeroTextContent extends StatelessWidget {
@@ -28,6 +29,29 @@ class HeroTextContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: AppTokens.s12.w,
+            vertical: AppTokens.s6.h,
+          ),
+          decoration: BoxDecoration(
+            color: AppTokens.surfaceGlass,
+            borderRadius: BorderRadius.circular(AppTokens.r999.r),
+            border: Border.all(
+              color: AppTokens.borderStrong.withValues(alpha: 0.55),
+            ),
+          ),
+          child: Text(
+            'Flutter developer · Product builder · UI systems',
+            style: GoogleFonts.inter(
+              color: AppTokens.textSecondary,
+              fontSize: 11.sp,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 1.4,
+            ),
+          ),
+        ),
+        SizedBox(height: AppTokens.s16.h),
         // Name with animated gradient
         Obx(
           () => AnimatedTextKit(
@@ -36,10 +60,10 @@ class HeroTextContent extends StatelessWidget {
               ColorizeAnimatedText(
                 ctrl.name.value,
                 textStyle: GoogleFonts.spaceGrotesk(
-                  fontSize: isMobile ? 48.sp : 64.sp,
+                  fontSize: isMobile ? 46.sp : 68.sp,
                   fontWeight: FontWeight.w800,
-                  height: 1.1,
-                  letterSpacing: -1.5,
+                  height: 1.0,
+                  letterSpacing: -2.2,
                 ),
                 colors: [
                   AppTokens.accent,
@@ -55,70 +79,92 @@ class HeroTextContent extends StatelessWidget {
             displayFullTextOnTap: true,
           ),
         ),
+        SizedBox(height: AppTokens.s12.h),
+
+        Text(
+          ctrl.brandHeadline,
+          style: GoogleFonts.spaceGrotesk(
+            color: AppTokens.textPrimary,
+            fontSize: isMobile ? 20.sp : 24.sp,
+            fontWeight: FontWeight.w600,
+            height: 1.25,
+          ),
+        ),
         SizedBox(height: AppTokens.s16.h),
 
-        // Title with accent
-        Obx(
-          () => Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: AppTokens.s16.w,
-              vertical: AppTokens.s8.h,
-            ),
-            decoration: BoxDecoration(
-              color: AppTokens.accent.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(AppTokens.r12.r),
-              border: Border.all(
-                color: AppTokens.accent.withValues(alpha: 0.3),
-              ),
-            ),
-            child: Text(
-              ctrl.title.value,
-              style: GoogleFonts.inter(
-                color: AppTokens.accent,
-                fontSize: isMobile ? 16.sp : 18.sp,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0.5,
-              ),
-            ),
+        Text(
+          ctrl.brandSummary,
+          style: GoogleFonts.inter(
+            color: AppTokens.textSecondary,
+            fontSize: isMobile ? 15.sp : 16.sp,
+            height: 1.8,
+            fontWeight: FontWeight.w400,
           ),
         ),
-        SizedBox(height: AppTokens.s32.h),
+        SizedBox(height: AppTokens.s24.h),
 
-        // Intro/Bio with typing animation
-        ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 600.w),
-          child: Obx(
-            () => AnimatedTextKit(
-              isRepeatingAnimation: false,
-              animatedTexts: [
-                TypewriterAnimatedText(
-                  ctrl.intro.value,
-                  textStyle: GoogleFonts.inter(
-                    color: AppTokens.textSecondary,
-                    fontSize: isMobile ? 16.sp : 18.sp,
-                    height: 1.8.h,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  speed: const Duration(milliseconds: 38),
-                  cursor: '|',
-                ),
-              ],
-              totalRepeatCount: 1,
-              displayFullTextOnTap: true,
-              pause: const Duration(milliseconds: 800),
-            ),
-          ),
-        ),
-        SizedBox(height: AppTokens.s48.h),
-
-        // CTA Buttons
         Wrap(
-          spacing: AppTokens.s16.w,
-          runSpacing: AppTokens.s16.h,
-          children: [
-            PrimaryButton(label: 'View My Work', onTap: onProjects),
-            SecondaryButton(label: 'Get In Touch', onTap: onHire),
-          ],
+          spacing: AppTokens.s12.w,
+          runSpacing: AppTokens.s12.h,
+          children: ctrl.heroStats
+              .map(
+                (stat) => SizedBox(
+                  width: isMobile ? double.infinity : 180.w,
+                  child: PortfolioStatCard(stat: stat),
+                ),
+              )
+              .toList(),
+        ),
+
+        SizedBox(height: AppTokens.s24.h),
+
+        Container(
+          padding: EdgeInsets.all(AppTokens.s16.w),
+          decoration: BoxDecoration(
+            color: AppTokens.surfaceGlass,
+            borderRadius: BorderRadius.circular(AppTokens.r24.r),
+            border: Border.all(
+              color: AppTokens.borderStrong.withValues(alpha: 0.55),
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      ctrl.availabilityNote,
+                      style: GoogleFonts.inter(
+                        color: AppTokens.textPrimary,
+                        fontSize: 13.sp,
+                        height: 1.6,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: AppTokens.s12.w),
+                  Container(
+                    width: 12,
+                    height: 12,
+                    decoration: const BoxDecoration(
+                      color: AppTokens.accent,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: AppTokens.s16.h),
+              Wrap(
+                spacing: AppTokens.s12.w,
+                runSpacing: AppTokens.s12.h,
+                children: [
+                  PrimaryButton(label: 'View Featured Work', onTap: onProjects),
+                  SecondaryButton(label: 'Start a Conversation', onTap: onHire),
+                ],
+              ),
+            ],
+          ),
         ),
       ],
     );

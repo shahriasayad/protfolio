@@ -5,7 +5,7 @@ import 'package:my_portfolio/features/portfolio/viewmodels/portfolio_controller.
 import '../../../../core/constants/app_tokens.dart';
 import 'package:my_portfolio/core/utils/app_screen_util.dart';
 import '../widgets/common/section_wrapper.dart';
-import '../widgets/common/section_label.dart';
+import '../widgets/common/portfolio_section_header.dart';
 
 /// About section - bio/personal intro
 class AboutSection extends StatelessWidget {
@@ -16,11 +16,16 @@ class AboutSection extends StatelessWidget {
     final ctrl = Get.find<PortfolioController>();
 
     return SectionWrapper(
+      tone: SectionTone.base,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SectionLabel(label: 'About'),
+          const PortfolioSectionHeader(
+            sectionIndex: '01',
+            title: 'About',
+            subtitle: 'Who I am and how I like to build.',
+          ),
           SizedBox(height: AppTokens.s48.h),
           ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 800.w),

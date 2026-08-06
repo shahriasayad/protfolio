@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
 import 'package:my_portfolio/core/utils/app_screen_util.dart';
 import '../../viewmodels/portfolio_controller.dart';
+import '../widgets/common/portfolio_backdrop.dart';
 import '../sections/hero_section.dart';
 import '../sections/about_section.dart';
 import '../sections/skills_section.dart';
@@ -26,35 +27,40 @@ class PortfolioPage extends StatelessWidget {
       backgroundColor: AppTokens.bg,
       body: Stack(
         children: [
-          SingleChildScrollView(
+          const PortfolioBackdrop(),
+          Scrollbar(
             controller: ctrl.scrollController,
-            child: Column(
-              children: [
-                SizedBox(height: AppTokens.s32.h),
-                HeroSection(
-                  key: ctrl.heroKey,
-                  onHire: () => ctrl.scrollToSection(ctrl.contactKey),
-                  onProjects: () => ctrl.scrollToSection(ctrl.projectsKey),
-                ),
-                const _Divider(),
-                AboutSection(key: ctrl.aboutKey),
-                const _Divider(),
-                ExperienceSection(key: ctrl.experienceKey),
-                const _Divider(),
-                ProjectsSection(key: ctrl.projectsKey),
-                const _Divider(),
-                SkillsSection(key: ctrl.skillsKey),
-                const _Divider(),
-                const ToolsSection(),
-                const _Divider(),
-                const AchievementsSection(),
-                const _Divider(),
-                EducationSection(key: ctrl.educationKey),
-                const _Divider(),
-                ContactSection(key: ctrl.contactKey),
-                SizedBox(height: AppTokens.s32.h),
-                const _Footer(),
-              ],
+            thumbVisibility: true,
+            child: SingleChildScrollView(
+              controller: ctrl.scrollController,
+              child: Column(
+                children: [
+                  SizedBox(height: AppTokens.s24.h),
+                  HeroSection(
+                    key: ctrl.heroKey,
+                    onHire: () => ctrl.scrollToSection(ctrl.contactKey),
+                    onProjects: () => ctrl.scrollToSection(ctrl.projectsKey),
+                  ),
+                  const _Divider(),
+                  AboutSection(key: ctrl.aboutKey),
+                  const _Divider(),
+                  ExperienceSection(key: ctrl.experienceKey),
+                  const _Divider(),
+                  ProjectsSection(key: ctrl.projectsKey),
+                  const _Divider(),
+                  SkillsSection(key: ctrl.skillsKey),
+                  const _Divider(),
+                  const ToolsSection(),
+                  const _Divider(),
+                  const AchievementsSection(),
+                  const _Divider(),
+                  EducationSection(key: ctrl.educationKey),
+                  const _Divider(),
+                  ContactSection(key: ctrl.contactKey),
+                  SizedBox(height: AppTokens.s40.h),
+                  const _Footer(),
+                ],
+              ),
             ),
           ),
           Obx(
@@ -68,6 +74,7 @@ class PortfolioPage extends StatelessWidget {
                 duration: const Duration(milliseconds: 300),
                 opacity: ctrl.isNavVisible.value ? 1 : 0,
                 child: TopNav(
+                  activeIndex: ctrl.activeSectionIndex.value,
                   onHero: () => ctrl.scrollToSection(ctrl.heroKey),
                   onAbout: () => ctrl.scrollToSection(ctrl.aboutKey),
                   onSkills: () => ctrl.scrollToSection(ctrl.skillsKey),

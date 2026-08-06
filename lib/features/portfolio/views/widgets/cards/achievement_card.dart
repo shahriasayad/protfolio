@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
+import 'package:my_portfolio/core/utils/app_screen_util.dart';
 import 'package:my_portfolio/features/portfolio/models/achievement_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -33,42 +34,46 @@ class _AchievementCardState extends State<AchievementCard> {
       onEnter: (_) => setState(() => _hovered = true),
       onExit: (_) => setState(() => _hovered = false),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        margin: EdgeInsets.only(bottom: widget.isLast ? 0 : AppTokens.s24),
-        padding: const EdgeInsets.all(AppTokens.s24),
+        duration: const Duration(milliseconds: 220),
+        transform: Matrix4.translationValues(0, _hovered ? -3 : 0, 0),
+        margin: EdgeInsets.only(bottom: widget.isLast ? 0 : AppTokens.s20.h),
+        padding: EdgeInsets.all(AppTokens.s20.w),
         decoration: BoxDecoration(
-          color: _hovered ? AppTokens.surfaceAlt : AppTokens.surface,
-          borderRadius: BorderRadius.circular(AppTokens.r12),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              _hovered ? AppTokens.surfaceAlt : AppTokens.surface,
+              AppTokens.surfaceSoft.withValues(alpha: 0.92),
+            ],
+          ),
+          borderRadius: BorderRadius.circular(AppTokens.r20.r),
           border: Border.all(
             color: _hovered
-                ? AppTokens.accent.withValues(alpha: 0.4)
-                : AppTokens.border,
+                ? AppTokens.accent.withValues(alpha: 0.35)
+                : AppTokens.borderStrong.withValues(alpha: 0.55),
           ),
-          boxShadow: _hovered
-              ? [
-                  BoxShadow(
-                    color: AppTokens.accent.withValues(alpha: 0.1),
-                    blurRadius: 24,
-                    spreadRadius: 0,
-                  ),
-                ]
-              : [],
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: _hovered ? 0.24 : 0.16),
+              blurRadius: _hovered ? 28 : 18,
+              offset: const Offset(0, 10),
+            ),
+          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Title
             Text(
               widget.item.title,
               style: GoogleFonts.spaceGrotesk(
                 color: AppTokens.textPrimary,
                 fontWeight: FontWeight.w600,
-                fontSize: 18,
+                fontSize: 18.sp,
               ),
             ),
-            const SizedBox(height: AppTokens.s12),
+            SizedBox(height: AppTokens.s12.h),
 
-            // Organization (clickable)
             GestureDetector(
               onTap: _launchUrl,
               child: MouseRegion(
@@ -79,7 +84,7 @@ class _AchievementCardState extends State<AchievementCard> {
                     color: _hovered
                         ? AppTokens.accent
                         : AppTokens.textSecondary,
-                    fontSize: 15,
+                    fontSize: 14.sp,
                     fontWeight: _hovered ? FontWeight.w600 : FontWeight.w500,
                     decoration: _hovered
                         ? TextDecoration.underline
@@ -89,15 +94,14 @@ class _AchievementCardState extends State<AchievementCard> {
                 ),
               ),
             ),
-            const SizedBox(height: AppTokens.s16),
+            SizedBox(height: AppTokens.s16.h),
 
-            // Description
             Text(
               widget.item.description,
               style: GoogleFonts.inter(
                 color: AppTokens.textSecondary,
-                fontSize: 14,
-                height: 1.6,
+                fontSize: 14.sp,
+                height: 1.7,
               ),
             ),
           ],

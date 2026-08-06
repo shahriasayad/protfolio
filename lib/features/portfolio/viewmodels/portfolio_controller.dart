@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import '../../../core/constants/app_tokens.dart';
 import '../models/project_model.dart';
 import '../models/experience_model.dart';
 import '../models/achievement_model.dart';
 import '../models/education_model.dart';
 import '../models/skill_model.dart';
 import '../models/social_link_model.dart';
+import '../models/portfolio_stat_model.dart';
 import '../../../core/utils/icon_color_extractor.dart';
 
 /// PortfolioController - ViewModel managing all portfolio data and state
@@ -29,6 +31,7 @@ class PortfolioController extends GetxController {
   final isNavVisible = true.obs;
   final isContactSubmitting = false.obs;
   final skillPaletteReady = false.obs;
+  final activeSectionIndex = 0.obs;
 
   // ── Tools ───────────────────────────────────────────────
   final tools = <Map<String, Object>>[
@@ -76,6 +79,36 @@ writing about Dart internals, or hiking somewhere without cell service.
           .obs;
 
   final email = 'shahriasayad9@gmail.com'.obs;
+  final brandHeadline =
+      'I design and build Flutter products with a sharper point of view.';
+  final brandSummary =
+      'Product-minded mobile work shaped around clarity, speed, and memorable user experience. I build interfaces that feel designed, not assembled.';
+  final availabilityNote =
+      'Available for selective freelance work and product teams that care about detail.';
+
+  final heroStats = const <PortfolioStatModel>[
+    PortfolioStatModel(
+      value: '4+',
+      label: 'Years building',
+      detail: 'Production Flutter work across apps and features.',
+      icon: Icons.timer_outlined,
+      accent: AppTokens.accentBlue,
+    ),
+    PortfolioStatModel(
+      value: '9',
+      label: 'Core tools',
+      detail: 'A focused stack for shipping polished mobile products.',
+      icon: Icons.grid_view_rounded,
+      accent: AppTokens.accent,
+    ),
+    PortfolioStatModel(
+      value: '6+',
+      label: 'Featured projects',
+      detail: 'Case studies that show range, craft, and delivery.',
+      icon: Icons.auto_awesome_outlined,
+      accent: AppTokens.accentPink,
+    ),
+  ];
 
   // ── Skills ─────────────────────────────────────────────────
   final skills = <SkillModel>[
@@ -158,6 +191,7 @@ writing about Dart internals, or hiking somewhere without cell service.
           'Stripe payments, and animated product carousels. Reached 50k+ MAU.',
       tech: ['Flutter', 'Firebase', 'Stripe', 'GetX'],
       link: 'https://github.com/example/shopflow',
+      impact: '50k+ MAU, Stripe checkout, live inventory sync',
     ),
     ProjectModel(
       emoji: '🧘',
@@ -167,6 +201,7 @@ writing about Dart internals, or hiking somewhere without cell service.
           'and sleep stories. Featured on the App Store in 12 countries.',
       tech: ['Flutter', 'Dart', 'Riverpod', 'Supabase'],
       link: 'https://github.com/example/stillness',
+      impact: 'Featured in 12 countries on the App Store',
     ),
     ProjectModel(
       emoji: '📊',
@@ -176,6 +211,7 @@ writing about Dart internals, or hiking somewhere without cell service.
           'charts, tables, and KPI widgets. 600+ GitHub stars.',
       tech: ['Flutter', 'fl_chart', 'pub.dev'],
       link: 'https://github.com/example/dashkit',
+      impact: '600+ GitHub stars, reusable dashboard primitives',
     ),
     ProjectModel(
       emoji: '🤖',
@@ -185,7 +221,24 @@ writing about Dart internals, or hiking somewhere without cell service.
           'opinionated architecture, linting, and CI templates in seconds.',
       tech: ['Dart', 'CLI', 'GitHub Actions'],
       link: 'https://github.com/example/jarvis-cli',
+      impact: 'Scaffolds opinionated Flutter projects in seconds',
     ),
+  ];
+
+  List<ProjectModel> get featuredProjects =>
+      projects.isEmpty ? const <ProjectModel>[] : [projects.first];
+
+  List<ProjectModel> get supportingProjects =>
+      projects.length <= 1 ? const <ProjectModel>[] : projects.skip(1).toList();
+
+  List<GlobalKey> get sectionKeys => [
+    heroKey,
+    aboutKey,
+    experienceKey,
+    projectsKey,
+    skillsKey,
+    educationKey,
+    contactKey,
   ];
 
   // ── Experience ─────────────────────────────────────────────
@@ -293,6 +346,29 @@ writing about Dart internals, or hiking somewhere without cell service.
         scrollController.position.userScrollDirection ==
             ScrollDirection.forward ||
         scrollController.offset < 80;
+    _updateActiveSection();
+  }
+
+  void _updateActiveSection() {
+    const anchorOffset = 180.0;
+
+    for (var index = 0; index < sectionKeys.length; index++) {
+      final key = sectionKeys[index];
+      final context = key.currentContext;
+      if (context == null) {
+        continue;
+      }
+
+      final renderObject = context.findRenderObject();
+      if (renderObject is! RenderBox || !renderObject.hasSize) {
+        continue;
+      }
+
+      final offset = renderObject.localToGlobal(Offset.zero).dy;
+      if (offset - anchorOffset <= 0) {
+        activeSectionIndex.value = index;
+      }
+    }
   }
 
   void scrollToSection(GlobalKey key) {
