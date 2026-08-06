@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_portfolio/core/constants/app_tokens.dart';
+import 'package:my_portfolio/core/utils/app_screen_util.dart';
 import 'package:my_portfolio/features/portfolio/viewmodels/portfolio_controller.dart';
 import '../widgets/common/section_wrapper.dart';
 import '../widgets/common/hero_image.dart';
@@ -19,13 +21,13 @@ class HeroSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ctrl = Get.find<PortfolioController>();
-    final isWide = MediaQuery.of(context).size.width > 900;
-    final isMobile = MediaQuery.of(context).size.width < 640;
+    final isWide = AppScreenUtil.screenWidth > 900;
+    final isMobile = AppScreenUtil.screenWidth < 640;
 
     return SectionWrapper(
       padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 24.0 : 24.0,
-        vertical: isMobile ? 64.0 : 96.0,
+        horizontal: AppTokens.s24.w,
+        vertical: isMobile ? AppTokens.s64.h : AppTokens.s96.h,
       ),
       child: TweenAnimationBuilder<double>(
         duration: const Duration(milliseconds: 900),
@@ -51,7 +53,7 @@ class HeroSection extends StatelessWidget {
                       onProjects: onProjects,
                     ),
                   ),
-                  const SizedBox(width: 96.0),
+                  SizedBox(width: AppTokens.s96.w),
                   Flexible(flex: 1, child: HeroImage(ctrl)),
                 ],
               )
@@ -60,13 +62,13 @@ class HeroSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (!isMobile) HeroImage(ctrl),
-                  if (!isMobile) const SizedBox(height: 64.0),
+                  if (!isMobile) SizedBox(height: AppTokens.s64.h),
                   HeroTextContent(
                     ctrl: ctrl,
                     onHire: onHire,
                     onProjects: onProjects,
                   ),
-                  if (isMobile) const SizedBox(height: 48.0),
+                  if (isMobile) SizedBox(height: AppTokens.s48.h),
                   if (isMobile) Center(child: HeroImage(ctrl)),
                 ],
               ),

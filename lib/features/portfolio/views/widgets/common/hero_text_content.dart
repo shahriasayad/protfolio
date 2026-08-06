@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
+import 'package:my_portfolio/core/utils/app_screen_util.dart';
 import '../../../viewmodels/portfolio_controller.dart';
 import '../buttons/primary_button.dart';
 import '../buttons/secondary_button.dart';
@@ -13,7 +14,8 @@ class HeroTextContent extends StatelessWidget {
   final VoidCallback onHire;
   final VoidCallback onProjects;
 
-  const HeroTextContent({super.key, 
+  const HeroTextContent({
+    super.key,
     required this.ctrl,
     required this.onHire,
     required this.onProjects,
@@ -21,7 +23,7 @@ class HeroTextContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 640;
+    final isMobile = AppScreenUtil.screenWidth < 640;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,7 +36,7 @@ class HeroTextContent extends StatelessWidget {
               ColorizeAnimatedText(
                 ctrl.name.value,
                 textStyle: GoogleFonts.spaceGrotesk(
-                  fontSize: isMobile ? 48 : 64,
+                  fontSize: isMobile ? 48.sp : 64.sp,
                   fontWeight: FontWeight.w800,
                   height: 1.1,
                   letterSpacing: -1.5,
@@ -53,18 +55,18 @@ class HeroTextContent extends StatelessWidget {
             displayFullTextOnTap: true,
           ),
         ),
-        const SizedBox(height: AppTokens.s16),
+        SizedBox(height: AppTokens.s16.h),
 
         // Title with accent
         Obx(
           () => Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppTokens.s16,
-              vertical: AppTokens.s8,
+            padding: EdgeInsets.symmetric(
+              horizontal: AppTokens.s16.w,
+              vertical: AppTokens.s8.h,
             ),
             decoration: BoxDecoration(
               color: AppTokens.accent.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(AppTokens.r12),
+              borderRadius: BorderRadius.circular(AppTokens.r12.r),
               border: Border.all(
                 color: AppTokens.accent.withValues(alpha: 0.3),
               ),
@@ -73,18 +75,18 @@ class HeroTextContent extends StatelessWidget {
               ctrl.title.value,
               style: GoogleFonts.inter(
                 color: AppTokens.accent,
-                fontSize: isMobile ? 16 : 18,
+                fontSize: isMobile ? 16.sp : 18.sp,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 0.5,
               ),
             ),
           ),
         ),
-        const SizedBox(height: AppTokens.s32),
+        SizedBox(height: AppTokens.s32.h),
 
         // Intro/Bio with typing animation
         ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 600),
+          constraints: BoxConstraints(maxWidth: 600.w),
           child: Obx(
             () => AnimatedTextKit(
               isRepeatingAnimation: false,
@@ -93,8 +95,8 @@ class HeroTextContent extends StatelessWidget {
                   ctrl.intro.value,
                   textStyle: GoogleFonts.inter(
                     color: AppTokens.textSecondary,
-                    fontSize: isMobile ? 16 : 18,
-                    height: 1.8,
+                    fontSize: isMobile ? 16.sp : 18.sp,
+                    height: 1.8.h,
                     fontWeight: FontWeight.w400,
                   ),
                   speed: const Duration(milliseconds: 38),
@@ -107,12 +109,12 @@ class HeroTextContent extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppTokens.s48),
+        SizedBox(height: AppTokens.s48.h),
 
         // CTA Buttons
         Wrap(
-          spacing: AppTokens.s16,
-          runSpacing: AppTokens.s16,
+          spacing: AppTokens.s16.w,
+          runSpacing: AppTokens.s16.h,
           children: [
             PrimaryButton(label: 'View My Work', onTap: onProjects),
             SecondaryButton(label: 'Get In Touch', onTap: onHire),

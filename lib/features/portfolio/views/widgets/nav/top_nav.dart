@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
+import 'package:my_portfolio/core/utils/app_screen_util.dart';
 
 /// Top navigation bar
 class TopNav extends StatelessWidget {
@@ -25,7 +26,7 @@ class TopNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isWide = MediaQuery.of(context).size.width > 640;
+    final isWide = AppScreenUtil.screenWidth > 640;
     return Container(
       color: AppTokens.bg.withValues(alpha: 0.85),
       child: ClipRect(
@@ -33,9 +34,9 @@ class TopNav extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border(bottom: BorderSide(color: AppTokens.border)),
           ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppTokens.s24,
-            vertical: AppTokens.s16,
+          padding: EdgeInsets.symmetric(
+            horizontal: AppTokens.s24.w,
+            vertical: AppTokens.s16.h,
           ),
           child: Row(
             children: [
@@ -81,7 +82,7 @@ class TopNav extends StatelessWidget {
         ),
       ),
       builder: (_) => Padding(
-        padding: const EdgeInsets.all(AppTokens.s32),
+        padding: EdgeInsets.all(AppTokens.s32.w),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -120,9 +121,9 @@ class _NavItemState extends State<NavItem> {
         onTap: widget.onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 150),
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppTokens.s12,
-            vertical: AppTokens.s8,
+          padding: EdgeInsets.symmetric(
+            horizontal: AppTokens.s12.w,
+            vertical: AppTokens.s8.h,
           ),
           child: Text(
             widget.label,

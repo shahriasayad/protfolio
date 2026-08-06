@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
+import 'package:my_portfolio/core/utils/app_screen_util.dart';
 import '../../../viewmodels/portfolio_controller.dart';
 
 /// Hero image - Profile picture with animation
@@ -16,9 +17,9 @@ class HeroImage extends StatelessWidget {
       builder: (context, value, child) =>
           Transform.scale(scale: value, child: child),
       child: Container(
-        constraints: const BoxConstraints(maxWidth: 280, maxHeight: 280),
+        constraints: BoxConstraints(maxWidth: 280.w, maxHeight: 280.h),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppTokens.r24),
+          borderRadius: BorderRadius.circular(AppTokens.r24.r),
           border: Border.all(color: AppTokens.border, width: 2),
           boxShadow: [
             BoxShadow(
@@ -29,7 +30,7 @@ class HeroImage extends StatelessWidget {
           ],
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(AppTokens.r24),
+          borderRadius: BorderRadius.circular(AppTokens.r24.r),
           child: Image.asset(
             ctrl.imageUrl,
             fit: BoxFit.cover,

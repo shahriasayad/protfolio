@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_portfolio/features/portfolio/viewmodels/portfolio_controller.dart';
 import '../../../../core/constants/app_tokens.dart';
+import 'package:my_portfolio/core/utils/app_screen_util.dart';
 import '../widgets/common/section_wrapper.dart';
 import '../widgets/common/section_label.dart';
 import '../widgets/buttons/email_button.dart';
@@ -23,39 +24,39 @@ class ContactSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SectionLabel(label: 'Contact'),
-          const SizedBox(height: AppTokens.s48),
+          SizedBox(height: AppTokens.s48.h),
 
           // Big CTA text
           ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 600),
+            constraints: BoxConstraints(maxWidth: 600.w),
             child: Text(
               "Have a project in mind?\nLet's talk.",
               style: GoogleFonts.spaceGrotesk(
                 color: AppTokens.textPrimary,
-                fontSize: 36,
+                fontSize: 36.sp,
                 fontWeight: FontWeight.w700,
                 letterSpacing: -1,
-                height: 1.15,
+                height: 1.15.h,
               ),
             ),
           ),
-          const SizedBox(height: AppTokens.s32),
+          SizedBox(height: AppTokens.s32.h),
 
           // Email link (clickable)
           Obx(() => EmailButton(email: ctrl.email.value)),
-          const SizedBox(height: AppTokens.s32),
+          SizedBox(height: AppTokens.s32.h),
 
           // Social links
           Wrap(
-            spacing: AppTokens.s12,
-            runSpacing: AppTokens.s12,
+            spacing: AppTokens.s12.w,
+            runSpacing: AppTokens.s12.h,
             children: ctrl.socials.map((s) => SocialButton(social: s)).toList(),
           ),
-          const SizedBox(height: AppTokens.s48),
+          SizedBox(height: AppTokens.s48.h),
 
           // Contact form
           ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 600),
+            constraints: BoxConstraints(maxWidth: 600.w),
             child: const ContactForm(),
           ),
         ],

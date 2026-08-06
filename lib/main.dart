@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'core/constants/app_tokens.dart';
+import 'core/utils/app_screen_util.dart';
 import 'features/portfolio/viewmodels/portfolio_controller.dart';
 import 'features/portfolio/views/screens/portfolio_screen.dart';
 
@@ -19,6 +20,10 @@ class PortfolioApp extends StatelessWidget {
       initialBinding: BindingsBuilder(() {
         Get.put(PortfolioController(), permanent: true);
       }),
+      builder: (context, child) {
+        AppScreenUtil.init(context);
+        return child ?? const SizedBox.shrink();
+      },
       title: 'Portfolio',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(

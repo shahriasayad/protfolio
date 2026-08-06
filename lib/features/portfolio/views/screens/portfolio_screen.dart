@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
+import 'package:my_portfolio/core/utils/app_screen_util.dart';
 import '../../viewmodels/portfolio_controller.dart';
 import '../sections/hero_section.dart';
 import '../sections/about_section.dart';
@@ -29,7 +30,7 @@ class PortfolioPage extends StatelessWidget {
             controller: ctrl.scrollController,
             child: Column(
               children: [
-                const SizedBox(height: AppTokens.s32),
+                SizedBox(height: AppTokens.s32.h),
                 HeroSection(
                   key: ctrl.heroKey,
                   onHire: () => ctrl.scrollToSection(ctrl.contactKey),
@@ -51,7 +52,7 @@ class PortfolioPage extends StatelessWidget {
                 EducationSection(key: ctrl.educationKey),
                 const _Divider(),
                 ContactSection(key: ctrl.contactKey),
-                const SizedBox(height: AppTokens.s32),
+                SizedBox(height: AppTokens.s32.h),
                 const _Footer(),
               ],
             ),
@@ -89,10 +90,10 @@ class _Divider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
+    return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: AppTokens.s24,
-        vertical: AppTokens.s4,
+        horizontal: AppTokens.s24.w,
+        vertical: AppTokens.s4.h,
       ),
       child: Divider(height: 1, color: AppTokens.border),
     );

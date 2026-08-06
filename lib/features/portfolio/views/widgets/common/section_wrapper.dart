@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
+import 'package:my_portfolio/core/utils/app_screen_util.dart';
 
 /// SectionWrapper - Consistent max-width + padding for all sections
 class SectionWrapper extends StatelessWidget {
@@ -16,9 +17,9 @@ class SectionWrapper extends StatelessWidget {
         child: Padding(
           padding:
               padding ??
-              const EdgeInsets.symmetric(
-                horizontal: AppTokens.s24,
-                vertical: AppTokens.s48,
+              EdgeInsets.symmetric(
+                horizontal: AppTokens.s24.w,
+                vertical: AppTokens.s48.h,
               ),
           child: child,
         ),
