@@ -28,7 +28,6 @@ class PortfolioController extends GetxController {
   final contactEmailController = TextEditingController();
   final contactMessageController = TextEditingController();
 
-  final isNavVisible = true.obs;
   final isContactSubmitting = false.obs;
   final skillPaletteReady = false.obs;
   final activeSectionIndex = 0.obs;
@@ -342,10 +341,6 @@ writing about Dart internals, or hiking somewhere without cell service.
   }
 
   void _handleScroll() {
-    isNavVisible.value =
-        scrollController.position.userScrollDirection ==
-            ScrollDirection.forward ||
-        scrollController.offset < 80;
     _updateActiveSection();
   }
 

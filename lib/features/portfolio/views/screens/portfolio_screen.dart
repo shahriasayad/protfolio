@@ -35,6 +35,7 @@ class PortfolioPage extends StatelessWidget {
               controller: ctrl.scrollController,
               child: Column(
                 children: [
+                  const SizedBox(height: 100),
                   SizedBox(height: AppTokens.s24.h),
                   HeroSection(
                     key: ctrl.heroKey,
@@ -63,26 +64,18 @@ class PortfolioPage extends StatelessWidget {
               ),
             ),
           ),
-          Obx(
-            () => AnimatedSlide(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-              offset: ctrl.isNavVisible.value
-                  ? Offset.zero
-                  : const Offset(0, -1),
-              child: AnimatedOpacity(
-                duration: const Duration(milliseconds: 300),
-                opacity: ctrl.isNavVisible.value ? 1 : 0,
-                child: TopNav(
-                  activeIndex: ctrl.activeSectionIndex.value,
-                  onHero: () => ctrl.scrollToSection(ctrl.heroKey),
-                  onAbout: () => ctrl.scrollToSection(ctrl.aboutKey),
-                  onSkills: () => ctrl.scrollToSection(ctrl.skillsKey),
-                  onProjects: () => ctrl.scrollToSection(ctrl.projectsKey),
-                  onEducation: () => ctrl.scrollToSection(ctrl.educationKey),
-                  onExperience: () => ctrl.scrollToSection(ctrl.experienceKey),
-                  onContact: () => ctrl.scrollToSection(ctrl.contactKey),
-                ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Obx(
+              () => TopNav(
+                activeIndex: ctrl.activeSectionIndex.value,
+                onHero: () => ctrl.scrollToSection(ctrl.heroKey),
+                onAbout: () => ctrl.scrollToSection(ctrl.aboutKey),
+                onSkills: () => ctrl.scrollToSection(ctrl.skillsKey),
+                onProjects: () => ctrl.scrollToSection(ctrl.projectsKey),
+                onEducation: () => ctrl.scrollToSection(ctrl.educationKey),
+                onExperience: () => ctrl.scrollToSection(ctrl.experienceKey),
+                onContact: () => ctrl.scrollToSection(ctrl.contactKey),
               ),
             ),
           ),

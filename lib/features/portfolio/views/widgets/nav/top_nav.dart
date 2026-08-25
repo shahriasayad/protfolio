@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
@@ -30,74 +31,90 @@ class TopNav extends StatelessWidget {
   Widget build(BuildContext context) {
     final isWide = AppScreenUtil.screenWidth > 640;
 
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: AppTokens.border.withValues(alpha: 0.35)),
-        ),
-      ),
-      padding: EdgeInsets.symmetric(
-        horizontal: AppTokens.s24.w,
-        vertical: AppTokens.s14.h,
-      ),
-      child: Row(
-        children: [
-          GestureDetector(
-            onTap: onHero,
+    return ClipRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+        child: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: AppTokens.bg.withValues(alpha: 0.85),
+            border: Border(
+              bottom: BorderSide(
+                color: AppTokens.border.withValues(alpha: 0.35),
+              ),
+            ),
+          ),
+          padding: EdgeInsets.symmetric(
+            horizontal: AppTokens.s24.w,
+            vertical: AppTokens.s14.h,
+          ),
+          child: SafeArea(
+            top: false,
             child: Row(
               children: [
-                Container(
-                  width: 34,
-                  height: 34,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [AppTokens.accent, AppTokens.accentBlue],
-                    ),
-                    borderRadius: BorderRadius.circular(AppTokens.r12.r),
-                  ),
-                  child: const Icon(
-                    Icons.flutter_dash,
-                    color: AppTokens.bg,
-                    size: 18,
+                GestureDetector(
+                  onTap: onHero,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 34,
+                        height: 34,
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [AppTokens.accent, AppTokens.accentBlue],
+                          ),
+                          borderRadius: BorderRadius.circular(AppTokens.r12.r),
+                        ),
+                        child: const Icon(
+                          Icons.flutter_dash,
+                          color: AppTokens.bg,
+                          size: 18,
+                        ),
+                      ),
+                      SizedBox(width: AppTokens.s12.w),
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Shahria Sayad',
+                            style: GoogleFonts.spaceGrotesk(
+                              color: AppTokens.textPrimary,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16.sp,
+                            ),
+                          ),
+                          Text(
+                            'Flutter developer',
+                            style: GoogleFonts.inter(
+                              color: AppTokens.textMuted,
+                              fontSize: 11.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(width: AppTokens.s12.w),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Shahria Sayad',
-                      style: GoogleFonts.spaceGrotesk(
-                        color: AppTokens.textPrimary,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16.sp,
-                      ),
-                    ),
-                    Text(
-                      'Flutter developer',
-                      style: GoogleFonts.inter(
-                        color: AppTokens.textMuted,
-                        fontSize: 11.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
+                const Spacer(),
+                if (isWide) ...[
+                  NavItem('About', onAbout, isActive: activeIndex == 1),
+                  NavItem(
+                    'Experience',
+                    onExperience,
+                    isActive: activeIndex == 2,
+                  ),
+                  NavItem('Projects', onProjects, isActive: activeIndex == 3),
+                  NavItem('Skills', onSkills, isActive: activeIndex == 4),
+                  NavItem('Education', onEducation, isActive: activeIndex == 5),
+                  NavItem('Contact', onContact, isActive: activeIndex == 6),
+                ] else
+                  _MobileMenuButton(onPressed: () => _showMobileMenu(context)),
               ],
             ),
           ),
-          const Spacer(),
-          if (isWide) ...[
-            NavItem('About', onAbout, isActive: activeIndex == 1),
-            NavItem('Experience', onExperience, isActive: activeIndex == 2),
-            NavItem('Projects', onProjects, isActive: activeIndex == 3),
-            NavItem('Skills', onSkills, isActive: activeIndex == 4),
-            NavItem('Education', onEducation, isActive: activeIndex == 5),
-            NavItem('Contact', onContact, isActive: activeIndex == 6),
-          ] else
-            _MobileMenuButton(onPressed: () => _showMobileMenu(context)),
-        ],
+        ),
       ),
     );
   }
@@ -113,16 +130,19 @@ class TopNav extends StatelessWidget {
       ),
       builder: (_) => Padding(
         padding: EdgeInsets.all(AppTokens.s32.w),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            MobileNavItem('About', onAbout, context),
-            MobileNavItem('Experience', onExperience, context),
-            MobileNavItem('Projects', onProjects, context),
-            MobileNavItem('Skills', onSkills, context),
-            MobileNavItem('Education', onEducation, context),
-            MobileNavItem('Contact', onContact, context),
-          ],
+        child: SafeArea(
+          top: false,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              MobileNavItem('About', onAbout, context),
+              MobileNavItem('Experience', onExperience, context),
+              MobileNavItem('Projects', onProjects, context),
+              MobileNavItem('Skills', onSkills, context),
+              MobileNavItem('Education', onEducation, context),
+              MobileNavItem('Contact', onContact, context),
+            ],
+          ),
         ),
       ),
     );
