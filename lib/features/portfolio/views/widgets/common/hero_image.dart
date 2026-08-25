@@ -76,14 +76,6 @@ class HeroImage extends StatelessWidget {
                   color: AppTokens.borderStrong.withValues(alpha: 0.6),
                 ),
               ),
-              child: Text(
-                'Flutter-first',
-                style: TextStyle(
-                  color: AppTokens.textPrimary,
-                  fontSize: 11.sp,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
             ),
           ),
           Positioned(

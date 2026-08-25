@@ -36,7 +36,7 @@ class SectionWrapper extends StatelessWidget {
                 padding ??
                 EdgeInsets.symmetric(
                   horizontal: AppTokens.s24.w,
-                  vertical: AppTokens.s24.h,
+                  vertical: AppTokens.s12.h,
                 ),
             child: child,
           ),

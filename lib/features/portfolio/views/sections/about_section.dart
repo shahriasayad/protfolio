@@ -26,7 +26,7 @@ class AboutSection extends StatelessWidget {
             title: 'About',
             subtitle: 'Who I am and how I like to build.',
           ),
-          SizedBox(height: AppTokens.s24.h),
+          SizedBox(height: AppTokens.s16.h),
           ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 800.w),
             child: Obx(

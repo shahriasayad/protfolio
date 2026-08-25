@@ -29,10 +29,10 @@ class ProjectsSection extends StatelessWidget {
             description:
                 'One primary case study leads the section so the most meaningful work gets the strongest placement. Supporting projects stay visible without competing for attention.',
           ),
-          SizedBox(height: AppTokens.s24.h),
+          SizedBox(height: AppTokens.s16.h),
 
           FeaturedProjectCard(project: ctrl.featuredProjects.first),
-          SizedBox(height: AppTokens.s16.h),
+          SizedBox(height: AppTokens.s12.h),
 
           Builder(
             builder: (_) {
@@ -47,7 +47,9 @@ class ProjectsSection extends StatelessWidget {
               return Column(
                 children: List.generate(rows, (r) {
                   return Padding(
-                    padding: EdgeInsets.only(bottom: AppTokens.s16.h),
+                    padding: EdgeInsets.only(
+                      bottom: r == rows - 1 ? 0 : AppTokens.s16.h,
+                    ),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: List.generate(cols, (c) {

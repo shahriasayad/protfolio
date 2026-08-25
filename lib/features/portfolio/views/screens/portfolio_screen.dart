@@ -35,8 +35,7 @@ class PortfolioPage extends StatelessWidget {
               controller: ctrl.scrollController,
               child: Column(
                 children: [
-                  const SizedBox(height: 100),
-                  SizedBox(height: AppTokens.s24.h),
+                  const SizedBox(height: 60),
                   HeroSection(
                     key: ctrl.heroKey,
                     onHire: () => ctrl.scrollToSection(ctrl.contactKey),
@@ -91,10 +90,7 @@ class _Divider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: AppTokens.s24.w,
-        vertical: AppTokens.s4.h,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: AppTokens.s24.w),
       child: Divider(height: 1, color: AppTokens.border),
     );
   }

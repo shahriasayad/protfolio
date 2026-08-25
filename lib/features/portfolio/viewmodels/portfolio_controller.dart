@@ -126,13 +126,6 @@ writing about Dart internals, or hiking somewhere without cell service.
       icon: Icons.code,
       iconPath: 'assets/icons/dart.png',
     ),
-    SkillModel(
-      name: 'Python',
-      proficiency: 0.50,
-      category: 'Frontend',
-      icon: Icons.terminal,
-      iconPath: 'assets/icons/python.png',
-    ),
     // State Management
     SkillModel(
       name: 'GetX',
@@ -142,6 +135,20 @@ writing about Dart internals, or hiking somewhere without cell service.
       iconPath: 'assets/icons/getx.png',
     ),
     // Backend & Data
+    SkillModel(
+      name: 'Python',
+      proficiency: 0.50,
+      category: 'Backend',
+      icon: Icons.terminal,
+      iconPath: 'assets/icons/python.png',
+    ),
+    SkillModel(
+      name: 'Socket.io',
+      proficiency: 0.75,
+      category: 'Backend',
+      icon: Icons.sync,
+      iconPath: 'assets/icons/Socket.io.png',
+    ),
     SkillModel(
       name: 'Firebase',
       proficiency: 0.80,
@@ -177,6 +184,13 @@ writing about Dart internals, or hiking somewhere without cell service.
       category: 'DevOps',
       icon: Icons.merge_type,
       iconPath: 'assets/icons/git.png',
+    ),
+    SkillModel(
+      name: 'GitLab',
+      proficiency: 0.85,
+      category: 'DevOps',
+      icon: Icons.code,
+      iconPath: 'assets/icons/gitlab.png',
     ),
   ];
 

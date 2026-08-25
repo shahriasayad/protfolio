@@ -13,29 +13,15 @@ class SkillCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            AppTokens.surfaceAlt.withValues(alpha: 0.95),
-            AppTokens.surfaceSoft.withValues(alpha: 0.92),
-          ],
-        ),
-        borderRadius: BorderRadius.circular(AppTokens.r20.r),
+        color: AppTokens.surface,
+        borderRadius: BorderRadius.circular(AppTokens.r16.r),
         border: Border.all(
-          color: AppTokens.borderStrong.withValues(alpha: 0.55),
+          color: AppTokens.border.withValues(alpha: 0.5),
         ),
-        boxShadow: [
-          BoxShadow(
-            color: AppTokens.accent.withValues(alpha: 0.05),
-            blurRadius: 20,
-            spreadRadius: 0,
-          ),
-        ],
       ),
       padding: EdgeInsets.symmetric(
-        horizontal: AppTokens.s20.w,
-        vertical: AppTokens.s16.h,
+        horizontal: AppTokens.s16.w,
+        vertical: AppTokens.s12.h,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -61,7 +47,7 @@ class SkillCard extends StatelessWidget {
                     size: 22,
                   ),
           ),
-          SizedBox(width: AppTokens.s20.w),
+          SizedBox(width: AppTokens.s12.w),
           Expanded(child: SkillBar(skill: skill)),
         ],
       ),

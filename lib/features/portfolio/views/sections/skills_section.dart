@@ -38,7 +38,7 @@ class SkillsSection extends StatelessWidget {
               description:
                   'The stack below is organized around what I actually use to ship polished Flutter products and the systems that support them.',
             ),
-            const SizedBox(height: AppTokens.s16),
+            const SizedBox(height: AppTokens.s12),
             Wrap(
               spacing: AppTokens.s8.w,
               runSpacing: AppTokens.s8.h,
@@ -68,13 +68,13 @@ class SkillsSection extends StatelessWidget {
                   )
                   .toList(),
             ),
-            SizedBox(height: AppTokens.s24.h),
+            SizedBox(height: AppTokens.s16.h),
             ...grouped.entries.map(
               (entry) => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(bottom: AppTokens.s16.h),
+                    padding: EdgeInsets.only(bottom: AppTokens.s12.h),
                     child: Container(
                       padding: EdgeInsets.symmetric(
                         horizontal: AppTokens.s12.w,
@@ -100,11 +100,14 @@ class SkillsSection extends StatelessWidget {
                   ),
                   ...entry.value.map(
                     (skill) => Padding(
-                      padding: EdgeInsets.only(bottom: AppTokens.s24.h),
+                      padding: EdgeInsets.only(
+                        bottom: skill == entry.value.last ? 0 : AppTokens.s12.h,
+                      ),
                       child: SkillCard(skill: skill),
                     ),
                   ),
-                  SizedBox(height: AppTokens.s32.h),
+                  if (entry.key != grouped.entries.last.key)
+                    SizedBox(height: AppTokens.s16.h),
                 ],
               ),
             ),
