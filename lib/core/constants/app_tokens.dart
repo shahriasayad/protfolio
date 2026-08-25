@@ -2,31 +2,31 @@ import 'package:flutter/material.dart';
 
 class AppTokens {
   // Colors - Modern gradient palette
-  static const bg = Color(0xFF05080F); // deep navy-black
-  static const surface = Color(0xFF0F1419); // slightly lighter for depth
-  static const surfaceAlt = Color(0xFF1A202D); // elevated surface
-  static const surfaceGlass = Color(0xCC0F1419);
-  static const surfaceSoft = Color(0xFF101725);
-  static const border = Color(0xFF2D3748); // more visible borders
-  static const borderStrong = Color(0xFF425067);
-  static const textPrimary = Color(0xFFF7FAFC);
-  static const textSecondary = Color(0xFF9CA3AF);
-  static const textMuted = Color(0xFF6B7280);
+  static const bg = Color(0xFF09090B); // deep navy-black -> slate
+  static const surface = Color(0xFF18181B); // slightly lighter for depth
+  static const surfaceAlt = Color(0xFF27272A); // elevated surface
+  static const surfaceGlass = Color(0xCC18181B);
+  static const surfaceSoft = Color(0xFF131316);
+  static const border = Color(0xFF27272A); // more visible borders
+  static const borderStrong = Color(0xFF3F3F46);
+  static const textPrimary = Color(0xFFFAFAFA);
+  static const textSecondary = Color(0xFFA1A1AA);
+  static const textMuted = Color(0xFF71717A);
 
-  // Primary accent - vibrant cyan-green
-  static const accent = Color(0xFF06D6A0); // brighter, more vibrant
-  static const accentDim = Color(0xFF0D4D37); // darker for depth
+  // Primary accent - vibrant cyan-green -> monochrome premium
+  static const accent = Color(0xFFE4E4E7); // brighter, more vibrant
+  static const accentDim = Color(0xFF71717A); // darker for depth
 
   // Secondary accents for variety
-  static const accentPurple = Color(0xFF9F7AEA); // purple
-  static const accentBlue = Color(0xFF5B9FFF); // bright blue
-  static const accentOrange = Color(0xFFFF8C5A); // warm orange
-  static const accentPink = Color(0xFFFF6B9D); // vibrant pink
-  static const accentTeal = Color(0xFF38D6C2);
+  static const accentPurple = Color(0xFFD4D4D8); // purple
+  static const accentBlue = Color(0xFFD4D4D8); // bright blue
+  static const accentOrange = Color(0xFFD4D4D8); // warm orange
+  static const accentPink = Color(0xFFD4D4D8); // vibrant pink
+  static const accentTeal = Color(0xFFD4D4D8);
 
-  static const glowCyan = Color(0x2206D6A0);
-  static const glowBlue = Color(0x205B9FFF);
-  static const glowPink = Color(0x20FF6B9D);
+  static const glowCyan = Color(0x11FFFFFF);
+  static const glowBlue = Color(0x11FFFFFF);
+  static const glowPink = Color(0x11FFFFFF);
 
   // Spacing scale
   static const s4 = 4.0;

@@ -15,25 +15,11 @@ class FeaturedProjectCard extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            AppTokens.surfaceAlt.withValues(alpha: 0.98),
-            AppTokens.surface.withValues(alpha: 0.98),
-          ],
-        ),
-        borderRadius: BorderRadius.circular(AppTokens.r24.r),
+        color: AppTokens.surface,
+        borderRadius: BorderRadius.circular(AppTokens.r20.r),
         border: Border.all(
-          color: AppTokens.borderStrong.withValues(alpha: 0.7),
+          color: AppTokens.border.withValues(alpha: 0.5),
         ),
-        boxShadow: [
-          BoxShadow(
-            color: AppTokens.accent.withValues(alpha: 0.08),
-            blurRadius: 40,
-            offset: const Offset(0, 16),
-          ),
-        ],
       ),
       child: Padding(
         padding: EdgeInsets.all(AppTokens.s24.w),
@@ -92,8 +78,9 @@ class _ProjectStory extends StatelessWidget {
           project.title,
           style: GoogleFonts.spaceGrotesk(
             color: AppTokens.textPrimary,
-            fontSize: 26.sp,
-            fontWeight: FontWeight.w700,
+            fontSize: 22.sp,
+            fontWeight: FontWeight.w600,
+            letterSpacing: -0.8,
             height: 1.1,
           ),
         ),
@@ -102,8 +89,8 @@ class _ProjectStory extends StatelessWidget {
           project.description,
           style: GoogleFonts.inter(
             color: AppTokens.textSecondary,
-            fontSize: 15.sp,
-            height: 1.7,
+            fontSize: 14.sp,
+            height: 1.6,
           ),
         ),
         SizedBox(height: AppTokens.s16.h),
@@ -154,17 +141,10 @@ class _ProjectPreview extends StatelessWidget {
       aspectRatio: 1.18,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppTokens.r24.r),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              AppTokens.bg.withValues(alpha: 0.85),
-              AppTokens.surfaceSoft.withValues(alpha: 0.92),
-            ],
-          ),
+          borderRadius: BorderRadius.circular(AppTokens.r16.r),
+          color: AppTokens.bg,
           border: Border.all(
-            color: AppTokens.borderStrong.withValues(alpha: 0.7),
+            color: AppTokens.border,
           ),
         ),
         child: Padding(

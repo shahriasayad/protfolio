@@ -51,58 +51,40 @@ class HeroTextContent extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: AppTokens.s16.h),
+        SizedBox(height: AppTokens.s12.h),
         // Name with animated gradient
-        Obx(
-          () => AnimatedTextKit(
-            repeatForever: true,
-            animatedTexts: [
-              ColorizeAnimatedText(
-                ctrl.name.value,
-                textStyle: GoogleFonts.spaceGrotesk(
-                  fontSize: isMobile ? 46.sp : 68.sp,
-                  fontWeight: FontWeight.w800,
-                  height: 1.0,
-                  letterSpacing: -2.2,
-                ),
-                colors: [
-                  AppTokens.accent,
-                  AppTokens.accentBlue,
-                  AppTokens.accentPurple,
-                  AppTokens.accentPink,
-                ],
-                speed: const Duration(milliseconds: 400),
-              ),
-            ],
-            isRepeatingAnimation: true,
-            pause: const Duration(milliseconds: 1200),
-            displayFullTextOnTap: true,
+        Text(
+          ctrl.name.value,
+          style: GoogleFonts.spaceGrotesk(
+            color: AppTokens.textPrimary,
+            fontSize: isMobile ? 36.sp : 48.sp,
+            fontWeight: FontWeight.w700,
+            height: 1.0,
+            letterSpacing: -1.5,
           ),
         ),
-        SizedBox(height: AppTokens.s12.h),
+        SizedBox(height: AppTokens.s8.h),
 
         Text(
           ctrl.brandHeadline,
           style: GoogleFonts.spaceGrotesk(
             color: AppTokens.textPrimary,
-            fontSize: isMobile ? 20.sp : 24.sp,
+            fontSize: isMobile ? 18.sp : 20.sp,
             fontWeight: FontWeight.w600,
             height: 1.25,
           ),
         ),
-        SizedBox(height: AppTokens.s16.h),
+        SizedBox(height: AppTokens.s12.h),
 
         Text(
           ctrl.brandSummary,
           style: GoogleFonts.inter(
             color: AppTokens.textSecondary,
-            fontSize: isMobile ? 15.sp : 16.sp,
-            height: 1.8,
+            fontSize: isMobile ? 14.sp : 14.sp,
+            height: 1.6,
             fontWeight: FontWeight.w400,
           ),
         ),
-        SizedBox(height: AppTokens.s24.h),
-
         Wrap(
           spacing: AppTokens.s12.w,
           runSpacing: AppTokens.s12.h,
@@ -116,7 +98,7 @@ class HeroTextContent extends StatelessWidget {
               .toList(),
         ),
 
-        SizedBox(height: AppTokens.s24.h),
+        SizedBox(height: AppTokens.s16.h),
 
         Container(
           padding: EdgeInsets.all(AppTokens.s16.w),

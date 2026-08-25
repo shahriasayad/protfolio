@@ -24,30 +24,17 @@ class _ProjectCardState extends State<ProjectCard> {
       onExit: (_) => setState(() => _hovered = false),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 220),
-        transform: Matrix4.translationValues(0, _hovered ? -4 : 0, 0),
+        transform: Matrix4.identity()..scale(_hovered ? 1.01 : 1.0),
+        alignment: Alignment.center,
         padding: EdgeInsets.all(AppTokens.s20.w),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              _hovered ? AppTokens.surfaceAlt : AppTokens.surface,
-              AppTokens.surfaceSoft.withValues(alpha: 0.92),
-            ],
-          ),
-          borderRadius: BorderRadius.circular(AppTokens.r20.r),
+          color: _hovered ? AppTokens.surfaceAlt : AppTokens.surface,
+          borderRadius: BorderRadius.circular(AppTokens.r16.r),
           border: Border.all(
             color: _hovered
-                ? AppTokens.accent.withValues(alpha: 0.45)
-                : AppTokens.borderStrong.withValues(alpha: 0.55),
+                ? AppTokens.borderStrong
+                : AppTokens.border.withValues(alpha: 0.5),
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: _hovered ? 0.28 : 0.18),
-              blurRadius: _hovered ? 36 : 22,
-              offset: const Offset(0, 12),
-            ),
-          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,8 +42,8 @@ class _ProjectCardState extends State<ProjectCard> {
             Container(
               padding: EdgeInsets.all(AppTokens.s12.w),
               decoration: BoxDecoration(
-                color: AppTokens.accent.withValues(alpha: 0.08),
-                borderRadius: BorderRadius.circular(AppTokens.r16.r),
+                color: AppTokens.surfaceAlt.withValues(alpha: 0.5),
+                borderRadius: BorderRadius.circular(AppTokens.r12.r),
               ),
               child: Row(
                 children: [
@@ -79,8 +66,8 @@ class _ProjectCardState extends State<ProjectCard> {
                     duration: const Duration(milliseconds: 200),
                     opacity: _hovered ? 1 : 0.35,
                     child: Icon(
-                      Icons.arrow_outward,
-                      color: AppTokens.accent,
+                      Icons.arrow_forward_rounded,
+                      color: AppTokens.textSecondary,
                       size: 18,
                     ),
                   ),
@@ -95,8 +82,9 @@ class _ProjectCardState extends State<ProjectCard> {
                     p.title,
                     style: GoogleFonts.spaceGrotesk(
                       color: AppTokens.textPrimary,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15.sp,
+                      letterSpacing: -0.5,
                     ),
                   ),
                 ),
@@ -108,8 +96,8 @@ class _ProjectCardState extends State<ProjectCard> {
               p.description,
               style: GoogleFonts.inter(
                 color: AppTokens.textSecondary,
-                fontSize: 14.sp,
-                height: 1.7,
+                fontSize: 13.sp,
+                height: 1.5,
               ),
             ),
             SizedBox(height: AppTokens.s16.h),
@@ -123,15 +111,15 @@ class _ProjectCardState extends State<ProjectCard> {
                 color: AppTokens.bg.withValues(alpha: 0.45),
                 borderRadius: BorderRadius.circular(AppTokens.r12.r),
                 border: Border.all(
-                  color: AppTokens.border.withValues(alpha: 0.65),
+                  color: AppTokens.border.withValues(alpha: 0.4),
                 ),
               ),
               child: Text(
                 p.impact,
                 style: GoogleFonts.inter(
                   color: AppTokens.textPrimary,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w600,
+                  fontSize: 11.sp,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),

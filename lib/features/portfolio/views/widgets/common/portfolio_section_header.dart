@@ -30,23 +30,15 @@ class PortfolioSectionHeader extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: AppTokens.s12.w,
-                    vertical: AppTokens.s4.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppTokens.surfaceAlt.withValues(alpha: 0.8),
-                    borderRadius: BorderRadius.circular(AppTokens.r999.r),
-                    border: Border.all(color: AppTokens.borderStrong),
-                  ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: AppTokens.s4.h),
                   child: Text(
                     sectionIndex,
                     style: GoogleFonts.inter(
-                      color: AppTokens.accent,
-                      fontSize: 11.sp,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 2,
+                      color: AppTokens.textSecondary,
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 3,
                     ),
                   ),
                 ),
@@ -55,14 +47,14 @@ class PortfolioSectionHeader extends StatelessWidget {
                   title,
                   style: GoogleFonts.spaceGrotesk(
                     color: AppTokens.textPrimary,
-                    fontSize: 28.sp,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 24.sp,
+                    fontWeight: FontWeight.w600,
                     height: 1.05,
-                    letterSpacing: -0.8,
+                    letterSpacing: -1.2,
                   ),
                 ),
                 if (subtitle != null) ...[
-                  SizedBox(height: AppTokens.s8.h),
+                  SizedBox(height: AppTokens.s4.h),
                   Text(
                     subtitle!,
                     style: GoogleFonts.inter(
@@ -73,7 +65,7 @@ class PortfolioSectionHeader extends StatelessWidget {
                   ),
                 ],
                 if (description != null) ...[
-                  SizedBox(height: AppTokens.s12.h),
+                  SizedBox(height: AppTokens.s8.h),
                   Text(
                     description!,
                     style: GoogleFonts.inter(

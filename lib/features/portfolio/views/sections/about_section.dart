@@ -26,7 +26,7 @@ class AboutSection extends StatelessWidget {
             title: 'About',
             subtitle: 'Who I am and how I like to build.',
           ),
-          SizedBox(height: AppTokens.s48.h),
+          SizedBox(height: AppTokens.s24.h),
           ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 800.w),
             child: Obx(
@@ -34,8 +34,8 @@ class AboutSection extends StatelessWidget {
                 ctrl.bio.value.trim(),
                 style: GoogleFonts.inter(
                   color: AppTokens.textSecondary,
-                  fontSize: 16.sp,
-                  height: 1.8.h,
+                  fontSize: 14.sp,
+                  height: 1.6.h,
                 ),
               ),
             ),
