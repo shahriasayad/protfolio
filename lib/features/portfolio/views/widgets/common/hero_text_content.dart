@@ -57,7 +57,7 @@ class HeroTextContent extends StatelessWidget {
           ctrl.name.value,
           style: GoogleFonts.spaceGrotesk(
             color: AppTokens.textPrimary,
-            fontSize: isMobile ? 36.sp : 48.sp,
+            fontSize: isMobile ? 32.sp : 43.sp,
             fontWeight: FontWeight.w700,
             height: 1.0,
             letterSpacing: -1.5,
@@ -69,9 +69,9 @@ class HeroTextContent extends StatelessWidget {
           ctrl.brandHeadline,
           style: GoogleFonts.spaceGrotesk(
             color: AppTokens.textPrimary,
-            fontSize: isMobile ? 18.sp : 20.sp,
+            fontSize: isMobile ? 16.sp : 18.sp,
             fontWeight: FontWeight.w600,
-            height: 1.25,
+            // height: 1.25,
           ),
         ),
         SizedBox(height: AppTokens.s12.h),
@@ -80,8 +80,8 @@ class HeroTextContent extends StatelessWidget {
           ctrl.brandSummary,
           style: GoogleFonts.inter(
             color: AppTokens.textSecondary,
-            fontSize: isMobile ? 14.sp : 14.sp,
-            height: 1.6,
+            fontSize: isMobile ? 12.sp : 13.sp,
+            // height: 1.6,
             fontWeight: FontWeight.w400,
           ),
         ),
@@ -119,7 +119,7 @@ class HeroTextContent extends StatelessWidget {
                       ctrl.availabilityNote,
                       style: GoogleFonts.inter(
                         color: AppTokens.textPrimary,
-                        fontSize: 13.sp,
+                        fontSize: 12.sp,
                         height: 1.6,
                         fontWeight: FontWeight.w500,
                       ),

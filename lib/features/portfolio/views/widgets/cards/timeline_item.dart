@@ -130,7 +130,7 @@ class _TimelineItemState extends State<TimelineItem> {
                       style: GoogleFonts.inter(
                         color: AppTokens.textSecondary,
                         fontSize: 14.sp,
-                        height: 1.7,
+                        // height: 1.7,
                       ),
                     ),
                   ],

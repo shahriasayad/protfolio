@@ -122,7 +122,7 @@ class _HeroVisualCluster extends StatelessWidget {
                   style: TextStyle(
                     color: AppTokens.textSecondary,
                     fontSize: 12.sp,
-                    height: 1.5,
+                    // height: 1.5,
                     fontWeight: FontWeight.w500,
                   ),
                 ),

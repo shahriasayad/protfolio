@@ -36,8 +36,8 @@ class _AchievementCardState extends State<AchievementCard> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 220),
         transform: Matrix4.translationValues(0, _hovered ? -3 : 0, 0),
-        margin: EdgeInsets.only(bottom: widget.isLast ? 0 : AppTokens.s20.h),
-        padding: EdgeInsets.all(AppTokens.s20.w),
+        // margin: EdgeInsets.only(bottom: widget.isLast ? 0 : AppTokens.s20.h),
+        padding: EdgeInsets.all(AppTokens.s16.w),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,

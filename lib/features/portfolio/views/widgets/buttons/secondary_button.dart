@@ -44,8 +44,8 @@ class _SecondaryButtonState extends State<SecondaryButton> {
             style: GoogleFonts.inter(
               color: _hovered ? AppTokens.accent : AppTokens.textPrimary,
               fontWeight: FontWeight.w700,
-              fontSize: 16.sp,
-              letterSpacing: 0.3,
+              fontSize: 12.sp,
+              letterSpacing: 0.2,
             ),
           ),
         ),

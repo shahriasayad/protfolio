@@ -30,8 +30,8 @@ class _EducationCardState extends State<EducationCard> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 220),
         transform: Matrix4.translationValues(0, _hovered ? -3 : 0, 0),
-        margin: EdgeInsets.only(bottom: widget.isLast ? 0 : AppTokens.s20.h),
-        padding: EdgeInsets.all(AppTokens.s20.w),
+        // margin: EdgeInsets.only(bottom: widget.isLast ? 0 : AppTokens.s20.h),
+        padding: EdgeInsets.all(AppTokens.s16.w),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -120,8 +120,8 @@ class _EducationCardState extends State<EducationCard> {
               edu.description,
               style: GoogleFonts.inter(
                 color: AppTokens.textSecondary,
-                fontSize: 13.sp,
-                height: 1.7,
+                fontSize: 12.sp,
+                // height: 1.7,
               ),
             ),
           ],

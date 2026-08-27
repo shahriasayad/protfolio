@@ -60,7 +60,7 @@ class SkillsSection extends StatelessWidget {
                         '${entry.key} • ${entry.value.length}',
                         style: GoogleFonts.inter(
                           color: AppTokens.textPrimary,
-                          fontSize: 12.sp,
+                          fontSize: 11.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -69,48 +69,69 @@ class SkillsSection extends StatelessWidget {
                   .toList(),
             ),
             SizedBox(height: AppTokens.s16.h),
-            ...grouped.entries.map(
-              (entry) => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(bottom: AppTokens.s12.h),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: AppTokens.s12.w,
-                        vertical: AppTokens.s4.h,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppTokens.surfaceGlass,
-                        borderRadius: BorderRadius.circular(AppTokens.r999.r),
-                        border: Border.all(
-                          color: AppTokens.borderStrong.withValues(alpha: 0.55),
+            ...grouped.entries.indexed.map((item) {
+              final isLast = item.$1 == grouped.entries.length - 1;
+              final entry = item.$2;
+              return Padding(
+                padding: EdgeInsets.only(bottom: isLast ? 0 : AppTokens.s12.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: AppTokens.s8.h),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: AppTokens.s10.w,
+                          vertical: AppTokens.s4.h,
                         ),
-                      ),
-                      child: Text(
-                        entry.key,
-                        style: GoogleFonts.inter(
-                          color: AppTokens.accent,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 12.sp,
-                          letterSpacing: 1.4,
+                        decoration: BoxDecoration(
+                          color: AppTokens.surfaceGlass,
+                          borderRadius: BorderRadius.circular(AppTokens.r999.r),
+                          border: Border.all(
+                            color: AppTokens.borderStrong.withValues(
+                              alpha: 0.55,
+                            ),
+                          ),
+                        ),
+                        child: Text(
+                          entry.key,
+                          style: GoogleFonts.inter(
+                            color: AppTokens.accent,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 11.sp,
+                            letterSpacing: 1.2,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  ...entry.value.map(
-                    (skill) => Padding(
-                      padding: EdgeInsets.only(
-                        bottom: skill == entry.value.last ? 0 : AppTokens.s12.h,
-                      ),
-                      child: SkillCard(skill: skill),
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        final cols = constraints.maxWidth < 600
+                            ? 1
+                            : (constraints.maxWidth < 900 ? 2 : 3);
+                        final width =
+                            (constraints.maxWidth -
+                                (AppTokens.s8.w * (cols - 1))) /
+                            cols;
+
+                        return Wrap(
+                          spacing: AppTokens.s8.w,
+                          runSpacing: AppTokens.s6.h,
+                          children: entry.value
+                              .map(
+                                (skill) => SizedBox(
+                                  width: width,
+                                  child: SkillCard(skill: skill),
+                                ),
+                              )
+                              .toList(),
+                        );
+                      },
                     ),
-                  ),
-                  if (entry.key != grouped.entries.last.key)
-                    SizedBox(height: AppTokens.s16.h),
-                ],
-              ),
-            ),
+                  ],
+                ),
+              );
+            }),
           ],
         );
       }),

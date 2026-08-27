@@ -26,7 +26,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 150),
           padding: EdgeInsets.symmetric(
-            horizontal: AppTokens.s24.w,
+            horizontal: AppTokens.s16.w,
             vertical: AppTokens.s16.h,
           ),
           decoration: BoxDecoration(
@@ -40,7 +40,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
             style: GoogleFonts.inter(
               color: AppTokens.bg,
               fontWeight: FontWeight.w600,
-              fontSize: 15.sp,
+              fontSize: 12.sp,
             ),
           ),
         ),

@@ -97,7 +97,7 @@ class _ProjectCardState extends State<ProjectCard> {
               style: GoogleFonts.inter(
                 color: AppTokens.textSecondary,
                 fontSize: 13.sp,
-                height: 1.5,
+                // height: 1.5,
               ),
             ),
             SizedBox(height: AppTokens.s16.h),

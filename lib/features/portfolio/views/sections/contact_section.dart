@@ -61,7 +61,7 @@ class _ContactNarrative extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(AppTokens.s24.w),
+      padding: EdgeInsets.all(AppTokens.s16.w),
       decoration: BoxDecoration(
         color: AppTokens.surfaceGlass,
         borderRadius: BorderRadius.circular(AppTokens.r24.r),
@@ -76,7 +76,7 @@ class _ContactNarrative extends StatelessWidget {
             "Have a project in mind?\nLet's build the right version of it.",
             style: GoogleFonts.spaceGrotesk(
               color: AppTokens.textPrimary,
-              fontSize: 30.sp,
+              fontSize: 25.sp,
               fontWeight: FontWeight.w700,
               letterSpacing: -1.2,
               height: 1.1,
@@ -87,8 +87,8 @@ class _ContactNarrative extends StatelessWidget {
             ctrl.brandSummary,
             style: GoogleFonts.inter(
               color: AppTokens.textSecondary,
-              fontSize: 15.sp,
-              height: 1.8,
+              fontSize: 13.sp,
+              // height: 1.8,
             ),
           ),
           SizedBox(height: AppTokens.s24.h),
@@ -165,7 +165,7 @@ class _ContactTrustBullet extends StatelessWidget {
                 subtitle,
                 style: GoogleFonts.inter(
                   color: AppTokens.textMuted,
-                  fontSize: 13.sp,
+                  fontSize: 12.sp,
                   height: 1.5,
                 ),
               ),
