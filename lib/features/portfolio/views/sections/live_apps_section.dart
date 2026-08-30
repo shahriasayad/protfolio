@@ -21,17 +21,18 @@ class LiveAppsSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const PortfolioSectionHeader(
-            sectionIndex: '02', // Assuming it replaces Featured Projects which is 03? We'll let it share numbering or skip. Wait, Featured Projects is 03 in projects_section.dart. Let's not use an index if it's part of Projects, or just use 02.5. Let's omit sectionIndex.
+            sectionIndex:
+                '02', // Assuming it replaces Featured Projects which is 03? We'll let it share numbering or skip. Wait, Featured Projects is 03 in projects_section.dart. Let's not use an index if it's part of Projects, or just use 02.5. Let's omit sectionIndex.
             title: 'Live Apps',
             subtitle: 'Products I have built that are currently in production.',
           ),
           SizedBox(height: AppTokens.s16.h),
-          
+
           // Live Apps Grid
           LayoutBuilder(
             builder: (context, constraints) {
               final isWide = constraints.maxWidth > 700;
-              
+
               if (isWide) {
                 return Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,75 +52,6 @@ class LiveAppsSection extends StatelessWidget {
                 );
               }
             },
-          ),
-          
-          SizedBox(height: AppTokens.s24.h),
-          
-          // Technology Stack & Integrations
-          Container(
-            padding: EdgeInsets.all(AppTokens.s20.w),
-            decoration: BoxDecoration(
-              color: AppTokens.surfaceAlt,
-              borderRadius: BorderRadius.circular(AppTokens.r16.r),
-              border: Border.all(
-                color: AppTokens.border.withValues(alpha: 0.5),
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Technology Stack & Integrations',
-                  style: GoogleFonts.inter(
-                    color: AppTokens.textPrimary,
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(height: AppTokens.s12.h),
-                ...ctrl.techIntegrations.map((item) {
-                  return Padding(
-                    padding: EdgeInsets.only(bottom: AppTokens.s8.h),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '• ',
-                          style: GoogleFonts.inter(
-                            color: AppTokens.accent,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Expanded(
-                          child: RichText(
-                            text: TextSpan(
-                              style: GoogleFonts.inter(
-                                color: AppTokens.textSecondary,
-                                fontSize: 13.sp,
-                                height: 1.4,
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: '${item['category']}: ',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    color: AppTokens.textPrimary,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: item['details'],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }),
-              ],
-            ),
           ),
         ],
       ),
