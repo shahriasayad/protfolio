@@ -75,7 +75,7 @@ class _TimelineItemState extends State<TimelineItem> {
                 bottom: widget.isLast ? 0 : AppTokens.s28.h,
               ),
               child: Container(
-                padding: EdgeInsets.all(AppTokens.s20.w),
+                padding: EdgeInsets.all(AppTokens.s16.w),
                 decoration: BoxDecoration(
                   color: _hovered
                       ? AppTokens.surfaceAlt.withValues(alpha: 0.68)

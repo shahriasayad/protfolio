@@ -8,7 +8,7 @@ class AppScreenUtil {
   static bool _isInitialized = false;
 
   /// Maximum logical width before we stop scaling up to prevent tablet distortion.
-  static const double _maxScalingConstraint = 600.0;
+  static const double _maxScalingConstraint = 500.0;
 
   /// Base generic mobile width for scaling calculations.
   static const double _mobileBaseline = 390.0;
@@ -48,7 +48,8 @@ class AppScreenUtil {
 
     double shortestSide = min(screenWidth, screenHeight);
 
-    double clampedSide = min(shortestSide, 500.0);
+    // Clamp text scaling heavily to prevent comically large fonts on desktop/tablet.
+    double clampedSide = min(shortestSide, 420.0);
     return clampedSide / _mobileBaseline;
   }
 }

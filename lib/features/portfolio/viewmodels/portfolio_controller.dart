@@ -9,6 +9,7 @@ import '../models/education_model.dart';
 import '../models/skill_model.dart';
 import '../models/social_link_model.dart';
 import '../models/portfolio_stat_model.dart';
+import '../models/live_app_model.dart';
 import '../../../core/utils/icon_color_extractor.dart';
 
 /// PortfolioController - ViewModel managing all portfolio data and state
@@ -191,6 +192,56 @@ writing about Dart internals, or hiking somewhere without cell service.
       icon: Icons.code,
       iconPath: 'assets/icons/gitlab.png',
     ),
+  ];
+
+  // ── Live Apps ──────────────────────────────────────────────
+  final liveApps = const <LiveAppModel>[
+    LiveAppModel(
+      title: 'Taco Client',
+      description: 'Ride & parcel booking app with real-time tracking.',
+      features: [
+        'Ride & parcel booking',
+        'Real-time GPS tracking',
+        'Fare bidding/negotiation',
+        'Wallet & payments',
+        'Chat & support',
+      ],
+      coverImagePath: 'assets/images/taco_client_cover.png',
+      testFlightLink: 'https://testflight.apple.com/join/qtw85aeg',
+    ),
+    LiveAppModel(
+      title: 'Taco Conductor',
+      description: 'Driver companion app for ride management.',
+      features: [
+        'Ride & parcel requests',
+        'Real-time bidding',
+        'Navigation & trip tracking',
+        'Earnings & wallet',
+        'Vehicle/profile management',
+      ],
+      coverImagePath: 'assets/images/taco_conductor_cover.png',
+      testFlightLink: 'https://testflight.apple.com/join/ap6qyAFS',
+    ),
+  ];
+
+  final techIntegrations = const [
+    {
+      'category': 'Framework & Architecture',
+      'details': 'Flutter, Dart, GetX (State Management & DI)',
+    },
+    {
+      'category': 'Location & Mapping',
+      'details': 'Google Maps API (Live Tracking, Routing, Places API)',
+    },
+    {
+      'category': 'Backend Services',
+      'details': 'Firebase (Push Notifications, Authentication) & RESTful APIs',
+    },
+    {
+      'category': 'Real-Time Infrastructure',
+      'details':
+          'WebSockets (Socket.IO) for live bidding, chat, and driver tracking',
+    },
   ];
 
   // ── Projects ───────────────────────────────────────────────

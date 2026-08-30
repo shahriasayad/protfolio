@@ -34,7 +34,7 @@ class AboutSection extends StatelessWidget {
                 ctrl.bio.value.trim(),
                 style: GoogleFonts.inter(
                   color: AppTokens.textSecondary,
-                  fontSize: 12.sp,
+                  fontSize: 14.sp,
                   // height: 1.6.h,
                 ),
               ),

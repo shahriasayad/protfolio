@@ -78,7 +78,7 @@ class HeroTextContent extends StatelessWidget {
           ctrl.brandSummary,
           style: GoogleFonts.inter(
             color: AppTokens.textSecondary,
-            fontSize: isMobile ? 12.sp : 13.sp,
+            fontSize: isMobile ? 14.sp : 14.sp,
             // height: 1.6,
             fontWeight: FontWeight.w400,
           ),

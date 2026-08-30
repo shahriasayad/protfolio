@@ -9,6 +9,7 @@ import '../sections/about_section.dart';
 import '../sections/skills_section.dart';
 import '../sections/tools_section.dart';
 import '../sections/projects_section.dart';
+import '../sections/live_apps_section.dart';
 import '../sections/education_section.dart';
 import '../sections/experience_section.dart';
 import '../sections/achievements_section.dart';
@@ -45,6 +46,8 @@ class PortfolioPage extends StatelessWidget {
                   AboutSection(key: ctrl.aboutKey),
                   const _Divider(),
                   ExperienceSection(key: ctrl.experienceKey),
+                  const _Divider(),
+                  const LiveAppsSection(),
                   const _Divider(),
                   ProjectsSection(key: ctrl.projectsKey),
                   const _Divider(),

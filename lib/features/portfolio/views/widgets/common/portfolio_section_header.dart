@@ -59,7 +59,7 @@ class PortfolioSectionHeader extends StatelessWidget {
                     subtitle!,
                     style: GoogleFonts.inter(
                       color: AppTokens.textSecondary,
-                      fontSize: 13.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
