@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
 import 'package:my_portfolio/core/utils/app_screen_util.dart';
 import '../../../viewmodels/portfolio_controller.dart';

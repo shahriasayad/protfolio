@@ -5,7 +5,6 @@ import '../../../../core/constants/app_tokens.dart';
 import 'package:my_portfolio/core/utils/app_screen_util.dart';
 import '../widgets/common/section_wrapper.dart';
 import '../widgets/common/portfolio_section_header.dart';
-import '../widgets/cards/featured_project_card.dart';
 import '../widgets/cards/project_card.dart';
 
 /// Projects section - portfolio projects grid
@@ -30,9 +29,6 @@ class ProjectsSection extends StatelessWidget {
                 'One primary case study leads the section so the most meaningful work gets the strongest placement. Supporting projects stay visible without competing for attention.',
           ),
           SizedBox(height: AppTokens.s16.h),
-
-          FeaturedProjectCard(project: ctrl.featuredProjects.first),
-          SizedBox(height: AppTokens.s12.h),
 
           Builder(
             builder: (_) {

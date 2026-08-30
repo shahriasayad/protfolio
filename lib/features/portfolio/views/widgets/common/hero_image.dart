@@ -78,31 +78,6 @@ class HeroImage extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            right: -AppTokens.s8.w,
-            bottom: AppTokens.s24.h,
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: AppTokens.s12.w,
-                vertical: AppTokens.s8.h,
-              ),
-              decoration: BoxDecoration(
-                color: AppTokens.accent.withValues(alpha: 0.14),
-                borderRadius: BorderRadius.circular(AppTokens.r12.r),
-                border: Border.all(
-                  color: AppTokens.accent.withValues(alpha: 0.3),
-                ),
-              ),
-              child: Text(
-                'Product-focused UI',
-                style: TextStyle(
-                  color: AppTokens.accent,
-                  fontSize: 11.sp,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );

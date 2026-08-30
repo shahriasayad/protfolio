@@ -193,7 +193,7 @@ class _NavItemState extends State<NavItem> {
               color: widget.isActive || _hovered
                   ? AppTokens.textPrimary
                   : AppTokens.textSecondary,
-              fontSize: 13.sp,
+              fontSize: 12.sp,
               fontWeight: widget.isActive ? FontWeight.w700 : FontWeight.w500,
             ),
           ),
