@@ -11,6 +11,7 @@ import '../models/social_link_model.dart';
 import '../models/portfolio_stat_model.dart';
 import '../models/live_app_model.dart';
 import '../../../core/utils/icon_color_extractor.dart';
+import '../../../core/constants/asset_paths.dart';
 
 /// PortfolioController - ViewModel managing all portfolio data and state
 class PortfolioController extends GetxController {
@@ -34,34 +35,27 @@ class PortfolioController extends GetxController {
 
   // ── Tools ───────────────────────────────────────────────
   final tools = <Map<String, Object>>[
-    {'name': 'VS Code', 'icon': 'icons/vscode.png', 'color': Color(0xFF007ACC)},
+    {'name': 'VS Code', 'icon': IconPaths.vsCode, 'color': Color(0xFF007ACC)},
     {
       'name': 'Android Studio',
-      'icon': 'icons/androidstudio.png',
+      'icon': IconPaths.androidStudio,
       'color': Color(0xFF3DDC84),
     },
     {
       'name': 'IntelliJ IDEA',
-      'icon': 'icons/intellijidea.png',
+      'icon': IconPaths.intellijIdea,
       'color': Color(0xFFEE5A52),
     },
-    {'name': 'GitHub', 'icon': 'icons/github.png', 'color': Color(0xFFFFFFFF)},
-    {
-      'name': 'Postman',
-      'icon': 'icons/postman.png',
-      'color': Color(0xFFFF6C37),
-    },
-    {
-      'name': 'Swagger',
-      'icon': 'icons/swagger.png',
-      'color': Color(0xFF85EA2D),
-    },
+    {'name': 'GitHub', 'icon': IconPaths.github, 'color': Color(0xFFFFFFFF)},
+    {'name': 'Figma', 'icon': IconPaths.figma, 'color': Color(0xFFF24E1E)},
+    {'name': 'Postman', 'icon': IconPaths.postman, 'color': Color(0xFFFF6C37)},
+    {'name': 'Swagger', 'icon': IconPaths.swagger, 'color': Color(0xFF85EA2D)},
   ];
 
   // ── Personal info ──────────────────────────────────────────
   final name = 'Shahria Sayad'.obs;
   final title = 'Flutter Developer'.obs;
-  final imageUrl = 'assets/images/profile2.jpg';
+  final imageUrl = ImagePaths.profile2;
 
   final intro =
       'I craft fast, beautiful cross-platform apps\nthat feel native everywhere.'
@@ -117,14 +111,14 @@ writing about Dart internals, or hiking somewhere without cell service.
       proficiency: 0.92,
       category: 'Frontend',
       icon: Icons.flutter_dash,
-      iconPath: 'assets/icons/flutter.png',
+      iconPath: IconPaths.flutter,
     ),
     SkillModel(
       name: 'Dart',
       proficiency: 0.90,
       category: 'Frontend',
       icon: Icons.code,
-      iconPath: 'assets/icons/dart.png',
+      iconPath: IconPaths.dart,
     ),
     // State Management
     SkillModel(
@@ -132,7 +126,7 @@ writing about Dart internals, or hiking somewhere without cell service.
       proficiency: 0.95,
       category: 'State Management',
       icon: Icons.settings,
-      iconPath: 'assets/icons/getx.png',
+      iconPath: IconPaths.getx,
     ),
     // Backend & Data
     SkillModel(
@@ -140,42 +134,42 @@ writing about Dart internals, or hiking somewhere without cell service.
       proficiency: 0.50,
       category: 'Backend',
       icon: Icons.terminal,
-      iconPath: 'assets/icons/python.png',
+      iconPath: IconPaths.python,
     ),
     SkillModel(
       name: 'Socket.io',
       proficiency: 0.75,
       category: 'Backend',
       icon: Icons.sync,
-      iconPath: 'assets/icons/Socket.io.png',
+      iconPath: IconPaths.socketIo,
     ),
     SkillModel(
       name: 'Firebase',
       proficiency: 0.80,
       category: 'Backend',
       icon: Icons.cloud,
-      iconPath: 'assets/icons/firebase.png',
+      iconPath: IconPaths.firebase,
     ),
     SkillModel(
       name: 'REST API',
       proficiency: 0.85,
       category: 'Backend',
       icon: Icons.api,
-      iconPath: 'assets/icons/swagger.png',
+      iconPath: IconPaths.swagger,
     ),
     SkillModel(
       name: 'Hive',
       proficiency: 0.80,
       category: 'Local Storage',
       icon: Icons.storage,
-      iconPath: 'assets/icons/hive.png',
+      iconPath: IconPaths.hive,
     ),
     SkillModel(
       name: 'Shared Preference',
       proficiency: 0.88,
       category: 'Local Storage',
       icon: Icons.save,
-      iconPath: 'assets/icons/sharedpreferences.png',
+      iconPath: IconPaths.sharedPreferences,
     ),
     // DevOps & Tools
     SkillModel(
@@ -183,14 +177,14 @@ writing about Dart internals, or hiking somewhere without cell service.
       proficiency: 0.95,
       category: 'DevOps',
       icon: Icons.merge_type,
-      iconPath: 'assets/icons/git.png',
+      iconPath: IconPaths.git,
     ),
     SkillModel(
       name: 'GitLab',
       proficiency: 0.85,
       category: 'DevOps',
       icon: Icons.code,
-      iconPath: 'assets/icons/gitlab.png',
+      iconPath: IconPaths.gitlab,
     ),
   ];
 
@@ -206,7 +200,7 @@ writing about Dart internals, or hiking somewhere without cell service.
         'Wallet & payments',
         'Chat & support',
       ],
-      coverImagePath: 'assets/images/taco_client_cover.png',
+      coverImagePath: ImagePaths.tacoClientCover,
       testFlightLink: 'https://testflight.apple.com/join/qtw85aeg',
     ),
     LiveAppModel(
@@ -219,8 +213,25 @@ writing about Dart internals, or hiking somewhere without cell service.
         'Earnings & wallet',
         'Vehicle/profile management',
       ],
-      coverImagePath: 'assets/images/taco_conductor_cover.png',
+      coverImagePath: ImagePaths.tacoConductorCover,
       testFlightLink: 'https://testflight.apple.com/join/ap6qyAFS',
+    ),
+    LiveAppModel(
+      title: 'Florida Yacht Trader',
+      description:
+          'A comprehensive platform for marine enthusiasts to discover, search, and purchase yachts and boats.',
+      features: [
+        'Comprehensive Listings',
+        'Florida Yacht Trader Integration',
+        'Advanced Search Capability',
+        'AI-Powered Chat',
+        'Nautical Blog & Resources',
+      ],
+      coverImagePath: ImagePaths.floridaYachtTraderCover,
+      appStoreLink:
+          'https://apps.apple.com/us/app/florida-yacht-trader/id6769546384',
+      playStoreLink:
+          'https://play.google.com/store/apps/details?id=com.floridayachttrader.diaz',
     ),
   ];
 
@@ -246,6 +257,25 @@ writing about Dart internals, or hiking somewhere without cell service.
 
   // ── Projects ───────────────────────────────────────────────
   final projects = <ProjectModel>[
+    ProjectModel(
+      emoji: '🍔',
+      title: 'Bite Go',
+      description:
+          'A comprehensive, dual-sided food delivery platform featuring dedicated experiences for both customers and delivery partners.',
+      tech: ['Flutter', 'GetX', 'Local State Management'],
+      link: 'https://github.com/shahriasayad/bite_go',
+      impact:
+          'Dual-role architecture, complete customer journey, rider dashboard',
+    ),
+    ProjectModel(
+      emoji: '🩺',
+      title: 'Care Bridge',
+      description:
+          'A comprehensive telemedicine and health-tracking prototype featuring virtual consultations, health monitoring, and appointment management.',
+      tech: ['Flutter', 'GetX', 'fl_chart'],
+      link: 'https://github.com/shahriasayad/care_bridge',
+      impact: 'Dual-role architecture, telemedicine, health tracking',
+    ),
     ProjectModel(
       emoji: '🛒',
       title: 'ShopFlow',
@@ -307,28 +337,13 @@ writing about Dart internals, or hiking somewhere without cell service.
   // ── Experience ─────────────────────────────────────────────
   final experience = <ExperienceModel>[
     ExperienceModel(
-      role: 'Senior Flutter Developer',
-      company: 'Luminary Labs',
-      period: '2022 – Present',
+      role: 'Flutter App Developer',
+      company: 'Softvence Agency',
+      period: 'Dec 2025 – Aug 2026 (9 mos)',
+      companyUrl: 'https://softvence.agency/',
       description:
-          'Led mobile team of 5, shipped 3 major app versions. '
-          'Reduced build times by 40% via modular architecture.',
-    ),
-    ExperienceModel(
-      role: 'Flutter Developer',
-      company: 'Kite Agency',
-      period: '2020 – 2022',
-      description:
-          'Built 8 client apps across fintech, health, and retail. '
-          'Introduced automated testing culture from scratch.',
-    ),
-    ExperienceModel(
-      role: 'Mobile Developer Intern',
-      company: 'Nexora',
-      period: '2019 – 2020',
-      description:
-          'Started with React Native, migrated flagship app to Flutter. '
-          'Maintained Dart packages published on pub.dev.',
+          'Developed and maintained cross-platform mobile applications using Flutter. '
+          'Focused on implementing clean architecture, optimizing app performance, and building responsive user interfaces.',
     ),
   ];
 

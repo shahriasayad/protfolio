@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
 import 'package:my_portfolio/core/utils/app_screen_util.dart';
 import 'package:my_portfolio/features/portfolio/viewmodels/portfolio_controller.dart';
@@ -34,21 +33,24 @@ class LiveAppsSection extends StatelessWidget {
               final isWide = constraints.maxWidth > 700;
 
               if (isWide) {
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(child: LiveAppCard(app: ctrl.liveApps[0])),
-                    SizedBox(width: AppTokens.s16.w),
-                    Expanded(child: LiveAppCard(app: ctrl.liveApps[1])),
-                  ],
+                return Wrap(
+                  spacing: AppTokens.s16.w,
+                  runSpacing: AppTokens.s16.h,
+                  children: ctrl.liveApps.map((app) {
+                    return SizedBox(
+                      width: (constraints.maxWidth - AppTokens.s16.w) / 2,
+                      child: LiveAppCard(app: app),
+                    );
+                  }).toList(),
                 );
               } else {
                 return Column(
-                  children: [
-                    LiveAppCard(app: ctrl.liveApps[0]),
-                    SizedBox(height: AppTokens.s16.h),
-                    LiveAppCard(app: ctrl.liveApps[1]),
-                  ],
+                  children: ctrl.liveApps.map((app) {
+                    return Padding(
+                      padding: EdgeInsets.only(bottom: AppTokens.s16.h),
+                      child: LiveAppCard(app: app),
+                    );
+                  }).toList(),
                 );
               }
             },

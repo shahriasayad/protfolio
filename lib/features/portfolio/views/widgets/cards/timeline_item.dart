@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
 import 'package:my_portfolio/core/utils/app_screen_util.dart';
 import 'package:my_portfolio/features/portfolio/models/experience_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Timeline item - displays experience in a timeline
 class TimelineItem extends StatefulWidget {
@@ -115,15 +116,42 @@ class _TimelineItemState extends State<TimelineItem> {
                       ],
                     ),
                     SizedBox(height: AppTokens.s6.h),
-                    Text(
-                      e.company,
-                      style: GoogleFonts.inter(
-                        color: AppTokens.accent,
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 0.2,
+                    if (e.companyUrl != null)
+                      InkWell(
+                        onTap: () => launchUrl(Uri.parse(e.companyUrl!)),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              e.company,
+                              style: GoogleFonts.inter(
+                                color: AppTokens.accent,
+                                fontSize: 13.sp,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0.2,
+                                decoration: TextDecoration.underline,
+                                decorationColor: AppTokens.accent,
+                              ),
+                            ),
+                            SizedBox(width: AppTokens.s4.w),
+                            Icon(
+                              Icons.open_in_new,
+                              size: 14.sp,
+                              color: AppTokens.accent,
+                            ),
+                          ],
+                        ),
+                      )
+                    else
+                      Text(
+                        e.company,
+                        style: GoogleFonts.inter(
+                          color: AppTokens.accent,
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 0.2,
+                        ),
                       ),
-                    ),
                     SizedBox(height: AppTokens.s8.h),
                     Text(
                       e.description,

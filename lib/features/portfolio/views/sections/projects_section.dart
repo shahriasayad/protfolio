@@ -37,7 +37,7 @@ class ProjectsSection extends StatelessWidget {
                   : AppScreenUtil.screenWidth < 1100
                   ? 2
                   : 3;
-              final items = ctrl.supportingProjects;
+              final items = ctrl.projects;
               final rows = (items.length / cols).ceil();
 
               return Column(
