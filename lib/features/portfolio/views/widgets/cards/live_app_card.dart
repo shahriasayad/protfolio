@@ -148,52 +148,6 @@ class _LiveAppCardState extends State<LiveAppCard> {
 
                         SizedBox(height: AppTokens.s12.h),
 
-                        // Tech Stack Section
-                        Text(
-                          'Technology Stack:',
-                          style: GoogleFonts.inter(
-                            color: Colors.white,
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        SizedBox(height: AppTokens.s4.h),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: ctrl.techIntegrations.map((item) {
-                                return Padding(
-                                  padding: EdgeInsets.only(
-                                    bottom: AppTokens.s4.h,
-                                  ),
-                                  child: RichText(
-                                    text: TextSpan(
-                                      style: GoogleFonts.inter(
-                                        color: Colors.white70,
-                                        fontSize: 10.sp,
-                                        height: 1.3,
-                                      ),
-                                      children: [
-                                        TextSpan(
-                                          text: '${item['category']}: ',
-                                          style: const TextStyle(
-                                            color: AppTokens.accent,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        TextSpan(text: item['details']),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                        ),
-
-                        SizedBox(height: AppTokens.s12.h),
-
                         // Store Buttons
                         Row(
                           children: [

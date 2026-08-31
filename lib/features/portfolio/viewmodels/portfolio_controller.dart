@@ -46,7 +46,6 @@ class PortfolioController extends GetxController {
       'icon': IconPaths.intellijIdea,
       'color': Color(0xFFEE5A52),
     },
-    {'name': 'GitHub', 'icon': IconPaths.github, 'color': Color(0xFFFFFFFF)},
     {'name': 'Figma', 'icon': IconPaths.figma, 'color': Color(0xFFF24E1E)},
     {'name': 'Postman', 'icon': IconPaths.postman, 'color': Color(0xFFFF6C37)},
     {'name': 'Swagger', 'icon': IconPaths.swagger, 'color': Color(0xFF85EA2D)},
@@ -109,14 +108,14 @@ writing about Dart internals, or hiking somewhere without cell service.
     SkillModel(
       name: 'Flutter',
       proficiency: 0.92,
-      category: 'Frontend',
+      category: 'Mobile Development',
       icon: Icons.flutter_dash,
       iconPath: IconPaths.flutter,
     ),
     SkillModel(
       name: 'Dart',
       proficiency: 0.90,
-      category: 'Frontend',
+      category: 'Mobile Development',
       icon: Icons.code,
       iconPath: IconPaths.dart,
     ),
@@ -124,7 +123,7 @@ writing about Dart internals, or hiking somewhere without cell service.
     SkillModel(
       name: 'GetX',
       proficiency: 0.95,
-      category: 'State Management',
+      category: 'State Management & Data',
       icon: Icons.settings,
       iconPath: IconPaths.getx,
     ),
@@ -132,42 +131,42 @@ writing about Dart internals, or hiking somewhere without cell service.
     SkillModel(
       name: 'Python',
       proficiency: 0.50,
-      category: 'Backend',
+      category: 'Languages',
       icon: Icons.terminal,
       iconPath: IconPaths.python,
     ),
     SkillModel(
       name: 'Socket.io',
       proficiency: 0.75,
-      category: 'Backend',
+      category: 'Backend Services',
       icon: Icons.sync,
       iconPath: IconPaths.socketIo,
     ),
     SkillModel(
       name: 'Firebase',
       proficiency: 0.80,
-      category: 'Backend',
+      category: 'Backend Services',
       icon: Icons.cloud,
       iconPath: IconPaths.firebase,
     ),
     SkillModel(
       name: 'REST API',
       proficiency: 0.85,
-      category: 'Backend',
+      category: 'Backend Services',
       icon: Icons.api,
       iconPath: IconPaths.swagger,
     ),
     SkillModel(
       name: 'Hive',
       proficiency: 0.80,
-      category: 'Local Storage',
+      category: 'State Management & Data',
       icon: Icons.storage,
       iconPath: IconPaths.hive,
     ),
     SkillModel(
       name: 'Shared Preference',
       proficiency: 0.88,
-      category: 'Local Storage',
+      category: 'State Management & Data',
       icon: Icons.save,
       iconPath: IconPaths.sharedPreferences,
     ),
@@ -175,16 +174,23 @@ writing about Dart internals, or hiking somewhere without cell service.
     SkillModel(
       name: 'Git',
       proficiency: 0.95,
-      category: 'DevOps',
+      category: 'Version Control',
       icon: Icons.merge_type,
       iconPath: IconPaths.git,
     ),
     SkillModel(
       name: 'GitLab',
       proficiency: 0.85,
-      category: 'DevOps',
+      category: 'Version Control',
       icon: Icons.code,
       iconPath: IconPaths.gitlab,
+    ),
+    SkillModel(
+      name: 'GitHub',
+      proficiency: 0.95,
+      category: 'Version Control',
+      icon: Icons.code,
+      iconPath: IconPaths.github,
     ),
   ];
 
@@ -235,25 +241,6 @@ writing about Dart internals, or hiking somewhere without cell service.
     ),
   ];
 
-  final techIntegrations = const [
-    {
-      'category': 'Framework & Architecture',
-      'details': 'Flutter, Dart, GetX (State Management & DI)',
-    },
-    {
-      'category': 'Location & Mapping',
-      'details': 'Google Maps API (Live Tracking, Routing, Places API)',
-    },
-    {
-      'category': 'Backend Services',
-      'details': 'Firebase (Push Notifications, Authentication) & RESTful APIs',
-    },
-    {
-      'category': 'Real-Time Infrastructure',
-      'details':
-          'WebSockets (Socket.IO) for live bidding, chat, and driver tracking',
-    },
-  ];
 
   // ── Projects ───────────────────────────────────────────────
   final projects = <ProjectModel>[
