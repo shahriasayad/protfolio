@@ -266,6 +266,7 @@ writing about Dart internals, or hiking somewhere without cell service.
       link: 'https://github.com/shahriasayad/bite_go',
       impact:
           'Dual-role architecture, complete customer journey, rider dashboard',
+      coverImagePath: ImagePaths.biteGoCover,
     ),
     ProjectModel(
       emoji: '🩺',
@@ -275,6 +276,7 @@ writing about Dart internals, or hiking somewhere without cell service.
       tech: ['Flutter', 'GetX', 'fl_chart'],
       link: 'https://github.com/shahriasayad/care_bridge',
       impact: 'Dual-role architecture, telemedicine, health tracking',
+      coverImagePath: ImagePaths.careBridgeCover,
     ),
     ProjectModel(
       emoji: '🍛',
@@ -284,20 +286,27 @@ writing about Dart internals, or hiking somewhere without cell service.
       tech: ['Flutter', 'Hive', 'PDF Generation'],
       link: 'https://github.com/shahriasayad/meal_khata',
       impact: 'Automated financial summaries, PDF reporting, offline-first',
+      coverImagePath: ImagePaths.mealKhataCover,
     ),
     ProjectModel(
       emoji: '⛅',
       title: 'Weather Forecast',
       description:
           'A Flutter-based weather forecast application providing real-time meteorological data and hourly forecasts using the OpenWeatherMap API.',
-      tech: [
-        'Flutter',
-        'REST API',
-        'Getx'
-            'UI/UX',
-      ],
+      tech: ['Flutter', 'REST API', 'GetX'],
       link: 'https://github.com/shahriasayad/weather_forecast_app',
       impact: 'Real-time updates, detailed metrics, modern interface',
+      coverImagePath: ImagePaths.weatherForecastCover,
+    ),
+    ProjectModel(
+      emoji: '📝',
+      title: 'ShareList',
+      description:
+          'A streamlined task management application to efficiently organize, track, and color-code daily to-dos with real-time sync.',
+      tech: ['Flutter', 'Firebase', 'Google Auth'],
+      link: 'https://github.com/shahriasayad/ShareList_UsingFirebase',
+      impact: 'Real-time sync, media integration, secure access',
+      coverImagePath: ImagePaths.shareListCover,
     ),
   ];
 

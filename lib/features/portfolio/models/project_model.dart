@@ -5,6 +5,7 @@ class ProjectModel {
   final String link;
   final String emoji;
   final String impact;
+  final String? coverImagePath;
 
   const ProjectModel({
     required this.title,
@@ -13,5 +14,6 @@ class ProjectModel {
     required this.link,
     required this.emoji,
     required this.impact,
+    this.coverImagePath,
   });
 }
