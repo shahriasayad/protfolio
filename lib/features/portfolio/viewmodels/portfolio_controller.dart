@@ -277,44 +277,27 @@ writing about Dart internals, or hiking somewhere without cell service.
       impact: 'Dual-role architecture, telemedicine, health tracking',
     ),
     ProjectModel(
-      emoji: '🛒',
-      title: 'ShopFlow',
+      emoji: '🍛',
+      title: 'Meal Khata',
       description:
-          'A full-featured e-commerce app with real-time inventory, '
-          'Stripe payments, and animated product carousels. Reached 50k+ MAU.',
-      tech: ['Flutter', 'Firebase', 'Stripe', 'GetX'],
-      link: 'https://github.com/example/shopflow',
-      impact: '50k+ MAU, Stripe checkout, live inventory sync',
+          'A mess management app designed to simplify shared living finances by tracking daily meals, expenses, and member contributions.',
+      tech: ['Flutter', 'Hive', 'PDF Generation'],
+      link: 'https://github.com/shahriasayad/meal_khata',
+      impact: 'Automated financial summaries, PDF reporting, offline-first',
     ),
     ProjectModel(
-      emoji: '🧘',
-      title: 'Stillness',
+      emoji: '⛅',
+      title: 'Weather Forecast',
       description:
-          'Mindfulness app with guided meditations, breathing exercises, '
-          'and sleep stories. Featured on the App Store in 12 countries.',
-      tech: ['Flutter', 'Dart', 'Riverpod', 'Supabase'],
-      link: 'https://github.com/example/stillness',
-      impact: 'Featured in 12 countries on the App Store',
-    ),
-    ProjectModel(
-      emoji: '📊',
-      title: 'DashKit',
-      description:
-          'A reusable Flutter dashboard component library with 30+ '
-          'charts, tables, and KPI widgets. 600+ GitHub stars.',
-      tech: ['Flutter', 'fl_chart', 'pub.dev'],
-      link: 'https://github.com/example/dashkit',
-      impact: '600+ GitHub stars, reusable dashboard primitives',
-    ),
-    ProjectModel(
-      emoji: '🤖',
-      title: 'Jarvis CLI',
-      description:
-          'A command-line dev tool that scaffolds Flutter projects with '
-          'opinionated architecture, linting, and CI templates in seconds.',
-      tech: ['Dart', 'CLI', 'GitHub Actions'],
-      link: 'https://github.com/example/jarvis-cli',
-      impact: 'Scaffolds opinionated Flutter projects in seconds',
+          'A Flutter-based weather forecast application providing real-time meteorological data and hourly forecasts using the OpenWeatherMap API.',
+      tech: [
+        'Flutter',
+        'REST API',
+        'Getx'
+            'UI/UX',
+      ],
+      link: 'https://github.com/shahriasayad/weather_forecast_app',
+      impact: 'Real-time updates, detailed metrics, modern interface',
     ),
   ];
 
