@@ -24,7 +24,7 @@ class ProjectsSection extends StatelessWidget {
           const PortfolioSectionHeader(
             sectionIndex: '03',
             title: 'Featured Projects',
-            subtitle: 'The work that best shows my range and product thinking.',
+            subtitle: 'Work that shows my range and how I approach product problems.',
             description:
                 'One primary case study leads the section so the most meaningful work gets the strongest placement. Supporting projects stay visible without competing for attention.',
           ),

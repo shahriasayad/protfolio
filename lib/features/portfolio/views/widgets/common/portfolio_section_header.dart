@@ -30,19 +30,6 @@ class PortfolioSectionHeader extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Padding(
-                //   padding: EdgeInsets.only(bottom: AppTokens.s4.h),
-                //   child: Text(
-                //     sectionIndex,
-                //     style: GoogleFonts.inter(
-                //       color: AppTokens.textSecondary,
-                //       fontSize: 12.sp,
-                //       fontWeight: FontWeight.w600,
-                //       letterSpacing: 3,
-                //     ),
-                //   ),
-                // ),
-                // SizedBox(height: AppTokens.s16.h),
                 Text(
                   title,
                   style: GoogleFonts.spaceGrotesk(
@@ -59,7 +46,7 @@ class PortfolioSectionHeader extends StatelessWidget {
                     subtitle!,
                     style: GoogleFonts.inter(
                       color: AppTokens.textSecondary,
-                      fontSize: 14.sp,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -70,7 +57,7 @@ class PortfolioSectionHeader extends StatelessWidget {
                     description!,
                     style: GoogleFonts.inter(
                       color: AppTokens.textMuted,
-                      fontSize: 12.sp,
+                      fontSize: 15.sp,
                       // height: 1.7,
                     ),
                   ),

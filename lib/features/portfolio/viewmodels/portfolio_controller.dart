@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import '../../../core/constants/app_tokens.dart';
 import '../models/project_model.dart';
 import '../models/experience_model.dart';
@@ -57,46 +59,40 @@ class PortfolioController extends GetxController {
   final imageUrl = ImagePaths.profile2;
 
   final intro =
-      'I craft fast, beautiful cross-platform apps\nthat feel native everywhere.'
-          .obs;
+      'I build fast, cross-platform apps that feel native on every device.'.obs;
   final bio =
       '''
-I'm a Flutter developer with 4+ years of experience building production apps for 
-startups and scale-ups. I care deeply about performance, clean architecture, and 
-pixel-perfect UI that users actually enjoy.
-
-When I'm not shipping features, you'll find me contributing to open-source, 
-writing about Dart internals, or hiking somewhere without cell service.
+I'm a Flutter developer focused on building clean, reliable, and user-friendly mobile applications.
+I enjoy turning ideas and designs into functional products and working across the frontend, APIs, and app architecture.
 '''
           .obs;
 
   final email = 'shahriasayad9@gmail.com'.obs;
-  final brandHeadline =
-      'I design and build Flutter products with a sharper point of view.';
+  final brandHeadline = 'I build Flutter products with a clear point of view.';
   final brandSummary =
-      'Product-minded mobile work shaped around clarity, speed, and memorable user experience. I build interfaces that feel designed, not assembled.';
+      'Mobile work built around clarity, speed, and user experience that sticks. I focus on interfaces that feel designed, not just functional.';
   final availabilityNote =
       'Available for selective freelance work and product teams that care about detail.';
 
   final heroStats = const <PortfolioStatModel>[
     PortfolioStatModel(
-      value: '4+',
-      label: 'Years building',
-      detail: 'Production Flutter work across apps and features.',
+      value: '3',
+      label: 'Live apps',
+      detail: 'Published and currently in production.',
       icon: Icons.timer_outlined,
       accent: AppTokens.accentBlue,
     ),
     PortfolioStatModel(
-      value: '9',
-      label: 'Core tools',
+      value: '18',
+      label: 'Core skills & tools',
       detail: 'A focused stack for shipping polished mobile products.',
       icon: Icons.grid_view_rounded,
       accent: AppTokens.accent,
     ),
     PortfolioStatModel(
-      value: '6+',
+      value: '5',
       label: 'Featured projects',
-      detail: 'Case studies that show range, craft, and delivery.',
+      detail: 'Case studies showing range, craft, and delivery.',
       icon: Icons.auto_awesome_outlined,
       accent: AppTokens.accentPink,
     ),
@@ -241,7 +237,6 @@ writing about Dart internals, or hiking somewhere without cell service.
     ),
   ];
 
-
   // ── Projects ───────────────────────────────────────────────
   final projects = <ProjectModel>[
     ProjectModel(
@@ -321,8 +316,7 @@ writing about Dart internals, or hiking somewhere without cell service.
       period: 'Dec 2025 – Aug 2026 (9 mos)',
       companyUrl: 'https://softvence.agency/',
       description:
-          'Developed and maintained cross-platform mobile applications using Flutter. '
-          'Focused on implementing clean architecture, optimizing app performance, and building responsive user interfaces.',
+          'Built and maintained cross-platform mobile apps using Flutter. Focused on clean architecture, performance, and responsive UI.',
     ),
   ];
 
@@ -333,14 +327,14 @@ writing about Dart internals, or hiking somewhere without cell service.
       organization: 'BdCalling Academy',
       organizationUrl: 'https://bdcalling.com/partnership/bdcalling-academy',
       description:
-          'Completed a 3-month industrial training in Flutter Development. Worked on real-life projects and gained hands-on experience with live app development.',
+          'Completed a 3-month Flutter development training at BdCalling Academy, working on real projects with live app deployments.',
     ),
     AchievementModel(
       title: 'Programming Contest',
       organization: 'Brahmanbaria Polytechnic Institute',
       organizationUrl: 'https://brahmanbaria.polytech.gov.bd/',
       description:
-          'Achieved 8th place among 34 participants in a coding competition using Python programming language.',
+          'Placed 8th out of 34 participants in a Python programming contest at Brahmanbaria Polytechnic Institute.',
     ),
   ];
 
@@ -444,11 +438,25 @@ writing about Dart internals, or hiking somewhere without cell service.
         continue;
       }
 
+      if (skill.name == 'GitHub') {
+        skill.setCachedColor(Colors.white);
+        continue;
+      }
+
       final color = await IconColorExtractor.extractDominantColor(iconPath);
       skill.setCachedColor(color);
     }
 
     skillPaletteReady.value = true;
+  }
+
+  Future<void> downloadCV() async {
+    final Uri url = Uri.parse('https://canva.link/6l65wdwp7qrc8hz');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      EasyLoading.showError('Could not download CV');
+    }
   }
 
   Future<void> submitContactForm() async {
@@ -457,6 +465,7 @@ writing about Dart internals, or hiking somewhere without cell service.
     }
 
     isContactSubmitting.value = true;
+    EasyLoading.show(status: 'Sending...');
 
     try {
       final response = await http
@@ -477,24 +486,12 @@ writing about Dart internals, or hiking somewhere without cell service.
       if (response.statusCode == 200 || response.statusCode == 201) {
         contactEmailController.clear();
         contactMessageController.clear();
-        Get.snackbar(
-          'Success',
-          'Message sent successfully!',
-          backgroundColor: Colors.green.withValues(alpha: 0.7),
-          colorText: Colors.white,
-          duration: const Duration(seconds: 3),
-        );
+        EasyLoading.dismiss();
       } else {
-        throw Exception('Failed: ${response.statusCode}');
+        EasyLoading.showError('Failed to send message.');
       }
     } catch (_) {
-      Get.snackbar(
-        'Error',
-        'Failed to send message. Please try again.',
-        backgroundColor: Colors.red.withValues(alpha: 0.7),
-        colorText: Colors.white,
-        duration: const Duration(seconds: 3),
-      );
+      EasyLoading.showError('Error sending message.');
     } finally {
       isContactSubmitting.value = false;
     }

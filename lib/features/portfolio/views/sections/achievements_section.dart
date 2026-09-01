@@ -24,7 +24,7 @@ class AchievementsSection extends StatelessWidget {
           const PortfolioSectionHeader(
             sectionIndex: '06',
             title: 'Featured Achievements',
-            subtitle: 'Credibility signals that support the portfolio story.',
+            subtitle: 'A few things worth mentioning.',
             description:
                 'These highlights are kept concise so they support the narrative without turning the page into a résumé dump.',
           ),

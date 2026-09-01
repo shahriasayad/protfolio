@@ -23,10 +23,6 @@ class HeroSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final ctrl = Get.find<PortfolioController>();
     final isWide = AppScreenUtil.screenWidth > 900;
-    final minHeight = math.max<double>(
-      AppScreenUtil.screenHeight - AppTokens.s56.h,
-      640.h,
-    );
 
     return Padding(
       padding: EdgeInsets.fromLTRB(
@@ -35,56 +31,53 @@ class HeroSection extends StatelessWidget {
         AppTokens.s24.w,
         AppTokens.s40.h,
       ),
-      child: ConstrainedBox(
-        constraints: BoxConstraints(minHeight: minHeight),
-        child: TweenAnimationBuilder<double>(
-          duration: const Duration(milliseconds: 900),
-          tween: Tween<double>(begin: 0, end: 1),
-          builder: (context, value, child) {
-            return Opacity(
-              opacity: value,
-              child: Transform.translate(
-                offset: Offset(0, (1 - value) * 16),
-                child: child,
-              ),
-            );
-          },
-          child: isWide
-              ? Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      flex: 6,
-                      child: HeroTextContent(
-                        ctrl: ctrl,
-                        onHire: onHire,
-                        onProjects: onProjects,
-                      ),
-                    ),
-                    SizedBox(width: AppTokens.s40.w),
-                    Expanded(
-                      flex: 5,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: _HeroVisualCluster(ctrl: ctrl),
-                      ),
-                    ),
-                  ],
-                )
-              : Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    HeroTextContent(
+      child: TweenAnimationBuilder<double>(
+        duration: const Duration(milliseconds: 900),
+        tween: Tween<double>(begin: 0, end: 1),
+        builder: (context, value, child) {
+          return Opacity(
+            opacity: value,
+            child: Transform.translate(
+              offset: Offset(0, (1 - value) * 16),
+              child: child,
+            ),
+          );
+        },
+        child: isWide
+            ? Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    flex: 6,
+                    child: HeroTextContent(
                       ctrl: ctrl,
                       onHire: onHire,
                       onProjects: onProjects,
                     ),
-                    SizedBox(height: AppTokens.s24.h),
-                    _HeroVisualCluster(ctrl: ctrl),
-                  ],
-                ),
-        ),
+                  ),
+                  SizedBox(width: AppTokens.s40.w),
+                  Expanded(
+                    flex: 5,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: _HeroVisualCluster(ctrl: ctrl),
+                    ),
+                  ),
+                ],
+              )
+            : Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  HeroTextContent(
+                    ctrl: ctrl,
+                    onHire: onHire,
+                    onProjects: onProjects,
+                  ),
+                  SizedBox(height: AppTokens.s24.h),
+                  _HeroVisualCluster(ctrl: ctrl),
+                ],
+              ),
       ),
     );
   }

@@ -24,7 +24,7 @@ class AboutSection extends StatelessWidget {
           const PortfolioSectionHeader(
             sectionIndex: '01',
             title: 'About',
-            subtitle: 'Who I am and how I like to build.',
+            subtitle: 'Who I am and how I work.',
           ),
           SizedBox(height: AppTokens.s16.h),
           ConstrainedBox(
@@ -34,7 +34,7 @@ class AboutSection extends StatelessWidget {
                 ctrl.bio.value.trim(),
                 style: GoogleFonts.inter(
                   color: AppTokens.textSecondary,
-                  fontSize: 14.sp,
+                  fontSize: 15.sp,
                   // height: 1.6.h,
                 ),
               ),

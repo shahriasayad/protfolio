@@ -23,8 +23,8 @@ class ExperienceSection extends StatelessWidget {
         children: [
           const PortfolioSectionHeader(
             sectionIndex: '02',
-            title: 'Experience Timeline',
-            subtitle: 'The work history that shaped my product instincts.',
+            title: 'Experience',
+            subtitle: 'The roles that shaped how I think about building products.',
             description:
                 'I focus on outcomes, team leverage, and consistent delivery. The timeline shows progression in scope and responsibility, not just job titles.',
           ),

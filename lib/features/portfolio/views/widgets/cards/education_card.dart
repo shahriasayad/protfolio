@@ -82,7 +82,7 @@ class _EducationCardState extends State<EducationCard> {
                         style: GoogleFonts.spaceGrotesk(
                           color: AppTokens.textPrimary,
                           fontWeight: FontWeight.w600,
-                          fontSize: 16.sp,
+                          fontSize: 16.5.sp,
                         ),
                       ),
                       SizedBox(height: AppTokens.s4.h),
@@ -90,7 +90,7 @@ class _EducationCardState extends State<EducationCard> {
                         edu.field,
                         style: GoogleFonts.inter(
                           color: accentColor,
-                          fontSize: 13.sp,
+                          fontSize: 15.sp,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -111,7 +111,7 @@ class _EducationCardState extends State<EducationCard> {
               edu.school,
               style: GoogleFonts.inter(
                 color: AppTokens.textSecondary,
-                fontSize: 14.sp,
+                fontSize: 15.sp,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -120,7 +120,7 @@ class _EducationCardState extends State<EducationCard> {
               edu.description,
               style: GoogleFonts.inter(
                 color: AppTokens.textSecondary,
-                fontSize: 12.sp,
+                fontSize: 14.sp,
                 // height: 1.7,
               ),
             ),

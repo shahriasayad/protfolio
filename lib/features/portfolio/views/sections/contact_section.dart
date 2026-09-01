@@ -28,7 +28,7 @@ class ContactSection extends StatelessWidget {
           const PortfolioSectionHeader(
             sectionIndex: '07',
             title: 'Contact',
-            subtitle: 'A final CTA, not just a form.',
+            subtitle: 'Let\'s talk about what you\'re building.',
             description:
                 'If you want a Flutter portfolio, product page, or mobile experience that feels more premium and considered, let’s talk about the outcome you want to create.',
           ),
@@ -101,13 +101,13 @@ class _ContactNarrative extends StatelessWidget {
           _ContactTrustBullet(
             icon: Icons.verified_outlined,
             title: 'Clear communication',
-            subtitle: 'Practical scope, thoughtful execution, no fluff.',
+            subtitle: 'Straightforward scope, no unnecessary back-and-forth.',
           ),
           SizedBox(height: AppTokens.s12.h),
           _ContactTrustBullet(
             icon: Icons.public_outlined,
-            title: 'Open to remote work',
-            subtitle: 'Selective freelance and product-focused collaborations.',
+            title: 'Remote-friendly',
+            subtitle: 'Open to freelance and product-focused collaborations.',
           ),
           SizedBox(height: AppTokens.s24.h),
           Obx(() => EmailButton(email: ctrl.email.value)),

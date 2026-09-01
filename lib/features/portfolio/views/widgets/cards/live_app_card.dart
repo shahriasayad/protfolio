@@ -149,7 +149,9 @@ class _LiveAppCardState extends State<LiveAppCard> {
                         SizedBox(height: AppTokens.s12.h),
 
                         // Store Buttons
-                        Row(
+                        Wrap(
+                          spacing: AppTokens.s12.w,
+                          runSpacing: AppTokens.s8.h,
                           children: [
                             if (widget.app.testFlightLink != null)
                               _StoreButton(
@@ -167,15 +169,13 @@ class _LiveAppCardState extends State<LiveAppCard> {
                                     _launchUrl(widget.app.appStoreLink),
                               ),
                             if (widget.app.playStoreLink != null &&
-                                widget.app.testFlightLink == null) ...[
-                              SizedBox(width: AppTokens.s12.w),
+                                widget.app.testFlightLink == null)
                               _StoreButton(
                                 icon: Icons.play_arrow,
                                 label: 'Play Store',
                                 onTap: () =>
                                     _launchUrl(widget.app.playStoreLink),
                               ),
-                            ],
                           ],
                         ),
                       ],

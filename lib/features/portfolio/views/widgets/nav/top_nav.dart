@@ -52,49 +52,58 @@ class TopNav extends StatelessWidget {
             top: false,
             child: Row(
               children: [
-                GestureDetector(
-                  onTap: onHero,
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 34,
-                        height: 34,
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [AppTokens.accent, AppTokens.accentBlue],
-                          ),
-                          borderRadius: BorderRadius.circular(AppTokens.r12.r),
-                        ),
-                        child: const Icon(
-                          Icons.flutter_dash,
-                          color: AppTokens.bg,
-                          size: 18,
-                        ),
-                      ),
-                      SizedBox(width: AppTokens.s12.w),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Shahria Sayad',
-                            style: GoogleFonts.spaceGrotesk(
-                              color: AppTokens.textPrimary,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16.sp,
+                Flexible(
+                  child: GestureDetector(
+                    onTap: onHero,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 34,
+                          height: 34,
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              colors: [AppTokens.accent, AppTokens.accentBlue],
+                            ),
+                            borderRadius: BorderRadius.circular(
+                              AppTokens.r12.r,
                             ),
                           ),
-                          Text(
-                            'Flutter developer',
-                            style: GoogleFonts.inter(
-                              color: AppTokens.textMuted,
-                              fontSize: 11.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
+                          child: const Icon(
+                            Icons.flutter_dash,
+                            color: AppTokens.bg,
+                            size: 18,
                           ),
-                        ],
-                      ),
-                    ],
+                        ),
+                        SizedBox(width: AppTokens.s12.w),
+                        Flexible(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Shahria Sayad',
+                                style: GoogleFonts.spaceGrotesk(
+                                  color: AppTokens.textPrimary,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16.sp,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              Text(
+                                'Flutter developer',
+                                style: GoogleFonts.inter(
+                                  color: AppTokens.textMuted,
+                                  fontSize: 11.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const Spacer(),
