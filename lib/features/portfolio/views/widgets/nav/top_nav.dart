@@ -29,7 +29,7 @@ class TopNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isWide = AppScreenUtil.screenWidth > 640;
+    final isWide = AppScreenUtil.screenWidth > 900;
 
     return ClipRect(
       child: BackdropFilter(
@@ -75,33 +75,35 @@ class TopNav extends StatelessWidget {
                             size: 18,
                           ),
                         ),
-                        SizedBox(width: AppTokens.s12.w),
-                        Flexible(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Shahria Sayad',
-                                style: GoogleFonts.spaceGrotesk(
-                                  color: AppTokens.textPrimary,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16.sp,
+                        if (AppScreenUtil.screenWidth > 200) ...[
+                          SizedBox(width: AppTokens.s12.w),
+                          Flexible(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Shahria Sayad',
+                                  style: GoogleFonts.spaceGrotesk(
+                                    color: AppTokens.textPrimary,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16.sp,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              Text(
-                                'Flutter developer',
-                                style: GoogleFonts.inter(
-                                  color: AppTokens.textMuted,
-                                  fontSize: 11.sp,
-                                  fontWeight: FontWeight.w500,
+                                Text(
+                                  'Flutter developer',
+                                  style: GoogleFonts.inter(
+                                    color: AppTokens.textMuted,
+                                    fontSize: 11.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
+                        ],
                       ],
                     ),
                   ),

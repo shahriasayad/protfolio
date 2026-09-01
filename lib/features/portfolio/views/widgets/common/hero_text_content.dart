@@ -135,17 +135,17 @@ class HeroTextContent extends StatelessWidget {
                 ],
               ),
               SizedBox(height: AppTokens.s16.h),
-                Wrap(
-                  spacing: AppTokens.s12.w,
-                  runSpacing: AppTokens.s12.h,
-                  children: [
-                    PrimaryButton(
-                      label: 'Download CV',
-                      onTap: () => ctrl.downloadCV(),
-                    ),
-                    SecondaryButton(label: 'Get in Touch', onTap: onHire),
-                  ],
-                ),
+              Wrap(
+                spacing: AppTokens.s12.w,
+                runSpacing: AppTokens.s12.h,
+                children: [
+                  PrimaryButton(
+                    label: 'View CV',
+                    onTap: () => ctrl.downloadCV(),
+                  ),
+                  SecondaryButton(label: 'Get in Touch', onTap: onHire),
+                ],
+              ),
             ],
           ),
         ),

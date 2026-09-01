@@ -34,7 +34,7 @@ class _ProjectCardState extends State<ProjectCard> {
         },
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 220),
-          transform: Matrix4.identity()..scale(_hovered ? 1.01 : 1.0),
+          transform: Matrix4.diagonal3Values(_hovered ? 1.01 : 1.0, _hovered ? 1.01 : 1.0, 1.0),
           alignment: Alignment.center,
           padding: EdgeInsets.all(AppTokens.s20.w),
           decoration: BoxDecoration(

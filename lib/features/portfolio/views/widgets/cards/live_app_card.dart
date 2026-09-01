@@ -3,9 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
 import 'package:my_portfolio/core/utils/app_screen_util.dart';
 import 'package:my_portfolio/features/portfolio/models/live_app_model.dart';
-import 'package:my_portfolio/features/portfolio/viewmodels/portfolio_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:get/get.dart';
 
 class LiveAppCard extends StatefulWidget {
   final LiveAppModel app;
@@ -29,7 +27,7 @@ class _LiveAppCardState extends State<LiveAppCard> {
 
   @override
   Widget build(BuildContext context) {
-    final ctrl = Get.find<PortfolioController>();
+
 
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
@@ -93,92 +91,94 @@ class _LiveAppCardState extends State<LiveAppCard> {
                   duration: const Duration(milliseconds: 300),
                   child: Padding(
                     padding: EdgeInsets.all(AppTokens.s24.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          widget.app.title,
-                          style: GoogleFonts.inter(
-                            color: Colors.white,
-                            fontSize: 24.sp,
-                            fontWeight: FontWeight.bold,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            widget.app.title,
+                            style: GoogleFonts.inter(
+                              color: Colors.white,
+                              fontSize: 24.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: AppTokens.s8.h),
-                        Text(
-                          widget.app.description,
-                          style: GoogleFonts.inter(
-                            color: Colors.white70,
-                            fontSize: 14.sp,
-                            height: 1.4,
+                          SizedBox(height: AppTokens.s8.h),
+                          Text(
+                            widget.app.description,
+                            style: GoogleFonts.inter(
+                              color: Colors.white70,
+                              fontSize: 14.sp,
+                              height: 1.4,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        SizedBox(height: AppTokens.s16.h),
+                          SizedBox(height: AppTokens.s16.h),
 
-                        // Features Wrap
-                        Wrap(
-                          spacing: AppTokens.s8.w,
-                          runSpacing: AppTokens.s4.h,
-                          children: widget.app.features
-                              .map(
-                                (feature) => Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(
-                                      Icons.check_circle,
-                                      size: 12,
-                                      color: AppTokens.accent,
-                                    ),
-                                    SizedBox(width: AppTokens.s4.w),
-                                    Text(
-                                      feature,
-                                      style: GoogleFonts.inter(
-                                        color: Colors.white,
-                                        fontSize: 11.sp,
+                          // Features Wrap
+                          Wrap(
+                            spacing: AppTokens.s8.w,
+                            runSpacing: AppTokens.s4.h,
+                            children: widget.app.features
+                                .map(
+                                  (feature) => Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.check_circle,
+                                        size: 12,
+                                        color: AppTokens.accent,
                                       ),
-                                    ),
-                                  ],
+                                      SizedBox(width: AppTokens.s4.w),
+                                      Text(
+                                        feature,
+                                        style: GoogleFonts.inter(
+                                          color: Colors.white,
+                                          fontSize: 11.sp,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                                .toList(),
+                          ),
+
+                          SizedBox(height: AppTokens.s12.h),
+
+                          // Store Buttons
+                          Wrap(
+                            spacing: AppTokens.s12.w,
+                            runSpacing: AppTokens.s8.h,
+                            children: [
+                              if (widget.app.testFlightLink != null)
+                                _StoreButton(
+                                  icon: Icons.flight_takeoff,
+                                  label: 'TestFlight',
+                                  onTap: () =>
+                                      _launchUrl(widget.app.testFlightLink),
                                 ),
-                              )
-                              .toList(),
-                        ),
-
-                        SizedBox(height: AppTokens.s12.h),
-
-                        // Store Buttons
-                        Wrap(
-                          spacing: AppTokens.s12.w,
-                          runSpacing: AppTokens.s8.h,
-                          children: [
-                            if (widget.app.testFlightLink != null)
-                              _StoreButton(
-                                icon: Icons.flight_takeoff,
-                                label: 'TestFlight',
-                                onTap: () =>
-                                    _launchUrl(widget.app.testFlightLink),
-                              ),
-                            if (widget.app.appStoreLink != null &&
-                                widget.app.testFlightLink == null)
-                              _StoreButton(
-                                icon: Icons.apple,
-                                label: 'App Store',
-                                onTap: () =>
-                                    _launchUrl(widget.app.appStoreLink),
-                              ),
-                            if (widget.app.playStoreLink != null &&
-                                widget.app.testFlightLink == null)
-                              _StoreButton(
-                                icon: Icons.play_arrow,
-                                label: 'Play Store',
-                                onTap: () =>
-                                    _launchUrl(widget.app.playStoreLink),
-                              ),
-                          ],
-                        ),
-                      ],
+                              if (widget.app.appStoreLink != null &&
+                                  widget.app.testFlightLink == null)
+                                _StoreButton(
+                                  icon: Icons.apple,
+                                  label: 'App Store',
+                                  onTap: () =>
+                                      _launchUrl(widget.app.appStoreLink),
+                                ),
+                              if (widget.app.playStoreLink != null &&
+                                  widget.app.testFlightLink == null)
+                                _StoreButton(
+                                  icon: Icons.play_arrow,
+                                  label: 'Play Store',
+                                  onTap: () =>
+                                      _launchUrl(widget.app.playStoreLink),
+                                ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
