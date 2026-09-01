@@ -53,14 +53,14 @@ class PortfolioSectionHeader extends StatelessWidget {
                 ],
                 if (description != null) ...[
                   SizedBox(height: AppTokens.s8.h),
-                  Text(
-                    description!,
-                    style: GoogleFonts.inter(
-                      color: AppTokens.textMuted,
-                      fontSize: 15.sp,
-                      // height: 1.7,
-                    ),
-                  ),
+                  // Text(
+                  //   description!,
+                  //   style: GoogleFonts.inter(
+                  //     color: AppTokens.textMuted,
+                  //     fontSize: 15.sp,
+                  //     // height: 1.7,
+                  //   ),
+                  // ),
                 ],
               ],
             ),
