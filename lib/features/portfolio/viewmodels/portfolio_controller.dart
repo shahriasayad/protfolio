@@ -90,7 +90,7 @@ I enjoy turning ideas and designs into functional products and working across th
       accent: AppTokens.accent,
     ),
     PortfolioStatModel(
-      value: '5',
+      value: '6',
       label: 'Featured projects',
       detail: 'Case studies showing range, craft, and delivery.',
       icon: Icons.auto_awesome_outlined,
@@ -239,6 +239,17 @@ I enjoy turning ideas and designs into functional products and working across th
 
   // ── Projects ───────────────────────────────────────────────
   final projects = <ProjectModel>[
+    ProjectModel(
+      emoji: '📞',
+      title: 'Agora Connect',
+      description:
+          'A cross-platform Flutter application designed for seamless real-time communication. The app supports high-quality peer-to-peer audio and video calling, custom signaling for call negotiation, and local call history tracking for a complete communication experience.',
+      tech: ['Flutter', 'Dart', 'Agora RTC Engine', 'WebRTC', 'GetX'],
+      link: '',
+      impact:
+          'Real-time audio/video calls, custom call signaling, call history tracking, dynamic hardware permission handling.',
+      coverImagePath: ImagePaths.agoraConnectCover,
+    ),
     ProjectModel(
       emoji: '🍔',
       title: 'Bite Go',

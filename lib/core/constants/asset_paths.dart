@@ -34,4 +34,5 @@ class ImagePaths {
   static const String profile2 = 'assets/images/profile2.jpg';
   static const String tacoClientCover = 'assets/images/taco_client_cover.png';
   static const String tacoConductorCover = 'assets/images/taco_conductor_cover.png';
+  static const String agoraConnectCover = 'assets/images/agora_connect_cover.png';
 }
