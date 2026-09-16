@@ -245,7 +245,7 @@ I enjoy turning ideas and designs into functional products and working across th
       description:
           'A cross-platform Flutter application designed for seamless real-time communication. The app supports high-quality peer-to-peer audio and video calling, custom signaling for call negotiation, and local call history tracking for a complete communication experience.',
       tech: ['Flutter', 'Dart', 'Agora RTC Engine', 'WebRTC', 'GetX'],
-      link: '',
+      link: 'https://github.com/shahriasayad/agora_connect',
       impact:
           'Real-time audio/video calls, custom call signaling, call history tracking, dynamic hardware permission handling.',
       coverImagePath: ImagePaths.agoraConnectCover,
