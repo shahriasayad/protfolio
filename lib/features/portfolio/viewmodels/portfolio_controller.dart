@@ -132,6 +132,12 @@ I enjoy turning ideas and designs into functional products and working across th
       iconPath: IconPaths.python,
     ),
     SkillModel(
+      name: 'WebRTC / Agora',
+      proficiency: 0.85,
+      category: 'Backend Services',
+      icon: Icons.video_call,
+    ),
+    SkillModel(
       name: 'Socket.io',
       proficiency: 0.75,
       category: 'Backend Services',
