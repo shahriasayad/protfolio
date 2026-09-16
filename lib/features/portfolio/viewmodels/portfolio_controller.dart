@@ -249,7 +249,7 @@ I enjoy turning ideas and designs into functional products and working across th
       emoji: '📞',
       title: 'Agora Connect',
       description:
-          'A cross-platform Flutter application designed for seamless real-time communication. The app supports high-quality peer-to-peer audio and video calling, custom signaling for call negotiation, and local call history tracking for a complete communication experience.',
+          'A cross-platform Flutter app for real-time communication, featuring high-quality peer-to-peer audio/video calling, custom signaling, and call history tracking.',
       tech: ['Flutter', 'Dart', 'Agora RTC Engine', 'WebRTC', 'GetX'],
       link: 'https://github.com/shahriasayad/agora_connect',
       impact:
