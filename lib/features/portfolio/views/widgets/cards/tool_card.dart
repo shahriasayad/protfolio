@@ -1,83 +1,96 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
+import 'package:my_portfolio/core/theme/app_text_styles.dart';
+import '../../../models/tool_model.dart';
+import '../common/hover_builder.dart';
 
-/// Tool card - displays development tool with icon
-class ToolCard extends StatefulWidget {
-  final String name;
-  final String icon;
-  final Color color;
-  const ToolCard({super.key, required this.name, required this.icon, required this.color});
+/// Compact developer workbench tile for an IDE, design, or API tool.
+class ToolCard extends StatelessWidget {
+  final ToolModel tool;
+  final int index;
 
-  @override
-  State<ToolCard> createState() => _ToolCardState();
-}
-
-class _ToolCardState extends State<ToolCard> {
-  bool _hovered = false;
+  const ToolCard({
+    super.key,
+    required this.tool,
+    required this.index,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppTokens.s24,
-          vertical: AppTokens.s32,
-        ),
-        decoration: BoxDecoration(
-          color: _hovered
-              ? widget.color.withValues(alpha: 0.08)
-              : AppTokens.surface,
-          borderRadius: BorderRadius.circular(AppTokens.r16),
-          border: Border.all(
-            color: _hovered
-                ? widget.color.withValues(alpha: 0.4)
-                : AppTokens.border,
-            width: 2,
+    final indexLabel = (index + 1).toString().padLeft(2, '0');
+
+    return HoverBuilder(
+      hoverId: 'tool_${tool.name}',
+      cursor: MouseCursor.defer,
+      builder: (context, hovered) {
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 160),
+          padding: const EdgeInsets.all(AppTokens.s16),
+          decoration: BoxDecoration(
+            color: hovered ? AppTokens.surfaceAlt : AppTokens.surface,
+            borderRadius: BorderRadius.circular(AppTokens.r8),
+            border: Border.all(
+              color: hovered ? AppTokens.accent : AppTokens.border,
+            ),
           ),
-          boxShadow: _hovered
-              ? [
-                  BoxShadow(
-                    color: widget.color.withValues(alpha: 0.13),
-                    blurRadius: 24,
-                    spreadRadius: 0,
-                  ),
-                ]
-              : [],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                color: widget.color.withValues(alpha: 0.18),
-                borderRadius: BorderRadius.circular(AppTokens.r999),
+          child: Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                padding: const EdgeInsets.all(AppTokens.s8),
+                decoration: BoxDecoration(
+                  color: AppTokens.bg,
+                  borderRadius: BorderRadius.circular(AppTokens.r8),
+                  border: Border.all(color: AppTokens.border),
+                ),
+                child: Image.asset(
+                  tool.iconPath,
+                  fit: BoxFit.contain,
+                  cacheWidth: kIsWeb ? null : 80,
+                ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset(widget.icon, fit: BoxFit.contain),
+              const SizedBox(width: AppTokens.s12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      tool.name,
+                      style: AppTextStyles.body(
+                        fontSize: 14,
+                        color: AppTokens.textPrimary,
+                        fontWeight: FontWeight.w600,
+                        height: 1.2,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: AppTokens.s4),
+                    Text(
+                      tool.role,
+                      style: AppTextStyles.mono(
+                        fontSize: 11,
+                        color: hovered ? AppTokens.accent : AppTokens.textMuted,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: AppTokens.s16),
-            Text(
-              widget.name,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.inter(
-                color: AppTokens.textPrimary,
-                fontWeight: FontWeight.w600,
-                fontSize: 15,
-                letterSpacing: 0.2,
+              const SizedBox(width: AppTokens.s8),
+              Text(
+                indexLabel,
+                style: AppTextStyles.mono(
+                  fontSize: 11,
+                  color: AppTokens.textMuted,
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

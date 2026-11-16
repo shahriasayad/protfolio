@@ -1,50 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
-import 'package:my_portfolio/core/utils/app_screen_util.dart';
+import 'package:my_portfolio/core/theme/app_text_styles.dart';
+import '../common/hover_builder.dart';
 
-/// Primary button with filled background
-class PrimaryButton extends StatefulWidget {
+/// Primary action button with crisp fill and subtle hover elevation.
+class PrimaryButton extends StatelessWidget {
   final String label;
   final VoidCallback onTap;
-  const PrimaryButton({super.key, required this.label, required this.onTap});
+  final IconData? icon;
 
-  @override
-  State<PrimaryButton> createState() => _PrimaryButtonState();
-}
-
-class _PrimaryButtonState extends State<PrimaryButton> {
-  bool _hovered = false;
+  const PrimaryButton({
+    super.key,
+    required this.label,
+    required this.onTap,
+    this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
-      child: GestureDetector(
-        onTap: widget.onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 150),
-          padding: EdgeInsets.symmetric(
-            horizontal: AppTokens.s16.w,
-            vertical: AppTokens.s16.h,
+    return HoverBuilder(
+      hoverId: 'primary_btn_$label',
+      onTap: onTap,
+      builder: (context, hovered) {
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 160),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppTokens.s20,
+            vertical: AppTokens.s12,
           ),
           decoration: BoxDecoration(
-            color: _hovered
-                ? AppTokens.accent.withValues(alpha: 0.9)
-                : AppTokens.accent,
-            borderRadius: BorderRadius.circular(AppTokens.r12.r),
+            color: hovered ? AppTokens.accent : AppTokens.textPrimary,
+            borderRadius: BorderRadius.circular(AppTokens.r8),
           ),
-          child: Text(
-            widget.label,
-            style: GoogleFonts.inter(
-              color: AppTokens.bg,
-              fontWeight: FontWeight.w600,
-              fontSize: 12.sp,
-            ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                label,
+                style: AppTextStyles.button(
+                  fontSize: 13,
+                  color: AppTokens.bg,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              if (icon != null) ...[
+                const SizedBox(width: AppTokens.s8),
+                Icon(icon, size: 15, color: AppTokens.bg),
+              ],
+            ],
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

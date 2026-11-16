@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_portfolio/features/portfolio/viewmodels/portfolio_controller.dart';
 import '../../../../core/constants/app_tokens.dart';
-import '../../../../core/utils/app_screen_util.dart';
-import '../widgets/common/section_wrapper.dart';
-import '../widgets/common/portfolio_section_header.dart';
+import '../../viewmodels/portfolio_controller.dart';
 import '../widgets/cards/timeline_item.dart';
+import '../widgets/common/portfolio_section_header.dart';
+import '../widgets/common/section_wrapper.dart';
 
-/// Experience section - work experience timeline
+/// Experience section - work history timeline.
 class ExperienceSection extends StatelessWidget {
   const ExperienceSection({super.key});
 
@@ -18,7 +17,6 @@ class ExperienceSection extends StatelessWidget {
     return SectionWrapper(
       tone: SectionTone.base,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const PortfolioSectionHeader(
@@ -26,18 +24,16 @@ class ExperienceSection extends StatelessWidget {
             title: 'Experience',
             subtitle: 'The roles that shaped how I think about building products.',
             description:
-                'I focus on outcomes, team leverage, and consistent delivery. The timeline shows progression in scope and responsibility, not just job titles.',
+                'I focus on outcomes, team leverage, and consistent delivery across mobile releases.',
           ),
-          SizedBox(height: AppTokens.s48.h),
+          const SizedBox(height: AppTokens.s36),
           Column(
-            mainAxisSize: MainAxisSize.min,
             children: [
-              ...ctrl.experience.asMap().entries.map(
-                (e) => TimelineItem(
-                  item: e.value,
-                  isLast: e.key == ctrl.experience.length - 1,
+              for (var i = 0; i < ctrl.experience.length; i++)
+                TimelineItem(
+                  item: ctrl.experience[i],
+                  isLast: i == ctrl.experience.length - 1,
                 ),
-              ),
             ],
           ),
         ],

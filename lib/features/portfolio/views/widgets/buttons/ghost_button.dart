@@ -1,49 +1,62 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
-import 'package:my_portfolio/core/utils/app_screen_util.dart';
+import 'package:my_portfolio/core/theme/app_text_styles.dart';
+import '../common/hover_builder.dart';
 
-/// Ghost button with transparent background
-class GhostButton extends StatefulWidget {
+/// Minimal ghost link button for low-emphasis directional actions.
+class GhostButton extends StatelessWidget {
   final String label;
   final VoidCallback onTap;
-  const GhostButton({super.key, required this.label, required this.onTap});
+  final IconData? icon;
 
-  @override
-  State<GhostButton> createState() => _GhostButtonState();
-}
-
-class _GhostButtonState extends State<GhostButton> {
-  bool _hovered = false;
+  const GhostButton({
+    super.key,
+    required this.label,
+    required this.onTap,
+    this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
-      child: GestureDetector(
-        onTap: widget.onTap,
-        child: AnimatedContainer(
+    return HoverBuilder(
+      hoverId: 'ghost_btn_$label',
+      onTap: onTap,
+      builder: (context, hovered) {
+        return AnimatedContainer(
           duration: const Duration(milliseconds: 150),
-          padding: EdgeInsets.symmetric(
-            horizontal: AppTokens.s24.w,
-            vertical: AppTokens.s16.h,
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppTokens.s12,
+            vertical: AppTokens.s12,
           ),
           decoration: BoxDecoration(
-            color: _hovered ? AppTokens.surface : Colors.transparent,
-            borderRadius: BorderRadius.circular(AppTokens.r12.r),
-            border: Border.all(color: AppTokens.border),
+            color: hovered ? AppTokens.surfaceAlt : Colors.transparent,
+            borderRadius: BorderRadius.circular(AppTokens.r8),
           ),
-          child: Text(
-            widget.label,
-            style: GoogleFonts.inter(
-              color: AppTokens.textPrimary,
-              fontWeight: FontWeight.w500,
-              fontSize: 15.sp,
-            ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                label,
+                style: AppTextStyles.button(
+                  fontSize: 13,
+                  color: hovered
+                      ? AppTokens.textPrimary
+                      : AppTokens.textSecondary,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              if (icon != null) ...[
+                const SizedBox(width: AppTokens.s6),
+                Icon(
+                  icon,
+                  size: 15,
+                  color: hovered ? AppTokens.accent : AppTokens.textSecondary,
+                ),
+              ],
+            ],
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../core/constants/app_tokens.dart';
-import '../models/project_model.dart';
-import '../models/experience_model.dart';
+import '../../../core/constants/asset_paths.dart';
 import '../models/achievement_model.dart';
 import '../models/education_model.dart';
+import '../models/experience_model.dart';
+import '../models/live_app_model.dart';
+import '../models/portfolio_stat_model.dart';
+import '../models/project_model.dart';
 import '../models/skill_model.dart';
 import '../models/social_link_model.dart';
-import '../models/portfolio_stat_model.dart';
-import '../models/live_app_model.dart';
-import '../../../core/utils/icon_color_extractor.dart';
-import '../../../core/constants/asset_paths.dart';
+import '../models/tool_model.dart';
+import '../services/portfolio_service.dart';
 
-/// PortfolioController - ViewModel managing all portfolio data and state
+/// ViewModel managing portfolio content, scroll navigation, hover states, and actions.
 class PortfolioController extends GetxController {
+  PortfolioController({PortfolioService? service})
+    : _service = service ?? Get.find<PortfolioService>();
+
+  final PortfolioService _service;
+
   final scrollController = ScrollController();
 
   final heroKey = GlobalKey();
@@ -32,26 +37,18 @@ class PortfolioController extends GetxController {
   final contactMessageController = TextEditingController();
 
   final isContactSubmitting = false.obs;
-  final skillPaletteReady = false.obs;
   final activeSectionIndex = 0.obs;
 
-  // ── Tools ───────────────────────────────────────────────
-  final tools = <Map<String, Object>>[
-    {'name': 'VS Code', 'icon': IconPaths.vsCode, 'color': Color(0xFF007ACC)},
-    {
-      'name': 'Android Studio',
-      'icon': IconPaths.androidStudio,
-      'color': Color(0xFF3DDC84),
-    },
-    {
-      'name': 'IntelliJ IDEA',
-      'icon': IconPaths.intellijIdea,
-      'color': Color(0xFFEE5A52),
-    },
-    {'name': 'Figma', 'icon': IconPaths.figma, 'color': Color(0xFFF24E1E)},
-    {'name': 'Postman', 'icon': IconPaths.postman, 'color': Color(0xFFFF6C37)},
-    {'name': 'Swagger', 'icon': IconPaths.swagger, 'color': Color(0xFF85EA2D)},
-  ];
+  final Set<String> _hoveredIds = <String>{};
+
+  bool isHovered(String id) => _hoveredIds.contains(id);
+
+  void setHovered(String id, bool hovered) {
+    final changed = hovered ? _hoveredIds.add(id) : _hoveredIds.remove(id);
+    if (changed) {
+      update(<Object>['hover_$id']);
+    }
+  }
 
   // ── Personal info ──────────────────────────────────────────
   final name = 'Shahria Sayad'.obs;
@@ -73,34 +70,60 @@ I enjoy turning ideas and designs into functional products and working across th
       'Mobile work built around clarity, speed, and user experience that sticks. I focus on interfaces that feel designed, not just functional.';
   final availabilityNote =
       'Available for selective freelance work and product teams that care about detail.';
+  final cvUrl = 'https://canva.link/6l65wdwp7qrc8hz';
 
   final heroStats = const <PortfolioStatModel>[
     PortfolioStatModel(
       value: '3',
       label: 'Live apps',
       detail: 'Published and currently in production.',
-      icon: Icons.timer_outlined,
-      accent: AppTokens.accentBlue,
+      icon: Icons.rocket_launch_outlined,
+      accent: AppTokens.statusLive,
     ),
     PortfolioStatModel(
       value: '18',
       label: 'Core skills & tools',
       detail: 'A focused stack for shipping polished mobile products.',
-      icon: Icons.grid_view_rounded,
+      icon: Icons.layers_outlined,
       accent: AppTokens.accent,
     ),
     PortfolioStatModel(
       value: '6',
       label: 'Featured projects',
       detail: 'Case studies showing range, craft, and delivery.',
-      icon: Icons.auto_awesome_outlined,
-      accent: AppTokens.accentPink,
+      icon: Icons.code_rounded,
+      accent: AppTokens.accentWarm,
+    ),
+  ];
+
+  // ── Tools ──────────────────────────────────────────────────
+  final tools = const <ToolModel>[
+    ToolModel(name: 'VS Code', iconPath: IconPaths.vsCode, role: 'Code Editor'),
+    ToolModel(
+      name: 'Android Studio',
+      iconPath: IconPaths.androidStudio,
+      role: 'Mobile IDE',
+    ),
+    ToolModel(
+      name: 'IntelliJ IDEA',
+      iconPath: IconPaths.intellijIdea,
+      role: 'JetBrains IDE',
+    ),
+    ToolModel(name: 'Figma', iconPath: IconPaths.figma, role: 'UI & Specs'),
+    ToolModel(
+      name: 'Postman',
+      iconPath: IconPaths.postman,
+      role: 'API Testing',
+    ),
+    ToolModel(
+      name: 'Swagger',
+      iconPath: IconPaths.swagger,
+      role: 'API Contracts',
     ),
   ];
 
   // ── Skills ─────────────────────────────────────────────────
-  final skills = <SkillModel>[
-    // Frontend
+  final skills = const <SkillModel>[
     SkillModel(
       name: 'Flutter',
       proficiency: 0.92,
@@ -115,7 +138,6 @@ I enjoy turning ideas and designs into functional products and working across th
       icon: Icons.code,
       iconPath: IconPaths.dart,
     ),
-    // State Management
     SkillModel(
       name: 'GetX',
       proficiency: 0.95,
@@ -123,19 +145,25 @@ I enjoy turning ideas and designs into functional products and working across th
       icon: Icons.settings,
       iconPath: IconPaths.getx,
     ),
-    // Backend & Data
     SkillModel(
-      name: 'Python',
-      proficiency: 0.50,
-      category: 'Languages',
-      icon: Icons.terminal,
-      iconPath: IconPaths.python,
+      name: 'Hive',
+      proficiency: 0.80,
+      category: 'State Management & Data',
+      icon: Icons.storage,
+      iconPath: IconPaths.hive,
+    ),
+    SkillModel(
+      name: 'Shared Preference',
+      proficiency: 0.88,
+      category: 'State Management & Data',
+      icon: Icons.save,
+      iconPath: IconPaths.sharedPreferences,
     ),
     SkillModel(
       name: 'WebRTC / Agora',
       proficiency: 0.85,
       category: 'Backend Services',
-      icon: Icons.video_call,
+      icon: Icons.video_call_outlined,
     ),
     SkillModel(
       name: 'Socket.io',
@@ -159,21 +187,6 @@ I enjoy turning ideas and designs into functional products and working across th
       iconPath: IconPaths.swagger,
     ),
     SkillModel(
-      name: 'Hive',
-      proficiency: 0.80,
-      category: 'State Management & Data',
-      icon: Icons.storage,
-      iconPath: IconPaths.hive,
-    ),
-    SkillModel(
-      name: 'Shared Preference',
-      proficiency: 0.88,
-      category: 'State Management & Data',
-      icon: Icons.save,
-      iconPath: IconPaths.sharedPreferences,
-    ),
-    // DevOps & Tools
-    SkillModel(
       name: 'Git',
       proficiency: 0.95,
       category: 'Version Control',
@@ -193,6 +206,13 @@ I enjoy turning ideas and designs into functional products and working across th
       category: 'Version Control',
       icon: Icons.code,
       iconPath: IconPaths.github,
+    ),
+    SkillModel(
+      name: 'Python',
+      proficiency: 0.50,
+      category: 'Languages',
+      icon: Icons.terminal,
+      iconPath: IconPaths.python,
     ),
   ];
 
@@ -244,7 +264,7 @@ I enjoy turning ideas and designs into functional products and working across th
   ];
 
   // ── Projects ───────────────────────────────────────────────
-  final projects = <ProjectModel>[
+  final projects = const <ProjectModel>[
     ProjectModel(
       emoji: '📞',
       title: 'Agora Connect',
@@ -254,7 +274,6 @@ I enjoy turning ideas and designs into functional products and working across th
       link: 'https://github.com/shahriasayad/agora_connect',
       impact:
           'Real-time audio/video calls, custom call signaling, call history tracking, dynamic hardware permission handling.',
-      coverImagePath: ImagePaths.agoraConnectCover,
     ),
     ProjectModel(
       emoji: '🍔',
@@ -285,7 +304,6 @@ I enjoy turning ideas and designs into functional products and working across th
       tech: ['Flutter', 'Hive', 'PDF Generation'],
       link: 'https://github.com/shahriasayad/meal_khata',
       impact: 'Automated financial summaries, PDF reporting, offline-first',
-      coverImagePath: ImagePaths.mealKhataCover,
     ),
     ProjectModel(
       emoji: '⛅',
@@ -315,6 +333,14 @@ I enjoy turning ideas and designs into functional products and working across th
   List<ProjectModel> get supportingProjects =>
       projects.length <= 1 ? const <ProjectModel>[] : projects.skip(1).toList();
 
+  Map<String, List<SkillModel>> get groupedSkills {
+    final grouped = <String, List<SkillModel>>{};
+    for (final skill in skills) {
+      grouped.putIfAbsent(skill.category, () => <SkillModel>[]).add(skill);
+    }
+    return grouped;
+  }
+
   List<GlobalKey> get sectionKeys => [
     heroKey,
     aboutKey,
@@ -326,7 +352,7 @@ I enjoy turning ideas and designs into functional products and working across th
   ];
 
   // ── Experience ─────────────────────────────────────────────
-  final experience = <ExperienceModel>[
+  final experience = const <ExperienceModel>[
     ExperienceModel(
       role: 'Flutter App Developer',
       company: 'Softvence Agency',
@@ -337,8 +363,8 @@ I enjoy turning ideas and designs into functional products and working across th
     ),
   ];
 
-  // ── Achievements ──────────────────────────────────────────────
-  final achievements = <AchievementModel>[
+  // ── Achievements ───────────────────────────────────────────
+  final achievements = const <AchievementModel>[
     AchievementModel(
       title: 'Industrial Attachment',
       organization: 'BdCalling Academy',
@@ -356,7 +382,7 @@ I enjoy turning ideas and designs into functional products and working across th
   ];
 
   // ── Education ──────────────────────────────────────────────
-  final education = <EducationModel>[
+  final education = const <EducationModel>[
     EducationModel(
       degree: 'Bachelor of Science (BSc)',
       school: 'Uttara University (UU)',
@@ -384,97 +410,94 @@ I enjoy turning ideas and designs into functional products and working across th
   ];
 
   // ── Social Links ───────────────────────────────────────────
-  final socials = <SocialLink>[
+  final socials = const <SocialLink>[
     SocialLink(
       label: 'GitHub',
       url: 'https://github.com/shahriasayad',
-      icon: Icons.code,
+      icon: Icons.code_rounded,
     ),
     SocialLink(
       label: 'LinkedIn',
       url: 'https://www.linkedin.com/in/shahria-sayad-9236a1308/',
-      icon: Icons.link,
+      icon: Icons.north_east_rounded,
     ),
     SocialLink(
       label: 'Email',
       url: 'mailto:shahriasayad9@gmail.com',
-      icon: Icons.email,
+      icon: Icons.mail_outline_rounded,
     ),
   ];
 
   @override
   void onInit() {
     super.onInit();
-    scrollController.addListener(_handleScroll);
-    loadSkillColors();
-  }
-
-  void _handleScroll() {
-    _updateActiveSection();
+    scrollController.addListener(_updateActiveSection);
   }
 
   void _updateActiveSection() {
     const anchorOffset = 180.0;
+    var resolvedIndex = 0;
 
     for (var index = 0; index < sectionKeys.length; index++) {
-      final key = sectionKeys[index];
-      final context = key.currentContext;
-      if (context == null) {
-        continue;
-      }
+      final context = sectionKeys[index].currentContext;
+      if (context == null) continue;
 
       final renderObject = context.findRenderObject();
-      if (renderObject is! RenderBox || !renderObject.hasSize) {
-        continue;
-      }
+      if (renderObject is! RenderBox || !renderObject.hasSize) continue;
 
       final offset = renderObject.localToGlobal(Offset.zero).dy;
       if (offset - anchorOffset <= 0) {
-        activeSectionIndex.value = index;
+        resolvedIndex = index;
       }
+    }
+
+    if (activeSectionIndex.value != resolvedIndex) {
+      activeSectionIndex.value = resolvedIndex;
     }
   }
 
   void scrollToSection(GlobalKey key) {
     final context = key.currentContext;
-    if (context == null) {
-      return;
-    }
+    if (context == null) return;
 
+    final disableAnimations = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
     Scrollable.ensureVisible(
       context,
-      duration: const Duration(milliseconds: 700),
+      duration: disableAnimations
+          ? Duration.zero
+          : const Duration(milliseconds: 650),
       curve: Curves.easeInOutCubic,
+      alignment: 0.04,
     );
   }
 
-  Future<void> loadSkillColors() async {
-    for (final skill in skills) {
-      final iconPath = skill.iconPath;
-      if (iconPath == null) {
-        continue;
-      }
-
-      if (skill.name == 'GitHub') {
-        skill.setCachedColor(Colors.white);
-        continue;
-      }
-
-      final color = await IconColorExtractor.extractDominantColor(iconPath);
-      skill.setCachedColor(color);
-    }
-
-    skillPaletteReady.value = true;
+  Future<void> openUrl(
+    String? url, {
+    bool external = false,
+    String errorMessage = 'Could not open link.',
+  }) async {
+    await _service.openExternalUrl(
+      url,
+      mode: external ? LaunchMode.externalApplication : LaunchMode.platformDefault,
+      errorMessage: errorMessage,
+    );
   }
 
-  Future<void> downloadCV() async {
-    final Uri url = Uri.parse('https://canva.link/6l65wdwp7qrc8hz');
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    } else {
-      EasyLoading.showError('Could not download CV');
-    }
-  }
+  Future<void> openEmailClient() => _service.openEmailClient(email.value);
+
+  Future<void> copyEmail() => _service.copyToClipboard(
+    email.value,
+    toastMessage: 'Email copied to clipboard',
+  );
+
+  Future<void> downloadCV() => _service.openExternalUrl(
+    cvUrl,
+    errorMessage: 'Could not download CV.',
+  );
+
+  String? validateEmail(String? value) => _service.validateEmail(value);
+
+  String? validateMessage(String? value) => _service.validateMessage(value);
 
   Future<void> submitContactForm() async {
     if (!(contactFormKey.currentState?.validate() ?? false)) {
@@ -485,25 +508,16 @@ I enjoy turning ideas and designs into functional products and working across th
     EasyLoading.show(status: 'Sending...');
 
     try {
-      final response = await http
-          .post(
-            Uri.parse('https://formsubmit.co/ajax/${email.value}'),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: {
-              'email': contactEmailController.text,
-              'message': contactMessageController.text,
-              '_captcha': 'false',
-            },
-          )
-          .timeout(
-            const Duration(seconds: 10),
-            onTimeout: () => throw Exception('Request timeout'),
-          );
+      final sent = await _service.submitContactMessage(
+        targetEmail: email.value,
+        senderEmail: contactEmailController.text,
+        message: contactMessageController.text,
+      );
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
+      if (sent) {
         contactEmailController.clear();
         contactMessageController.clear();
-        EasyLoading.dismiss();
+        EasyLoading.showSuccess('Message sent!');
       } else {
         EasyLoading.showError('Failed to send message.');
       }
@@ -516,7 +530,7 @@ I enjoy turning ideas and designs into functional products and working across th
 
   @override
   void onClose() {
-    scrollController.removeListener(_handleScroll);
+    scrollController.removeListener(_updateActiveSection);
     scrollController.dispose();
     contactEmailController.dispose();
     contactMessageController.dispose();

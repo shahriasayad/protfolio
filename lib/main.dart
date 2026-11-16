@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'core/constants/app_tokens.dart';
 import 'core/utils/app_screen_util.dart';
+import 'features/portfolio/services/portfolio_service.dart';
 import 'features/portfolio/viewmodels/portfolio_controller.dart';
 import 'features/portfolio/views/screens/portfolio_screen.dart';
 
@@ -17,18 +18,18 @@ void _configLoading() {
     ..displayDuration = const Duration(milliseconds: 2000)
     ..indicatorType = EasyLoadingIndicatorType.ring
     ..loadingStyle = EasyLoadingStyle.custom
-    ..indicatorSize = 45.0
-    ..radius = 10.0
+    ..indicatorSize = 40.0
+    ..radius = AppTokens.r8
     ..progressColor = AppTokens.accent
-    ..backgroundColor = AppTokens.surface
+    ..backgroundColor = AppTokens.surfaceElevated
     ..indicatorColor = AppTokens.accent
     ..textColor = AppTokens.textPrimary
-    ..maskColor = AppTokens.bg.withValues(alpha: 0.5)
+    ..maskColor = AppTokens.bg.withValues(alpha: 0.6)
     ..userInteractions = false
     ..dismissOnTap = false;
 }
 
-/// Root application widget
+/// Root application widget configuring GetX DI, theme, and EasyLoading.
 class PortfolioApp extends StatelessWidget {
   const PortfolioApp({super.key});
 
@@ -36,6 +37,7 @@ class PortfolioApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       initialBinding: BindingsBuilder(() {
+        Get.put(PortfolioService(), permanent: true);
         Get.put(PortfolioController(), permanent: true);
       }),
       builder: EasyLoading.init(
@@ -44,13 +46,15 @@ class PortfolioApp extends StatelessWidget {
           return child ?? const SizedBox.shrink();
         },
       ),
-      title: 'Portfolio',
+      title: 'Shahria Sayad — Flutter Developer',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: AppTokens.bg,
         colorScheme: const ColorScheme.dark(
           primary: AppTokens.accent,
           surface: AppTokens.surface,
+          onPrimary: AppTokens.bg,
+          onSurface: AppTokens.textPrimary,
         ),
         textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme),
       ),

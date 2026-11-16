@@ -1,51 +1,54 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
-import 'package:my_portfolio/core/utils/app_screen_util.dart';
-import 'package:my_portfolio/features/portfolio/models/skill_model.dart';
+import '../../../models/skill_model.dart';
 import '../skill/skill_bar.dart';
 
-/// Skill card - displays skill with bar
+/// Clean capability item combining skill icon and precision SkillBar readout.
 class SkillCard extends StatelessWidget {
   final SkillModel skill;
+
   const SkillCard({super.key, required this.skill});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: AppTokens.surface,
-        borderRadius: BorderRadius.circular(AppTokens.r12.r),
-        border: Border.all(color: AppTokens.border.withValues(alpha: 0.5)),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppTokens.s14,
+        vertical: AppTokens.s12,
       ),
-      padding: EdgeInsets.symmetric(
-        horizontal: AppTokens.s12.w,
-        vertical: AppTokens.s8.h,
+      decoration: BoxDecoration(
+        color: AppTokens.bg,
+        borderRadius: BorderRadius.circular(AppTokens.r8),
+        border: Border.all(color: AppTokens.border),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: 32,
-            height: 32,
+            width: 30,
+            height: 30,
             decoration: BoxDecoration(
-              color: AppTokens.surfaceGlass,
-              borderRadius: BorderRadius.circular(AppTokens.r8.r),
-              border: Border.all(
-                color: AppTokens.borderStrong.withValues(alpha: 0.45),
-              ),
+              color: AppTokens.surface,
+              borderRadius: BorderRadius.circular(AppTokens.r6),
+              border: Border.all(color: AppTokens.border),
             ),
             child: skill.iconPath != null
                 ? Padding(
-                    padding: const EdgeInsets.all(7),
-                    child: Image.asset(skill.iconPath!, fit: BoxFit.contain),
+                    padding: const EdgeInsets.all(6),
+                    child: Image.asset(
+                      skill.iconPath!,
+                      fit: BoxFit.contain,
+                      cacheWidth: kIsWeb ? null : 64,
+                    ),
                   )
                 : Icon(
-                    skill.icon ?? Icons.star,
+                    skill.icon ?? Icons.code_rounded,
                     color: AppTokens.accent,
                     size: 16,
                   ),
           ),
-          SizedBox(width: AppTokens.s12.w),
+          const SizedBox(width: AppTokens.s12),
           Expanded(child: SkillBar(skill: skill)),
         ],
       ),

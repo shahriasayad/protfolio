@@ -1,50 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:my_portfolio/features/portfolio/viewmodels/portfolio_controller.dart';
 import '../../../../core/constants/app_tokens.dart';
-import 'package:my_portfolio/core/utils/app_screen_util.dart';
-import '../widgets/common/section_wrapper.dart';
-import '../widgets/common/portfolio_section_header.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/utils/app_screen_util.dart';
+import '../../viewmodels/portfolio_controller.dart';
 import '../widgets/buttons/email_button.dart';
 import '../widgets/buttons/social_button.dart';
+import '../widgets/common/portfolio_section_header.dart';
+import '../widgets/common/section_wrapper.dart';
 import '../widgets/forms/contact_form.dart';
 
-/// Contact section - call to action and social links
+/// Contact section - closing invitation, trust signals, direct links, and form.
 class ContactSection extends StatelessWidget {
   const ContactSection({super.key});
 
   @override
   Widget build(BuildContext context) {
     final ctrl = Get.find<PortfolioController>();
-    final isWide = AppScreenUtil.screenWidth > 900;
+    final width = MediaQuery.sizeOf(context).width;
+    final isDesktop = AppScreenUtil.isDesktopWidth(width);
 
     return SectionWrapper(
-      tone: SectionTone.elevated,
+      tone: SectionTone.tinted,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const PortfolioSectionHeader(
-            sectionIndex: '07',
+            sectionIndex: '09',
             title: 'Contact',
             subtitle: 'Let\'s talk about what you\'re building.',
             description:
-                'If you want a Flutter portfolio, product page, or mobile experience that feels more premium and considered, let’s talk about the outcome you want to create.',
+                'If you want a Flutter app, product build, or mobile experience that feels sharp and considered, let’s talk about the outcome you want to create.',
           ),
-          SizedBox(height: AppTokens.s48.h),
-          if (isWide)
+          const SizedBox(height: AppTokens.s36),
+          if (isDesktop)
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(child: _ContactNarrative(ctrl: ctrl)),
-                SizedBox(width: AppTokens.s24.w),
-                Expanded(child: const ContactForm()),
+                Expanded(flex: 5, child: _ContactNarrative(ctrl: ctrl)),
+                const SizedBox(width: AppTokens.s36),
+                const Expanded(flex: 6, child: ContactForm()),
               ],
             )
           else ...[
             _ContactNarrative(ctrl: ctrl),
-            SizedBox(height: AppTokens.s24.h),
+            const SizedBox(height: AppTokens.s28),
             const ContactForm(),
           ],
         ],
@@ -61,61 +61,56 @@ class _ContactNarrative extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(AppTokens.s16.w),
+      padding: const EdgeInsets.all(AppTokens.s24),
       decoration: BoxDecoration(
-        color: AppTokens.surfaceGlass,
-        borderRadius: BorderRadius.circular(AppTokens.r24.r),
-        border: Border.all(
-          color: AppTokens.borderStrong.withValues(alpha: 0.55),
-        ),
+        color: AppTokens.surface,
+        borderRadius: BorderRadius.circular(AppTokens.r12),
+        border: Border.all(color: AppTokens.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             "Have a project in mind?\nLet's build the right version of it.",
-            style: GoogleFonts.spaceGrotesk(
-              color: AppTokens.textPrimary,
-              fontSize: 25.sp,
-              fontWeight: FontWeight.w700,
-              letterSpacing: -1.2,
-              height: 1.1,
-            ),
+            style: AppTextStyles.cardTitle(fontSize: 24),
           ),
-          SizedBox(height: AppTokens.s16.h),
+          const SizedBox(height: AppTokens.s12),
           Text(
             ctrl.brandSummary,
-            style: GoogleFonts.inter(
+            style: AppTextStyles.body(
+              fontSize: 14,
               color: AppTokens.textSecondary,
-              fontSize: 13.sp,
-              // height: 1.8,
             ),
           ),
-          SizedBox(height: AppTokens.s24.h),
-          _ContactTrustBullet(
+          const SizedBox(height: AppTokens.s24),
+          const _ContactTrustBullet(
             icon: Icons.schedule_outlined,
             title: 'Fast response',
             subtitle: 'Usually within 24–48 hours.',
           ),
-          SizedBox(height: AppTokens.s12.h),
-          _ContactTrustBullet(
+          const SizedBox(height: AppTokens.s14),
+          const _ContactTrustBullet(
             icon: Icons.verified_outlined,
             title: 'Clear communication',
             subtitle: 'Straightforward scope, no unnecessary back-and-forth.',
           ),
-          SizedBox(height: AppTokens.s12.h),
-          _ContactTrustBullet(
+          const SizedBox(height: AppTokens.s14),
+          const _ContactTrustBullet(
             icon: Icons.public_outlined,
             title: 'Remote-friendly',
             subtitle: 'Open to freelance and product-focused collaborations.',
           ),
-          SizedBox(height: AppTokens.s24.h),
+          const SizedBox(height: AppTokens.s24),
+          const Divider(height: 1, color: AppTokens.border),
+          const SizedBox(height: AppTokens.s20),
           Obx(() => EmailButton(email: ctrl.email.value)),
-          SizedBox(height: AppTokens.s20.h),
+          const SizedBox(height: AppTokens.s14),
           Wrap(
-            spacing: AppTokens.s12.w,
-            runSpacing: AppTokens.s12.h,
-            children: ctrl.socials.map((s) => SocialButton(social: s)).toList(),
+            spacing: AppTokens.s10,
+            runSpacing: AppTokens.s10,
+            children: ctrl.socials
+                .map((s) => SocialButton(social: s))
+                .toList(),
           ),
         ],
       ),
@@ -140,33 +135,34 @@ class _ContactTrustBullet extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          padding: EdgeInsets.all(AppTokens.s8.w),
+          padding: const EdgeInsets.all(AppTokens.s8),
           decoration: BoxDecoration(
-            color: AppTokens.accent.withValues(alpha: 0.12),
-            borderRadius: BorderRadius.circular(AppTokens.r8.r),
+            color: AppTokens.accentSoft,
+            borderRadius: BorderRadius.circular(AppTokens.r6),
           ),
-          child: Icon(icon, color: AppTokens.accent, size: 16),
+          child: Icon(icon, color: AppTokens.accent, size: 15),
         ),
-        SizedBox(width: AppTokens.s12.w),
+        const SizedBox(width: AppTokens.s12),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 title,
-                style: GoogleFonts.inter(
+                style: AppTextStyles.body(
+                  fontSize: 14,
                   color: AppTokens.textPrimary,
-                  fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
+                  height: 1.25,
                 ),
               ),
-              SizedBox(height: AppTokens.s4.h),
+              const SizedBox(height: AppTokens.s2),
               Text(
                 subtitle,
-                style: GoogleFonts.inter(
+                style: AppTextStyles.body(
+                  fontSize: 13,
                   color: AppTokens.textMuted,
-                  fontSize: 12.sp,
-                  height: 1.5,
+                  height: 1.45,
                 ),
               ),
             ],

@@ -1,75 +1,66 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
-import 'package:my_portfolio/core/utils/app_screen_util.dart';
-import 'package:my_portfolio/features/portfolio/models/social_link_model.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:my_portfolio/core/theme/app_text_styles.dart';
+import '../../../models/social_link_model.dart';
+import '../../../viewmodels/portfolio_controller.dart';
+import '../common/hover_builder.dart';
 
-/// Social button - clickable social link
-class SocialButton extends StatefulWidget {
+/// Compact social profile link button.
+class SocialButton extends StatelessWidget {
   final SocialLink social;
+
   const SocialButton({super.key, required this.social});
 
   @override
-  State<SocialButton> createState() => _SocialButtonState();
-}
-
-class _SocialButtonState extends State<SocialButton> {
-  bool _hovered = false;
-
-  Future<void> _launchUrl() async {
-    final messenger = ScaffoldMessenger.of(context);
-    final Uri url = Uri.parse(widget.social.url);
-    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-      messenger.showSnackBar(
-        SnackBar(content: Text('Could not launch ${widget.social.url}')),
-      );
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
-      child: GestureDetector(
-        onTap: _launchUrl,
-        child: AnimatedContainer(
+    final ctrl = Get.find<PortfolioController>();
+
+    return HoverBuilder(
+      hoverId: 'social_${social.label}',
+      onTap: () => ctrl.openUrl(
+        social.url,
+        external: true,
+        errorMessage: 'Could not open ${social.label}.',
+      ),
+      builder: (context, hovered) {
+        return AnimatedContainer(
           duration: const Duration(milliseconds: 150),
-          padding: EdgeInsets.symmetric(
-            horizontal: AppTokens.s16.w,
-            vertical: AppTokens.s12.h,
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppTokens.s14,
+            vertical: AppTokens.s10,
           ),
           decoration: BoxDecoration(
-            color: _hovered ? AppTokens.surface : Colors.transparent,
-            borderRadius: BorderRadius.circular(AppTokens.r12.r),
+            color: hovered ? AppTokens.surfaceAlt : AppTokens.bg,
+            borderRadius: BorderRadius.circular(AppTokens.r8),
             border: Border.all(
-              color: _hovered ? AppTokens.border : AppTokens.border,
+              color: hovered ? AppTokens.accent : AppTokens.border,
             ),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
-                widget.social.icon,
-                color: _hovered ? AppTokens.accent : AppTokens.textSecondary,
-                size: 16,
+                social.icon,
+                color: hovered ? AppTokens.accent : AppTokens.textSecondary,
+                size: 15,
               ),
-              SizedBox(width: AppTokens.s8.w),
+              const SizedBox(width: AppTokens.s8),
               Text(
-                widget.social.label,
-                style: GoogleFonts.inter(
-                  color: _hovered
+                social.label,
+                style: AppTextStyles.body(
+                  fontSize: 13,
+                  color: hovered
                       ? AppTokens.textPrimary
                       : AppTokens.textSecondary,
-                  fontSize: 14.sp,
                   fontWeight: FontWeight.w500,
+                  height: 1.1,
                 ),
               ),
             ],
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

@@ -1,59 +1,94 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
-import 'package:my_portfolio/core/utils/app_screen_util.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:my_portfolio/core/theme/app_text_styles.dart';
+import '../../../viewmodels/portfolio_controller.dart';
+import '../common/hover_builder.dart';
 
-/// Email button - clickable email link
-class EmailButton extends StatefulWidget {
+/// Direct email trigger with inline clipboard copy action.
+class EmailButton extends StatelessWidget {
   final String email;
+
   const EmailButton({super.key, required this.email});
 
   @override
-  State<EmailButton> createState() => _EmailButtonState();
-}
-
-class _EmailButtonState extends State<EmailButton> {
-  bool _hovered = false;
-
-  Future<void> _launchEmail() async {
-    final messenger = ScaffoldMessenger.of(context);
-    final Uri emailUri = Uri(scheme: 'mailto', path: widget.email);
-    if (!await launchUrl(emailUri)) {
-      messenger.showSnackBar(
-        const SnackBar(content: Text('Could not launch email client')),
-      );
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
-      child: GestureDetector(
-        onTap: _launchEmail,
-        child: AnimatedDefaultTextStyle(
-          duration: const Duration(milliseconds: 150),
-          style: GoogleFonts.inter(
-            color: _hovered ? AppTokens.accent : AppTokens.textSecondary,
-            fontSize: 16.sp,
-            fontWeight: _hovered ? FontWeight.w600 : FontWeight.w400,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.mail_outline,
-                color: _hovered ? AppTokens.accent : AppTokens.textSecondary,
-                size: 18,
-              ),
-              SizedBox(width: AppTokens.s8.w),
-              Text(widget.email),
-            ],
+    final ctrl = Get.find<PortfolioController>();
+
+    return Row(
+      children: [
+        Flexible(
+          child: HoverBuilder(
+            hoverId: 'email_launch',
+            onTap: ctrl.openEmailClient,
+            builder: (context, hovered) {
+              return Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppTokens.s14,
+                  vertical: AppTokens.s10,
+                ),
+                decoration: BoxDecoration(
+                  color: AppTokens.bg,
+                  borderRadius: BorderRadius.circular(AppTokens.r8),
+                  border: Border.all(
+                    color: hovered ? AppTokens.accent : AppTokens.borderStrong,
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.mail_outline_rounded,
+                      size: 16,
+                      color: hovered
+                          ? AppTokens.accent
+                          : AppTokens.textSecondary,
+                    ),
+                    const SizedBox(width: AppTokens.s10),
+                    Flexible(
+                      child: Text(
+                        email,
+                        style: AppTextStyles.mono(
+                          fontSize: 13,
+                          color: hovered
+                              ? AppTokens.accent
+                              : AppTokens.textPrimary,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
         ),
-      ),
+        const SizedBox(width: AppTokens.s8),
+        HoverBuilder(
+          hoverId: 'email_copy',
+          onTap: ctrl.copyEmail,
+          builder: (context, hovered) {
+            return Tooltip(
+              message: 'Copy email',
+              child: Container(
+                padding: const EdgeInsets.all(AppTokens.s10),
+                decoration: BoxDecoration(
+                  color: hovered ? AppTokens.surfaceAlt : AppTokens.bg,
+                  borderRadius: BorderRadius.circular(AppTokens.r8),
+                  border: Border.all(
+                    color: hovered ? AppTokens.accent : AppTokens.borderStrong,
+                  ),
+                ),
+                child: Icon(
+                  Icons.copy_rounded,
+                  size: 16,
+                  color: hovered ? AppTokens.accent : AppTokens.textSecondary,
+                ),
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }

@@ -1,4 +1,6 @@
 class IconPaths {
+  IconPaths._();
+
   static const String socketIo = 'assets/icons/Socket.io.png';
   static const String androidStudio = 'assets/icons/androidstudio.png';
   static const String api = 'assets/icons/api.png';
@@ -19,20 +21,18 @@ class IconPaths {
   static const String vsCode = 'assets/icons/vscode.png';
 }
 
-
-
-
-
 class ImagePaths {
+  ImagePaths._();
+
   static const String biteGoCover = 'assets/images/bite_go_cover.png';
   static const String careBridgeCover = 'assets/images/care_bridge_cover.png';
-  static const String mealKhataCover = 'assets/images/meal_khata_cover.png';
   static const String shareListCover = 'assets/images/share_list_cover.jpg';
-  static const String weatherForecastCover = 'assets/images/weather_forecast_cover.jpg';
-  static const String floridaYachtTraderCover = 'assets/images/florida_yacht_trader_cover.png';
-  static const String profile1 = 'assets/images/profile1.jpg';
+  static const String weatherForecastCover =
+      'assets/images/weather_forecast_cover.jpg';
+  static const String floridaYachtTraderCover =
+      'assets/images/florida_yacht_trader_cover.png';
   static const String profile2 = 'assets/images/profile2.jpg';
   static const String tacoClientCover = 'assets/images/taco_client_cover.png';
-  static const String tacoConductorCover = 'assets/images/taco_conductor_cover.png';
-  static const String agoraConnectCover = 'assets/images/agora_connect_cover.png';
+  static const String tacoConductorCover =
+      'assets/images/taco_conductor_cover.png';
 }

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
+import 'package:my_portfolio/core/theme/app_text_styles.dart';
 import 'package:my_portfolio/core/utils/app_screen_util.dart';
 import '../../../viewmodels/portfolio_controller.dart';
+import '../buttons/ghost_button.dart';
 import '../buttons/primary_button.dart';
 import '../buttons/secondary_button.dart';
 import 'portfolio_stat_card.dart';
 
-/// Hero text content - Name, title, intro, and CTAs
+/// Hero editorial narrative column: availability status, display title, CTAs, and stats.
 class HeroTextContent extends StatelessWidget {
   final PortfolioController ctrl;
   final VoidCallback onHire;
@@ -22,132 +24,168 @@ class HeroTextContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = AppScreenUtil.screenWidth < 640;
+    final width = MediaQuery.sizeOf(context).width;
+    final isMobile = AppScreenUtil.isMobileWidth(width);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Monospace availability & discipline tag
         Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: AppTokens.s12.w,
-            vertical: AppTokens.s6.h,
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppTokens.s12,
+            vertical: AppTokens.s6,
           ),
           decoration: BoxDecoration(
-            color: AppTokens.surfaceGlass,
-            borderRadius: BorderRadius.circular(AppTokens.r999.r),
-            border: Border.all(
-              color: AppTokens.borderStrong.withValues(alpha: 0.55),
-            ),
+            color: AppTokens.surface,
+            borderRadius: BorderRadius.circular(AppTokens.r6),
+            border: Border.all(color: AppTokens.border),
           ),
-          child: Text(
-            'Flutter developer · Product builder · UI systems',
-            style: GoogleFonts.inter(
-              color: AppTokens.textSecondary,
-              fontSize: 11.sp,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 1.4,
-            ),
-          ),
-        ),
-        SizedBox(height: AppTokens.s12.h),
-        // Name with animated gradient
-        Text(
-          ctrl.name.value,
-          style: GoogleFonts.spaceGrotesk(
-            color: AppTokens.textPrimary,
-            fontSize: isMobile ? 32.sp : 43.sp,
-            fontWeight: FontWeight.w700,
-            height: 1.0,
-            letterSpacing: -1.5,
-          ),
-        ),
-        SizedBox(height: AppTokens.s8.h),
-
-        Text(
-          ctrl.brandHeadline,
-          style: GoogleFonts.spaceGrotesk(
-            color: AppTokens.textPrimary,
-            fontSize: isMobile ? 16.sp : 18.sp,
-            fontWeight: FontWeight.w600,
-            // height: 1.25,
-          ),
-        ),
-        SizedBox(height: AppTokens.s12.h),
-
-        Text(
-          ctrl.brandSummary,
-          style: GoogleFonts.inter(
-            color: AppTokens.textSecondary,
-            fontSize: isMobile ? 14.sp : 14.sp,
-            // height: 1.6,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        Wrap(
-          spacing: AppTokens.s12.w,
-          runSpacing: AppTokens.s12.h,
-          children: ctrl.heroStats
-              .map(
-                (stat) => SizedBox(
-                  width: isMobile ? double.infinity : 180.w,
-                  child: PortfolioStatCard(stat: stat),
-                ),
-              )
-              .toList(),
-        ),
-
-        SizedBox(height: AppTokens.s16.h),
-
-        Container(
-          padding: EdgeInsets.all(AppTokens.s16.w),
-          decoration: BoxDecoration(
-            color: AppTokens.surfaceGlass,
-            borderRadius: BorderRadius.circular(AppTokens.r24.r),
-            border: Border.all(
-              color: AppTokens.borderStrong.withValues(alpha: 0.55),
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      ctrl.availabilityNote,
-                      style: GoogleFonts.inter(
-                        color: AppTokens.textPrimary,
-                        fontSize: 12.sp,
-                        height: 1.6,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: AppTokens.s12.w),
-                  Container(
-                    width: 12,
-                    height: 12,
-                    decoration: const BoxDecoration(
-                      color: AppTokens.accent,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ],
+              Container(
+                width: 7,
+                height: 7,
+                decoration: const BoxDecoration(
+                  color: AppTokens.statusLive,
+                  shape: BoxShape.circle,
+                ),
               ),
-              SizedBox(height: AppTokens.s16.h),
-              Wrap(
-                spacing: AppTokens.s12.w,
-                runSpacing: AppTokens.s12.h,
-                children: [
-                  PrimaryButton(
-                    label: 'View CV',
-                    onTap: () => ctrl.downloadCV(),
+              const SizedBox(width: AppTokens.s8),
+              Flexible(
+                child: Obx(
+                  () => Text(
+                    '${ctrl.title.value.toUpperCase()}  ·  PRODUCT & UI SYSTEMS',
+                    style: AppTextStyles.mono(
+                      fontSize: 11,
+                      color: AppTokens.textSecondary,
+                      letterSpacing: 0.9,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  SecondaryButton(label: 'Get in Touch', onTap: onHire),
-                ],
+                ),
               ),
             ],
           ),
+        ),
+        const SizedBox(height: AppTokens.s20),
+
+        // Display name
+        Obx(
+          () => Text(
+            ctrl.name.value,
+            style: AppTextStyles.heroDisplay(isMobile: isMobile),
+          ),
+        ),
+        const SizedBox(height: AppTokens.s12),
+
+        // Brand headline
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: Text(
+            ctrl.brandHeadline,
+            style: AppTextStyles.heroStatement(isMobile: isMobile),
+          ),
+        ),
+        const SizedBox(height: AppTokens.s14),
+
+        // Summary + Intro
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 580),
+          child: Obx(
+            () => Text(
+              '${ctrl.intro.value} ${ctrl.brandSummary}',
+              style: AppTextStyles.body(
+                fontSize: isMobile ? 14 : 15,
+                color: AppTokens.textMuted,
+                height: 1.65,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: AppTokens.s24),
+
+        // Availability inline spec note
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(top: 5),
+              child: Icon(
+                Icons.terminal_rounded,
+                size: 14,
+                color: AppTokens.accent,
+              ),
+            ),
+            const SizedBox(width: AppTokens.s8),
+            Expanded(
+              child: Text(
+                ctrl.availabilityNote,
+                style: AppTextStyles.mono(
+                  fontSize: 12,
+                  color: AppTokens.textSecondary,
+                  letterSpacing: 0.1,
+                  height: 1.5,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppTokens.s24),
+
+        // CTA Cluster
+        Wrap(
+          spacing: AppTokens.s12,
+          runSpacing: AppTokens.s12,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            PrimaryButton(
+              label: 'View CV',
+              icon: Icons.north_east_rounded,
+              onTap: ctrl.downloadCV,
+            ),
+            SecondaryButton(
+              label: 'Get in Touch',
+              onTap: onHire,
+            ),
+            GhostButton(
+              label: 'Explore Projects',
+              icon: Icons.south_rounded,
+              onTap: onProjects,
+            ),
+          ],
+        ),
+        const SizedBox(height: AppTokens.s40),
+
+        // Architectural 3-column metrics strip
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final narrow = constraints.maxWidth < 480;
+            if (narrow) {
+              return Column(
+                children: ctrl.heroStats
+                    .map(
+                      (stat) => Padding(
+                        padding: const EdgeInsets.only(bottom: AppTokens.s16),
+                        child: PortfolioStatCard(stat: stat),
+                      ),
+                    )
+                    .toList(),
+              );
+            }
+
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (var i = 0; i < ctrl.heroStats.length; i++) ...[
+                  Expanded(child: PortfolioStatCard(stat: ctrl.heroStats[i])),
+                  if (i < ctrl.heroStats.length - 1)
+                    const SizedBox(width: AppTokens.s16),
+                ],
+              ],
+            );
+          },
         ),
       ],
     );

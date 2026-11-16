@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_portfolio/core/constants/app_tokens.dart';
-import 'package:my_portfolio/core/utils/app_screen_util.dart';
-import 'package:my_portfolio/features/portfolio/viewmodels/portfolio_controller.dart';
-import 'package:my_portfolio/features/portfolio/views/widgets/cards/live_app_card.dart';
-import 'package:my_portfolio/features/portfolio/views/widgets/common/portfolio_section_header.dart';
-import 'package:my_portfolio/features/portfolio/views/widgets/common/section_wrapper.dart';
+import '../../../../core/constants/app_tokens.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../viewmodels/portfolio_controller.dart';
+import '../widgets/cards/live_app_card.dart';
+import '../widgets/common/portfolio_section_header.dart';
+import '../widgets/common/section_wrapper.dart';
 
+/// Live Apps section - shipped production applications with prominent store links.
 class LiveAppsSection extends StatelessWidget {
   const LiveAppsSection({super.key});
 
@@ -15,45 +16,49 @@ class LiveAppsSection extends StatelessWidget {
     final ctrl = Get.find<PortfolioController>();
 
     return SectionWrapper(
-      tone: SectionTone.base,
+      tone: SectionTone.elevated,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const PortfolioSectionHeader(
-            sectionIndex:
-                '02', // Assuming it replaces Featured Projects which is 03? We'll let it share numbering or skip. Wait, Featured Projects is 03 in projects_section.dart. Let's not use an index if it's part of Projects, or just use 02.5. Let's omit sectionIndex.
+          PortfolioSectionHeader(
+            sectionIndex: '03',
             title: 'Live Apps',
             subtitle: 'Products I have built that are currently in production.',
+            trailing: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppTokens.s12,
+                vertical: AppTokens.s6,
+              ),
+              decoration: BoxDecoration(
+                color: AppTokens.statusLiveSoft,
+                borderRadius: BorderRadius.circular(AppTokens.r6),
+                border: Border.all(
+                  color: AppTokens.statusLive.withValues(alpha: 0.35),
+                ),
+              ),
+              child: Text(
+                '${ctrl.liveApps.length} SHIPPED PRODUCTS',
+                style: AppTextStyles.mono(
+                  fontSize: 11,
+                  color: AppTokens.statusLive,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
           ),
-          SizedBox(height: AppTokens.s16.h),
-
-          // Live Apps Grid
-          LayoutBuilder(
-            builder: (context, constraints) {
-              final isWide = constraints.maxWidth > 700;
-
-              if (isWide) {
-                return Wrap(
-                  spacing: AppTokens.s16.w,
-                  runSpacing: AppTokens.s16.h,
-                  children: ctrl.liveApps.map((app) {
-                    return SizedBox(
-                      width: (constraints.maxWidth - AppTokens.s16.w) / 2,
-                      child: LiveAppCard(app: app),
-                    );
-                  }).toList(),
-                );
-              } else {
-                return Column(
-                  children: ctrl.liveApps.map((app) {
-                    return Padding(
-                      padding: EdgeInsets.only(bottom: AppTokens.s16.h),
-                      child: LiveAppCard(app: app),
-                    );
-                  }).toList(),
-                );
-              }
-            },
+          const SizedBox(height: AppTokens.s36),
+          Column(
+            children: [
+              for (var i = 0; i < ctrl.liveApps.length; i++) ...[
+                LiveAppCard(
+                  app: ctrl.liveApps[i],
+                  index: i,
+                  reverseLayout: i.isOdd,
+                ),
+                if (i < ctrl.liveApps.length - 1)
+                  const SizedBox(height: AppTokens.s24),
+              ],
+            ],
           ),
         ],
       ),

@@ -1,132 +1,137 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
+import 'package:my_portfolio/core/theme/app_text_styles.dart';
 import 'package:my_portfolio/core/utils/app_screen_util.dart';
-import 'package:my_portfolio/features/portfolio/models/education_model.dart';
+import '../../../models/education_model.dart';
+import '../common/hover_builder.dart';
 
-/// Education card - displays education details
-class EducationCard extends StatefulWidget {
+/// Academic timeline entry aligned with the architectural rail grammar.
+class EducationCard extends StatelessWidget {
   final EducationModel item;
   final bool isLast;
-  const EducationCard({super.key, required this.item, required this.isLast});
 
-  @override
-  State<EducationCard> createState() => _EducationCardState();
-}
-
-class _EducationCardState extends State<EducationCard> {
-  bool _hovered = false;
+  const EducationCard({
+    super.key,
+    required this.item,
+    required this.isLast,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final edu = widget.item;
-    const accentColors = [AppTokens.accentBlue, AppTokens.accentPurple];
-    final accentColor =
-        accentColors[widget.item.hashCode % accentColors.length];
+    final width = MediaQuery.sizeOf(context).width;
+    final isMobile = AppScreenUtil.isMobileWidth(width);
 
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 220),
-        transform: Matrix4.translationValues(0, _hovered ? -3 : 0, 0),
-        // margin: EdgeInsets.only(bottom: widget.isLast ? 0 : AppTokens.s20.h),
-        padding: EdgeInsets.all(AppTokens.s16.w),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              _hovered ? AppTokens.surfaceAlt : AppTokens.surface,
-              AppTokens.surfaceSoft.withValues(alpha: 0.92),
-            ],
-          ),
-          borderRadius: BorderRadius.circular(AppTokens.r20.r),
-          border: Border.all(
-            color: _hovered
-                ? accentColor.withValues(alpha: 0.35)
-                : AppTokens.borderStrong.withValues(alpha: 0.55),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: _hovered ? 0.24 : 0.16),
-              blurRadius: _hovered ? 28 : 18,
-              offset: const Offset(0, 10),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(AppTokens.s8.w),
-                  decoration: BoxDecoration(
-                    color: accentColor.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(AppTokens.r12.r),
-                  ),
-                  child: Icon(
-                    Icons.school_outlined,
-                    color: accentColor,
-                    size: 20,
+    return HoverBuilder(
+      hoverId: 'edu_${item.degree}_${item.period}',
+      cursor: MouseCursor.defer,
+      builder: (context, hovered) {
+        return IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (!isMobile) ...[
+                SizedBox(
+                  width: 210,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 4, right: AppTokens.s16),
+                    child: Text(
+                      item.period,
+                      style: AppTextStyles.mono(
+                        fontSize: 12,
+                        color: hovered
+                            ? AppTokens.accent
+                            : AppTokens.textMuted,
+                        height: 1.5,
+                      ),
+                    ),
                   ),
                 ),
-                const SizedBox(width: AppTokens.s16),
-                Expanded(
+              ],
+              SizedBox(
+                width: 20,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 8),
+                    Container(
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(2),
+                        color: hovered ? AppTokens.accent : AppTokens.borderStrong,
+                      ),
+                    ),
+                    if (!isLast)
+                      Expanded(
+                        child: Container(
+                          width: 1,
+                          margin: const EdgeInsets.symmetric(
+                            vertical: AppTokens.s6,
+                          ),
+                          color: AppTokens.border,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: AppTokens.s16),
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.only(
+                    bottom: isLast ? AppTokens.s8 : AppTokens.s24,
+                  ),
+                  margin: EdgeInsets.only(
+                    bottom: isLast ? 0 : AppTokens.s16,
+                  ),
+                  decoration: isLast
+                      ? null
+                      : const BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: AppTokens.border),
+                          ),
+                        ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      if (isMobile) ...[
+                        Text(
+                          item.period,
+                          style: AppTextStyles.mono(
+                            fontSize: 11,
+                            color: AppTokens.accent,
+                          ),
+                        ),
+                        const SizedBox(height: AppTokens.s6),
+                      ],
                       Text(
-                        edu.degree,
-                        style: GoogleFonts.spaceGrotesk(
-                          color: AppTokens.textPrimary,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16.5.sp,
+                        item.degree,
+                        style: AppTextStyles.cardTitle(fontSize: 18),
+                      ),
+                      const SizedBox(height: AppTokens.s4),
+                      Text(
+                        '${item.field}  ·  ${item.school}',
+                        style: AppTextStyles.body(
+                          fontSize: 14,
+                          color: AppTokens.accent,
+                          fontWeight: FontWeight.w500,
+                          height: 1.4,
                         ),
                       ),
-                      SizedBox(height: AppTokens.s4.h),
+                      const SizedBox(height: AppTokens.s8),
                       Text(
-                        edu.field,
-                        style: GoogleFonts.inter(
-                          color: accentColor,
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.w500,
+                        item.description,
+                        style: AppTextStyles.body(
+                          fontSize: 14,
+                          color: AppTokens.textSecondary,
                         ),
                       ),
                     ],
                   ),
                 ),
-                Text(
-                  edu.period,
-                  style: GoogleFonts.inter(
-                    color: AppTokens.textMuted,
-                    fontSize: 13.sp,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: AppTokens.s16.h),
-            Text(
-              edu.school,
-              style: GoogleFonts.inter(
-                color: AppTokens.textSecondary,
-                fontSize: 15.sp,
-                fontWeight: FontWeight.w500,
               ),
-            ),
-            SizedBox(height: AppTokens.s12.h),
-            Text(
-              edu.description,
-              style: GoogleFonts.inter(
-                color: AppTokens.textSecondary,
-                fontSize: 14.sp,
-                // height: 1.7,
-              ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

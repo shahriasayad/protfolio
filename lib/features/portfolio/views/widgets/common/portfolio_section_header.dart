@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
+import 'package:my_portfolio/core/theme/app_text_styles.dart';
 import 'package:my_portfolio/core/utils/app_screen_util.dart';
 
+/// Editorial section header with monospace index, display title, subtitle, and lead copy.
 class PortfolioSectionHeader extends StatelessWidget {
   final String sectionIndex;
   final String title;
@@ -21,52 +22,85 @@ class PortfolioSectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: AppTokens.sectionLeadWidth.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: GoogleFonts.spaceGrotesk(
-                    color: AppTokens.textPrimary,
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w600,
-                    height: 1.05,
-                    letterSpacing: -1.2,
-                  ),
+    final width = MediaQuery.sizeOf(context).width;
+    final isMobile = AppScreenUtil.isMobileWidth(width);
+
+    final headerContent = ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: AppTokens.sectionLeadWidth),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                sectionIndex,
+                style: AppTextStyles.mono(
+                  fontSize: 12,
+                  color: AppTokens.accent,
+                  fontWeight: FontWeight.w600,
                 ),
-                if (subtitle != null) ...[
-                  SizedBox(height: AppTokens.s4.h),
-                  Text(
-                    subtitle!,
-                    style: GoogleFonts.inter(
-                      color: AppTokens.textSecondary,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
-                    ),
+              ),
+              const SizedBox(width: AppTokens.s8),
+              Container(
+                width: 24,
+                height: 1,
+                color: AppTokens.borderStrong,
+              ),
+              const SizedBox(width: AppTokens.s8),
+              Flexible(
+                child: Text(
+                  title.toUpperCase(),
+                  style: AppTextStyles.mono(
+                    fontSize: 11,
+                    color: AppTokens.textMuted,
+                    letterSpacing: 1.4,
                   ),
-                ],
-                if (description != null) ...[
-                  SizedBox(height: AppTokens.s8.h),
-                  // Text(
-                  //   description!,
-                  //   style: GoogleFonts.inter(
-                  //     color: AppTokens.textMuted,
-                  //     fontSize: 15.sp,
-                  //     // height: 1.7,
-                  //   ),
-                  // ),
-                ],
-              ],
-            ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
           ),
-        ),
-        if (trailing != null) ...[SizedBox(width: AppTokens.s24.w), trailing!],
+          const SizedBox(height: AppTokens.s14),
+          Text(
+            subtitle ?? title,
+            style: AppTextStyles.sectionTitle(isMobile: isMobile),
+          ),
+          if (description != null && description!.trim().isNotEmpty) ...[
+            const SizedBox(height: AppTokens.s12),
+            Text(
+              description!,
+              style: AppTextStyles.body(
+                fontSize: isMobile ? 14 : 15,
+                color: AppTokens.textSecondary,
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+
+    if (trailing == null) {
+      return headerContent;
+    }
+
+    if (isMobile) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          headerContent,
+          const SizedBox(height: AppTokens.s16),
+          trailing!,
+        ],
+      );
+    }
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Expanded(child: headerContent),
+        const SizedBox(width: AppTokens.s24),
+        trailing!,
       ],
     );
   }

@@ -1,55 +1,63 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:my_portfolio/core/constants/app_tokens.dart';
-import 'package:my_portfolio/core/utils/app_screen_util.dart';
+import 'package:my_portfolio/core/theme/app_text_styles.dart';
+import '../common/hover_builder.dart';
 
-/// Secondary button with border
-class SecondaryButton extends StatefulWidget {
+/// Secondary hairline button with crisp hover border highlight.
+class SecondaryButton extends StatelessWidget {
   final String label;
   final VoidCallback onTap;
-  const SecondaryButton({required this.label, required this.onTap, super.key});
+  final IconData? icon;
 
-  @override
-  State<SecondaryButton> createState() => _SecondaryButtonState();
-}
-
-class _SecondaryButtonState extends State<SecondaryButton> {
-  bool _hovered = false;
+  const SecondaryButton({
+    super.key,
+    required this.label,
+    required this.onTap,
+    this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
-      child: GestureDetector(
-        onTap: widget.onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          padding: EdgeInsets.symmetric(
-            horizontal: AppTokens.s32.w,
-            vertical: AppTokens.s16.h,
+    return HoverBuilder(
+      hoverId: 'secondary_btn_$label',
+      onTap: onTap,
+      builder: (context, hovered) {
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 160),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppTokens.s20,
+            vertical: AppTokens.s12,
           ),
           decoration: BoxDecoration(
-            color: _hovered ? AppTokens.surfaceAlt : AppTokens.surface,
-            borderRadius: BorderRadius.circular(AppTokens.r12.r),
+            color: hovered ? AppTokens.surfaceAlt : AppTokens.surface,
+            borderRadius: BorderRadius.circular(AppTokens.r8),
             border: Border.all(
-              color: _hovered
-                  ? AppTokens.accent.withValues(alpha: 0.5)
-                  : AppTokens.border.withValues(alpha: 0.5),
-              width: 2,
+              color: hovered ? AppTokens.accent : AppTokens.borderStrong,
             ),
           ),
-          child: Text(
-            widget.label,
-            style: GoogleFonts.inter(
-              color: _hovered ? AppTokens.accent : AppTokens.textPrimary,
-              fontWeight: FontWeight.w700,
-              fontSize: 12.sp,
-              letterSpacing: 0.2,
-            ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                label,
+                style: AppTextStyles.button(
+                  fontSize: 13,
+                  color: hovered ? AppTokens.accent : AppTokens.textPrimary,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              if (icon != null) ...[
+                const SizedBox(width: AppTokens.s8),
+                Icon(
+                  icon,
+                  size: 15,
+                  color: hovered ? AppTokens.accent : AppTokens.textPrimary,
+                ),
+              ],
+            ],
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
