@@ -74,7 +74,7 @@ I enjoy turning ideas and designs into functional products and working across th
 
   final heroStats = const <PortfolioStatModel>[
     PortfolioStatModel(
-      value: '3',
+      value: '4',
       label: 'Live apps',
       detail: 'Published and currently in production.',
       icon: Icons.rocket_launch_outlined,
@@ -260,6 +260,24 @@ I enjoy turning ideas and designs into functional products and working across th
           'https://apps.apple.com/us/app/florida-yacht-trader/id6769546384',
       playStoreLink:
           'https://play.google.com/store/apps/details?id=com.floridayachttrader.diaz',
+    ),
+    LiveAppModel(
+      title: 'Jupiter Marine Sales',
+      description:
+          'A smart boat discovery platform for exploring boats and luxury yachts, with AI-powered search and an intelligent chat assistant to help buyers find the right vessel.',
+      features: [
+        'Curated boat & luxury yacht marketplace',
+        'AI-powered natural-language search',
+        'AI chat assistant & smart recommendations',
+        'Detailed specs & descriptions',
+        'High-quality photo galleries',
+        'Platforms: iOS & Android',
+      ],
+      coverImagePath: ImagePaths.jupiterMarineSalesCover,
+      appStoreLink:
+          'https://apps.apple.com/us/app/jupiter-marine-sales/id6765932719',
+      playStoreLink:
+          'https://play.google.com/store/apps/details?id=com.jupitermarinesales.diaz',
     ),
   ];
 

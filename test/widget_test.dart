@@ -33,6 +33,9 @@ void main() {
     expect(find.text('Taco Client'), findsOneWidget);
     expect(find.text('Taco Conductor'), findsOneWidget);
     expect(find.text('Florida Yacht Trader'), findsOneWidget);
+    expect(find.text('Jupiter Marine Sales'), findsOneWidget);
+    expect(find.text('4 SHIPPED PRODUCTS'), findsOneWidget);
+    expect(find.text('APP 04'), findsOneWidget);
     expect(find.text('Agora Connect'), findsWidgets);
     expect(find.text('Meal Khata'), findsWidgets);
     expect(find.text('BdCalling Academy'), findsOneWidget);
@@ -40,6 +43,8 @@ void main() {
     expect(find.text('Send Message'), findsOneWidget);
 
     final ctrl = Get.find<PortfolioController>();
+    expect(ctrl.liveApps.length, 4);
+    expect(ctrl.heroStats.first.value, '4');
     expect(ctrl.scrollController.offset, 0.0);
 
     // Tap TopNav "Contact" link and verify scroll jumps down
@@ -98,5 +103,6 @@ void main() {
     expect(find.byIcon(Icons.menu_rounded), findsOneWidget);
     expect(find.text('Shahria Sayad'), findsWidgets);
     expect(find.text('Florida Yacht Trader'), findsOneWidget);
+    expect(find.text('Jupiter Marine Sales'), findsOneWidget);
   });
 }

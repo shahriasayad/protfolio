@@ -33,6 +33,8 @@ class ImagePaths {
       'assets/images/weather_forecast_cover.jpg';
   static const String floridaYachtTraderCover =
       'assets/images/florida_yacht_trader_cover.png';
+  static const String jupiterMarineSalesCover =
+      'assets/images/jupiter_marine_sales_cover.png';
   static const String profile2 = 'assets/images/profile2.jpg';
   static const String tacoClientCover = 'assets/images/taco_client_cover.png';
   static const String tacoConductorCover =
