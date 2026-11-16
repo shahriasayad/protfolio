@@ -274,6 +274,7 @@ I enjoy turning ideas and designs into functional products and working across th
       link: 'https://github.com/shahriasayad/agora_connect',
       impact:
           'Real-time audio/video calls, custom call signaling, call history tracking, dynamic hardware permission handling.',
+      coverImagePath: ImagePaths.agoraConnectCover,
     ),
     ProjectModel(
       emoji: '🍔',
@@ -304,6 +305,7 @@ I enjoy turning ideas and designs into functional products and working across th
       tech: ['Flutter', 'Hive', 'PDF Generation'],
       link: 'https://github.com/shahriasayad/meal_khata',
       impact: 'Automated financial summaries, PDF reporting, offline-first',
+      coverImagePath: ImagePaths.mealKhataCover,
     ),
     ProjectModel(
       emoji: '⛅',

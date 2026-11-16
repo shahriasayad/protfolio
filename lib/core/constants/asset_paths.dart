@@ -24,8 +24,10 @@ class IconPaths {
 class ImagePaths {
   ImagePaths._();
 
+  static const String agoraConnectCover = 'assets/images/agora_connect_cover.png';
   static const String biteGoCover = 'assets/images/bite_go_cover.png';
   static const String careBridgeCover = 'assets/images/care_bridge_cover.png';
+  static const String mealKhataCover = 'assets/images/meal_khata_cover.png';
   static const String shareListCover = 'assets/images/share_list_cover.jpg';
   static const String weatherForecastCover =
       'assets/images/weather_forecast_cover.jpg';
