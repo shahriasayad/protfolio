@@ -376,7 +376,7 @@ I enjoy turning ideas and designs into functional products and working across th
     ExperienceModel(
       role: 'Flutter App Developer',
       company: 'Softvence Agency',
-      period: 'Dec 2025 – Aug 2026 (9 mos)',
+      period: 'Nov 2025 – Oct 2026 (1 yr)',
       companyUrl: 'https://softvence.agency/',
       description:
           'Built and maintained cross-platform mobile apps using Flutter. Focused on clean architecture, performance, and responsive UI.',
